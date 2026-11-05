@@ -511,6 +511,8 @@ a[href^="https://seoulstart.com/"]:not(.btn)::after{content:"↗ · Source: Seou
 .tel-row a{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:64px;border-radius:14px;background:var(--accent-soft);color:var(--accent-ink);text-decoration:none;font-weight:800;font-size:18px}
 .tel-row a span{font-size:12px;font-weight:700;color:var(--sub)}
 .share-card .btn-row{margin-top:10px}
+.age-check{margin:10px 0 6px}.age-check label{display:flex;align-items:center;gap:8px;font-weight:600;cursor:pointer}.age-check input{width:20px;height:20px;margin:0}.age-check p{margin:4px 0 0}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
 .sns-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
 .sns-row a,.sns-row span{min-height:40px;display:inline-flex;align-items:center;padding:0 14px;border-radius:999px;background:var(--st-pending-bg);color:var(--text);font-weight:700;font-size:14px;text-decoration:none}
 .sns-row span{opacity:.5}
@@ -2465,6 +2467,8 @@ const CONFIG = (() => {
       baeminCeo: { label: 'Baemin CEO site — official (guest order, foreign cards)', url: 'https://ceo.baemin.com/knowhow/12885', published: '2024-07', checked: '2026-10-18' }
     },
     endpoint: '',
+    // 개인정보 처리방침 게시본(같은 폴더의 privacy.html — 빌드스크립트/privacy_build.py가 처리방침 초안 md에서 만든다)
+    privacyUrl: 'privacy.html',
     text: TEXT,
     goals: ['online_goods', 'food_delivery', 'reservation'],
     platforms: ['coupang', 'naver', 'baemin'],          // S1 칩 순서(명세 순서)
@@ -2557,6 +2561,62 @@ const CONFIG = (() => {
   };
 })();
 
+/* 11-05: 만 14세 체크칸 · 처리방침 링크(모든 판) + 수집을 켠 판(CONFIG.endpoint 있음)의 동의 문구.
+   위의 '이 검토본은 수집 중지' 문구는 endpoint가 비어 있는 공개판에만 남는다. 문구는 처리방침 v5 1절 B·2절·5절·7절과 같게. */
+const AGE_TEXT = {
+  en: { age14: 'I am 14 or older', age14Need: 'Please tick "I am 14 or older" first.', privacyLink: 'Privacy policy', inqLink: 'Open the [Contact] form', consentH: 'Help other international students' },
+  ko: { age14: '만 14세 이상입니다', age14Need: '먼저 "만 14세 이상입니다"에 체크해 주세요.', privacyLink: '개인정보 처리방침 보기', inqLink: '[문의하기] 폼 열기', consentH: '다른 유학생을 도와주세요' },
+  zh: { age14: '我已年满14岁', age14Need: '请先勾选"我已年满14岁"。', privacyLink: '隐私政策', inqLink: '打开[咨询]表单', consentH: '帮助其他留学生' },
+  vi: { age14: 'Tôi từ 14 tuổi trở lên', age14Need: 'Hãy đánh dấu "Tôi từ 14 tuổi trở lên" trước.', privacyLink: 'Chính sách quyền riêng tư', inqLink: 'Mở biểu mẫu [Liên hệ]', consentH: 'Giúp các du học sinh khác' }
+};
+const COLLECT_ON_TEXT = {
+  en: {
+    cPurpose: 'Why: to make route guidance more accurate.',
+    cItems: 'What is sent: completed steps, steps that did not work and the reason you chose, your payment answer, whether you did it yourself — with a random anonymous ID and the screen language.',
+    cItemsSurvey: 'What is sent: your survey choices — with a random anonymous ID and the screen language. Sent only when you press [Submit anonymously].',
+    cKept: 'Kept for 1 year from collection, then deleted automatically.',
+    retentionLine: 'Shared step records, survey answers and payment reports are kept for 1 year from collection, then deleted automatically.',
+    cWithdraw: 'To stop: turn sharing off in Info — nothing is sent after that. To delete what you already sent: send the anonymous ID shown in Info through the [Contact] form (we reply within 7 days).',
+    surveySubmit: 'Submit anonymously', shareYes: 'Share anonymously', shareLabel: 'Share anonymous answers', infoShareH: 'Sharing anonymous answers',
+    surveyLocal: 'Could not send. Your answers stayed on this device.', problemLocal: 'Could not send. It stayed on this device.',
+    shareOnNote: 'Sharing is on. You can turn it off in Info.', selfLocal: 'Thanks. Nothing is shared unless sharing is on in Info.'
+  },
+  ko: {
+    cPurpose: '목적: 경로 안내를 더 정확하게 하기 위해서입니다.',
+    cItems: '보내는 항목: 끝낸 단계, 안 된 단계와 고른 이유, 결제 응답, 직접 했는지 — 임의의 익명 ID·화면 언어와 함께.',
+    cItemsSurvey: '보내는 항목: 고른 설문 답 — 임의의 익명 ID·화면 언어와 함께. [익명으로 제출]을 눌렀을 때만 보내집니다.',
+    cKept: '수집일로부터 1년간 보관한 뒤 자동으로 삭제합니다.',
+    retentionLine: '공유한 단계 기록·설문·결제 보고는 수집일로부터 1년간 보관한 뒤 자동으로 삭제합니다.',
+    cWithdraw: '그만두기: 정보에서 공유를 끄면 그 뒤로는 보내지 않습니다. 이미 보낸 답 삭제: 정보에 보이는 익명 ID를 [문의하기] 폼으로 보내 주세요(7일 안에 답합니다).',
+    surveySubmit: '익명으로 제출', shareYes: '익명으로 공유', shareLabel: '익명 답변 공유', infoShareH: '익명 답변 공유',
+    surveyLocal: '보내지 못했어요. 답은 이 기기에만 남았습니다.', problemLocal: '보내지 못했어요. 이 기기에만 남았습니다.',
+    shareOnNote: '공유가 켜져 있어요. 정보에서 끌 수 있어요.', selfLocal: '감사합니다. 정보에서 공유를 켜야만 공유됩니다.'
+  },
+  zh: {
+    cPurpose: '目的：让路线指引更准确。',
+    cItems: '发送的内容：完成的步骤、没成功的步骤和你选的原因、付款回答、是否自己完成——附带随机匿名ID和界面语言。',
+    cItemsSurvey: '发送的内容：你选的问卷答案——附带随机匿名ID和界面语言。只有按[匿名提交]时才发送。',
+    cKept: '自收集之日起保存1年，之后自动删除。',
+    retentionLine: '分享的步骤记录、问卷和付款报告自收集之日起保存1年，之后自动删除。',
+    cWithdraw: '停止：在"信息"中关闭分享，之后不再发送。删除已发送的答案：把"信息"中显示的匿名ID通过[咨询]表单发给我们（7天内回复）。',
+    surveySubmit: '匿名提交', shareYes: '匿名分享', shareLabel: '匿名分享答案', infoShareH: '匿名分享答案',
+    surveyLocal: '没能发送。答案只留在这台设备上。', problemLocal: '没能发送。只留在这台设备上。',
+    shareOnNote: '分享已开启。可以在"信息"中关闭。', selfLocal: '谢谢。只有在"信息"中开启分享时才会分享。'
+  },
+  vi: {
+    cPurpose: 'Mục đích: để hướng dẫn lộ trình chính xác hơn.',
+    cItems: 'Nội dung gửi: các bước đã xong, bước không được và lý do bạn chọn, câu trả lời về thanh toán, bạn có tự làm không — kèm một ID ẩn danh ngẫu nhiên và ngôn ngữ màn hình.',
+    cItemsSurvey: 'Nội dung gửi: các lựa chọn khảo sát — kèm một ID ẩn danh ngẫu nhiên và ngôn ngữ màn hình. Chỉ gửi khi bạn bấm [Gửi ẩn danh].',
+    cKept: 'Lưu 1 năm kể từ ngày thu thập, sau đó tự động xóa.',
+    retentionLine: 'Bản ghi bước, khảo sát và báo cáo thanh toán đã chia sẻ được lưu 1 năm kể từ ngày thu thập, sau đó tự động xóa.',
+    cWithdraw: 'Dừng lại: tắt chia sẻ trong Thông tin — sau đó không gửi nữa. Xóa những gì đã gửi: gửi ID ẩn danh hiện trong Thông tin qua biểu mẫu [Liên hệ] (trả lời trong 7 ngày).',
+    surveySubmit: 'Gửi ẩn danh', shareYes: 'Chia sẻ ẩn danh', shareLabel: 'Chia sẻ câu trả lời ẩn danh', infoShareH: 'Chia sẻ câu trả lời ẩn danh',
+    surveyLocal: 'Chưa gửi được. Câu trả lời chỉ ở trên máy này.', problemLocal: 'Chưa gửi được. Chỉ ở trên máy này.',
+    shareOnNote: 'Đang bật chia sẻ. Bạn có thể tắt trong Thông tin.', selfLocal: 'Cảm ơn. Chỉ chia sẻ khi bạn bật chia sẻ trong Thông tin.'
+  }
+};
+['en', 'ko', 'zh', 'vi'].forEach(l => { if (TEXT[l]) Object.assign(TEXT[l], AGE_TEXT[l], CONFIG.endpoint ? COLLECT_ON_TEXT[l] : {}); });
+
 /* ---------- 2. 상태 ---------- */
 // 조건·대화·진행은 기본적으로 탭 메모리에만 둔다(해시에는 절대 없음).
 // 저장소에는 언어·데이터 모드만 — 사용자가 [Remember on this device]를 켰을 때만 조건 요약·진행 단계를 7일간 저장한다.
@@ -2573,6 +2633,7 @@ const state = {
   remember: true, expiresAt: null, improve: false, improveExpiresAt: null, counts: emptyCounts(),
   // 실사용: 익명 공유 동의(null=아직 묻지 않음)·익명 ID·찾는 물건·설문
   consent: null, anonId: null, item: null, survey: { answers: {}, sent: null },
+  age14: false, // '만 14세 이상입니다' 체크(이 탭 메모리에만, 기기에 저장하지 않음)
   infoReturn: null, confirmDelete: false, improveAsk: false, holdWrites: false, storageFailed: false,
   // 발표 모드·S6 관심 탭 수는 이 탭 메모리에만 둔다(저장·전송 없음 — 저장 동작은 바꾸지 않는다)
   present: false, interest: { phone_plan: 0, first_remittance: 0 }, interestShown: null, arcNext: null,
@@ -3186,7 +3247,8 @@ function reportBox(res, st) {
     el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccKindQ')), cardChips(c, 'cardKind', CARD_KINDS, v => t('ck_' + v), 'rp-'),
     el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccAuthQ')), cardChips(c, 'cardAuth', CARD_AUTHS, v => t('ca_' + v), 'rp-'),
     el('p', { class: 'small' }, t('rpWhat')), el('p', { class: 'small' }, t('rpKept')),
-    ready ? el('button', { type: 'button', class: 'btn btn-primary btn-block', 'data-fid': 'rp-send', onclick: send }, t('rpSend'))
+    ready ? ageCheck('rp') : null,
+    ready ? el('button', { type: 'button', class: 'btn btn-primary btn-block', 'data-fid': 'rp-send', disabled: !!CONFIG.endpoint && !state.age14, onclick: send }, t('rpSend'))
       : el('p', { class: 'note-line' }, t('rpNeed')));
 }
 /* 근거는 앞세우지 않는다: 단계 옆 작은 ⓘ를 눌러야 근거 종류·출처·날짜(그리고 단계 메모)가 보인다 */
@@ -3579,7 +3641,7 @@ function arcCard() {
     !state.remember ? el('p', { class: 'small' }, t('arcNoRemember')) : null);
 }
 // 문의 폼 링크: 구글 폼 주소만 받고, 자리표시에 화면·언어·버전만 넣는다
-const APP_VERSION = '2026-10-27';
+const APP_VERSION = '2026-11-05';
 function feedbackHref(scr) {
   const u = safeUrl(CONFIG.feedbackUrl || ''); if (!u) return null;
   const host = new URL(u).hostname; if (!/^(docs\.google\.com|forms\.gle)$/i.test(host)) return null;
@@ -4441,10 +4503,10 @@ function routeData(r, res) {
 function shareCard() {
   const pick = v => () => { setConsent(v); state.focusFid = 'share-done'; render(); };
   return el('section', { class: 'card share-card', 'aria-labelledby': 'share-h' },
-    el('h3', { id: 'share-h' }, t('shareH')),
-    consentLines('share'),
+    el('h3', { id: 'share-h' }, t('consentH')), // shareH는 친구 공유 카드가 덮어써서 따로 둔다(11-05)
+    consentLines('share'), ageCheck('share'),
     el('div', { class: 'btn-row' },
-      el('button', { type: 'button', class: 'btn btn-outline', 'data-fid': 'share-yes', onclick: pick('yes') }, t('shareYes')),
+      el('button', { type: 'button', class: 'btn btn-outline', 'data-fid': 'share-yes', disabled: !state.age14, 'aria-describedby': state.age14 ? null : 'age-need-share', onclick: pick('yes') }, t('shareYes')),
       el('button', { type: 'button', class: 'btn btn-outline', 'data-fid': 'share-no', onclick: pick('no') }, t('shareNo'))));
 }
 
@@ -4481,7 +4543,8 @@ function viewSurvey() {
         const on = q.multi ? (a[q.key] || []).includes(o) : a[q.key] === o;
         return el('button', { type: 'button', class: 'opt', 'aria-pressed': String(on), 'data-fid': 'sv-' + q.key + '-' + o, onclick: toggle(q, o) }, t('so_' + o));
       })))),
-    el('button', { type: 'button', class: 'btn btn-primary btn-block', onclick: submit }, t('surveySubmit')));
+    ageCheck('sv'),
+    el('button', { type: 'button', class: 'btn btn-primary btn-block', 'data-fid': 'sv-submit', disabled: !!CONFIG.endpoint && !state.age14, onclick: submit }, t('surveySubmit')));
 }
 
 /* 운영 정보: 보관 기한·연락처. 값이 없으면 "추후 안내"로 정직하게 보인다. */
@@ -4496,7 +4559,25 @@ function consentLines(kind) {
     el('li', {}, t(kind === 'survey' ? 'cItemsSurvey' : 'cItems')),
     el('li', {}, t('cNot')),
     CONFIG.endpoint ? el('li', {}, CONFIG.retention ? t('cKept', { d: CONFIG.retention }) : t('retentionTbd')) : null,
-    el('li', {}, t(CONFIG.endpoint ? 'cWithdraw' : 'cWithdrawOff'), ' ', href ? el('a', { href, target: href.startsWith('mailto:') ? null : '_blank', rel: 'noopener noreferrer' }, CONFIG.contact) : t('contactTbd')));
+    el('li', {}, t(CONFIG.endpoint ? 'cWithdraw' : 'cWithdrawOff'), ' ', inqLink() || (href ? el('a', { href, target: href.startsWith('mailto:') ? null : '_blank', rel: 'noopener noreferrer' }, CONFIG.contact) : t('contactTbd'))),
+    privacyLink() ? el('li', {}, privacyLink()) : null);
+}
+// 처리방침 게시본 링크(같은 폴더의 정해진 파일 이름만)
+function privacyLink() {
+  return CONFIG.privacyUrl === 'privacy.html' ? el('a', { href: 'privacy.html', target: '_blank', rel: 'noopener', 'data-fid': 'privacy-link' }, '🔒 ' + t('privacyLink')) : null;
+}
+// 열람·삭제 요청은 [문의하기] 폼으로(처리방침 8절)
+function inqLink() {
+  const h = feedbackHref('privacy'); return h ? el('a', { href: h, target: '_blank', rel: 'noopener noreferrer' }, t('inqLink')) : null;
+}
+/* '만 14세 이상입니다' 체크칸(처리방침 7절): 정보를 보내는 동의 화면마다. 체크해야 동의 버튼이 눌린다. 수집을 켠 판에서만 보인다 */
+function ageCheck(k) {
+  if (!CONFIG.endpoint) return null;
+  const fid = 'age-' + k;
+  return el('div', { class: 'age-check' },
+    el('label', {}, el('input', { type: 'checkbox', 'data-fid': fid, checked: state.age14,
+      onchange: e => { state.age14 = e.target.checked; state.focusFid = fid; render(); } }), ' ', t('age14')),
+    state.age14 ? null : el('p', { class: 'small', id: 'age-need-' + k }, t('age14Need')));
 }
 function opsLines() {
   const href = CONFIG.contact ? contactHref(CONFIG.contact) : null;
@@ -5536,9 +5617,10 @@ function viewInfo() {
     sec(t('infoAboutH'), el('p', {}, t('infoAbout'))),
     sec(t('infoLabelsH'), el('dl', { class: 'info-badges' }, levels.map(st => [el('dt', {}, badge(t('st_' + st), 'st-' + st)), el('dd', {}, t('lb_' + st))])),
       el('p', { class: 'small' }, t('infoDates'))),
-    !CONFIG.endpoint ? sec(t('infoShareH'), el('p', {}, t('noConnect')), el('p', { 'data-fid': 'share-off' }, t('shareOffInfo')), opsLines()[1]) :
+    !CONFIG.endpoint ? sec(t('infoShareH'), el('p', {}, t('noConnect')), el('p', { 'data-fid': 'share-off' }, t('shareOffInfo')), opsLines()[1], privacyLink() ? el('p', {}, privacyLink()) : null) :
     sec(t('infoShareH'), el('p', {}, t('noConnect')), consentLines('share'),
-      switchBtn('sw-share', t('shareLabel'), state.consent === 'yes', () => { setConsent(state.consent === 'yes' ? 'no' : 'yes'); state.focusFid = 'sw-share'; render(); }),
+      state.consent === 'yes' ? null : ageCheck('info'),
+      switchBtn('sw-share', t('shareLabel'), state.consent === 'yes', () => { if (state.consent !== 'yes' && !state.age14) { state.focusFid = 'age-info'; render(); return; } setConsent(state.consent === 'yes' ? 'no' : 'yes'); state.focusFid = 'sw-share'; render(); }),
       state.anonId ? el('p', { class: 'small' }, t('anonIdLine', { id: state.anonId })) : null,
       el('p', {}, el('a', { href: '#/survey' }, t('surveyLink')))),
     sec(t('infoSaveH'), el('p', { class: 'small' }, t('storeNoRaw')),
@@ -5578,7 +5660,7 @@ function deleteAll() {
   try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem(RATES_KEY); } catch (e) { storageFailed(); }
   freshState();
   Object.assign(state, { remember: false, expiresAt: null, improve: false, improveExpiresAt: null, counts: emptyCounts(), infoReturn: null, holdWrites: true,
-    consent: null, anonId: null, item: null, survey: { answers: {}, sent: null },
+    consent: null, anonId: null, item: null, survey: { answers: {}, sent: null }, age14: false,
     interest: { phone_plan: 0, first_remittance: 0 }, interestShown: null, arcNext: null,
     journey: { done: [], stay: '', exp: null }, platformReq: {}, money: emptyMoney(), life: { arrival: '', stamps: {}, arc: '', shop: [], leave: [], jobdocs: [], views: {}, exp: null } });
   addFlash('deleted'); state.focusFid = 'q';
