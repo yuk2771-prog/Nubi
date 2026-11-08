@@ -2617,6 +2617,39 @@ const COLLECT_ON_TEXT = {
 };
 ['en', 'ko', 'zh', 'vi'].forEach(l => { if (TEXT[l]) Object.assign(TEXT[l], AGE_TEXT[l], CONFIG.endpoint ? COLLECT_ON_TEXT[l] : {}); });
 
+/* 11-08: AI 설명 동의(처리방침 v5 1절 B⑥·D) — 기본 꺼짐, 동의해야 처음 보낸다. 동의는 이 탭 메모리에만 두고, [정보]에서 끌 수 있다 */
+const AI_TEXT = {
+  en: { aiH: 'Turn on the AI explanation?', aiSend: 'What is sent: your condition group (foreign card yes/no · SMS check possible/hard) and the route names and head counts in the list above.',
+    aiNot: 'Never sent: your anonymous ID, tester code, anything you typed, your name or contact details.',
+    aiWhere: 'Where it goes: through the Nubi AI server (Cloudflare — your connection details reach it) to Claude by Anthropic in the USA, which writes the explanation (transfer abroad). Nubi does not keep it; for Anthropic’s retention see section 1-D of the privacy policy.',
+    aiNo: 'Without it, the list and the default guide still work. You can turn it off later in Info.',
+    aiAgree: 'Agree and show the AI explanation', aiCancel: 'No thanks', aiAgeNeed: 'Please tick "I am 14 or older" first.',
+    aiNote: '🤖 Written by AI (Claude). Only your condition group, route names and totals were sent — no ID or typed text. It can be wrong; check each step’s source.',
+    aiInfoH: 'AI explanation', aiSwitch: 'AI explanation', aiInfoOn: 'On (this tab only). Turn it off and nothing more is sent.', aiInfoOff: 'Off. It turns on only when you agree under [Why this order? (AI)] on the compare screen.' },
+  ko: { aiH: 'AI 설명을 켤까요?', aiSend: '보내는 것: 내 조건 묶음(해외카드 있음/없음 · SMS 인증 가능/어려움)과 위 목록의 경로 이름·인원 숫자.',
+    aiNot: '보내지 않는 것: 익명 ID·테스터 코드·입력한 문장·이름·연락처.',
+    aiWhere: '받는 곳: 누비 AI 서버(Cloudflare — 접속 정보가 전달됨)를 거쳐 미국 Anthropic의 Claude가 설명을 씁니다(국외 이전). 누비는 저장하지 않으며, Anthropic 쪽 보관은 처리방침 1절 D를 보세요.',
+    aiNo: '켜지 않아도 목록과 기본 안내는 그대로 쓸 수 있어요. 켠 뒤에도 정보에서 끌 수 있어요.',
+    aiAgree: '동의하고 AI 설명 보기', aiCancel: '괜찮아요', aiAgeNeed: '먼저 "만 14세 이상입니다"에 체크해 주세요.',
+    aiNote: '🤖 AI(Claude)가 쓴 설명이에요. 내 조건 묶음과 경로 이름·집계 숫자만 보냈고, ID·입력한 문장은 보내지 않았어요. 틀릴 수 있으니 단계별 출처를 함께 확인하세요.',
+    aiInfoH: 'AI 설명', aiSwitch: 'AI 설명', aiInfoOn: '켜져 있어요(이 탭에서만). 끄면 더 보내지 않아요.', aiInfoOff: '꺼져 있어요. 비교 화면의 [AI로 이유 보기]에서 동의해야 켜져요.' },
+  zh: { aiH: '要打开 AI 说明吗？', aiSend: '发送的内容：你的条件组（有/没有海外卡 · 能/难以短信验证）以及上面列表中的路线名称和人数。',
+    aiNot: '不发送：匿名ID、测试者编号、你输入的句子、姓名、联系方式。',
+    aiWhere: '去向：经过 Nubi AI 服务器（Cloudflare，会收到连接信息）传给美国 Anthropic 的 Claude 撰写说明（跨境传输）。Nubi 不保存；Anthropic 的保存期限见隐私政策第1节D。',
+    aiNo: '不打开也能照常使用列表和基本指引。打开后也可以在"信息"中关闭。',
+    aiAgree: '同意并查看 AI 说明', aiCancel: '不用了', aiAgeNeed: '请先勾选"我已年满14岁"。',
+    aiNote: '🤖 这是 AI（Claude）写的说明。只发送了条件组、路线名称和合计数字，没有发送ID或输入的句子。可能有误，请同时查看每一步的出处。',
+    aiInfoH: 'AI 说明', aiSwitch: 'AI 说明', aiInfoOn: '已打开（仅限此标签页）。关闭后不再发送。', aiInfoOff: '已关闭。只有在比较页面的[AI]按钮处同意后才会打开。' },
+  vi: { aiH: 'Bật giải thích bằng AI?', aiSend: 'Nội dung gửi: nhóm điều kiện của bạn (có/không có thẻ nước ngoài · xác minh SMS được/khó) và tên lộ trình, số người trong danh sách trên.',
+    aiNot: 'Không gửi: ID ẩn danh, mã người thử, câu bạn nhập, tên, thông tin liên lạc.',
+    aiWhere: 'Nơi nhận: qua máy chủ AI của Nubi (Cloudflare — nhận thông tin kết nối) đến Claude của Anthropic tại Mỹ để viết giải thích (chuyển ra nước ngoài). Nubi không lưu; thời gian lưu của Anthropic xem mục 1-D chính sách.',
+    aiNo: 'Không bật vẫn dùng được danh sách và hướng dẫn cơ bản. Sau khi bật vẫn có thể tắt trong Thông tin.',
+    aiAgree: 'Đồng ý và xem giải thích AI', aiCancel: 'Không, cảm ơn', aiAgeNeed: 'Hãy đánh dấu "Tôi từ 14 tuổi trở lên" trước.',
+    aiNote: '🤖 Giải thích do AI (Claude) viết. Chỉ gửi nhóm điều kiện, tên lộ trình và số tổng — không gửi ID hay câu bạn nhập. Có thể sai, hãy xem nguồn của từng bước.',
+    aiInfoH: 'Giải thích AI', aiSwitch: 'Giải thích AI', aiInfoOn: 'Đang bật (chỉ tab này). Tắt thì không gửi nữa.', aiInfoOff: 'Đang tắt. Chỉ bật khi bạn đồng ý ở nút AI trên màn hình so sánh.' }
+};
+['en', 'ko', 'zh', 'vi'].forEach(l => { if (TEXT[l]) Object.assign(TEXT[l], AI_TEXT[l]); });
+
 /* ---------- 2. 상태 ---------- */
 // 조건·대화·진행은 기본적으로 탭 메모리에만 둔다(해시에는 절대 없음).
 // 저장소에는 언어·데이터 모드만 — 사용자가 [Remember on this device]를 켰을 때만 조건 요약·진행 단계를 7일간 저장한다.
@@ -2634,6 +2667,7 @@ const state = {
   // 실사용: 익명 공유 동의(null=아직 묻지 않음)·익명 ID·찾는 물건·설문
   consent: null, anonId: null, item: null, survey: { answers: {}, sent: null },
   age14: false, // '만 14세 이상입니다' 체크(이 탭 메모리에만, 기기에 저장하지 않음)
+  aiOn: false, // AI 설명 동의(처리방침 ⑥ — 기본 꺼짐, 이 탭 메모리에만)
   infoReturn: null, confirmDelete: false, improveAsk: false, holdWrites: false, storageFailed: false,
   // 발표 모드·S6 관심 탭 수는 이 탭 메모리에만 둔다(저장·전송 없음 — 저장 동작은 바꾸지 않는다)
   present: false, interest: { phone_plan: 0, first_remittance: 0 }, interestShown: null, arcNext: null,
@@ -3044,6 +3078,7 @@ function resolveScreen() {
     case '#/info': return 'info';
     case '#/arc': return 'arc';
     case '#/survey': return 'survey';
+    case '#/ai-check': return (/[?&]dev=1/.test(location.search) || /^(localhost|127\.0\.0\.1)$/.test(location.hostname) || location.protocol === 'file:') ? 'aicheck' : 'start'; // 팀 점검용(11-08)
     case '#/korean': return 'korean';
     case '#/benefits': return ADS_ON ? 'benefits' : null;
     case '#/money': return 'money';
@@ -3075,7 +3110,7 @@ function render() {
   try {
     renderChrome();
     renderTabbar(scr);
-    const view = { start: viewStart, talk: viewTalk, result: viewResult, steps: viewSteps, compare: viewCompare, info: viewInfo, arc: viewArc, survey: viewSurvey, korean: viewKorean, money: viewMoney, safety: viewSafety, situations: viewSituations, me: viewMe, life: viewLife, shop: viewShop, jobdocs: viewJobDocs, leave: viewLeave, alerts: viewAlerts, seasons: viewSeasons, work: viewWork, health: viewHealth, rates: viewRates, benefits: viewBenefits }[scr]();
+    const view = { start: viewStart, talk: viewTalk, result: viewResult, steps: viewSteps, compare: viewCompare, info: viewInfo, arc: viewArc, survey: viewSurvey, korean: viewKorean, money: viewMoney, safety: viewSafety, situations: viewSituations, me: viewMe, life: viewLife, shop: viewShop, jobdocs: viewJobDocs, leave: viewLeave, alerts: viewAlerts, seasons: viewSeasons, work: viewWork, health: viewHealth, aicheck: viewAiCheck, rates: viewRates, benefits: viewBenefits }[scr]();
     // 발표 모드: 화면 맨 위에 해설 카드만 덧붙인다(데이터·조건·판단은 그대로)
     $main.replaceChildren(...(state.present ? [presentCard(scr)] : []), view, ...[feedbackLine(scr)].filter(Boolean));
   } catch (err) {
@@ -4677,6 +4712,214 @@ function openRoute(id) {
   state.transfer = null; state.prep = null; state.askLog = [];
   go('#/result');
 }
+/* ---------- 과업④ AI 개인화 (11/8 추가) ----------
+   목록 A = 전체 선택 인원순, 목록 B = 같은 조건(해외카드·SMS) 사람들의 완료 비율순. 둘 다 계산식이고 AI가 아니다.
+   AI는 목록과 집계 숫자만 받아 이유를 설명한다. 개인 기록·코드·대화 원문은 보내지 않는다.
+   같은 조건에서 시작한 사람이 minStart 미만이면 목록 B 대신 기본 안내(For you 순서)를 보여 준다.
+   가상 데이터는 '가상 시연' 스위치를 켰을 때만 쓰고 화면에 '가상'이라고 표시한다. */
+const PERSONAL = {
+  // AI 서버 주소(Cloudflare Worker). 비어 있으면 [AI로 이유 보기] 버튼을 숨긴다.
+  aiUrl: 'https://nubi-ai.yukiyum.workers.dev',
+  minStart: 3,
+  // 실제 집계: 수집을 켠 뒤 팀이 시트에서 집계해 넣는다. 형식 { route, card:'yes'|'no', sms:'yes'|'no', picked, started, done }
+  stats: [],
+  // 가상 시연용(실제 아님). 보고서·발표에서 실제 수치로 쓰지 않는다.
+  demoStats: [
+    { route: 'coupang_goods', card: 'yes', sms: 'yes', picked: 9, started: 8, done: 6 },
+    { route: 'naver_goods', card: 'yes', sms: 'yes', picked: 6, started: 5, done: 4 },
+    { route: 'naver_reservation', card: 'yes', sms: 'yes', picked: 3, started: 3, done: 3 },
+    { route: 'baemin_food', card: 'yes', sms: 'yes', picked: 7, started: 6, done: 2 },
+    { route: 'coupang_goods', card: 'yes', sms: 'no', picked: 8, started: 7, done: 2 },
+    { route: 'naver_goods', card: 'yes', sms: 'no', picked: 4, started: 4, done: 3 },
+    { route: 'naver_reservation', card: 'yes', sms: 'no', picked: 2, started: 2, done: 1 },
+    { route: 'baemin_food', card: 'yes', sms: 'no', picked: 6, started: 5, done: 3 },
+    { route: 'coupang_goods', card: 'no', sms: 'yes', picked: 5, started: 4, done: 1 },
+    { route: 'naver_goods', card: 'no', sms: 'yes', picked: 3, started: 3, done: 2 },
+    { route: 'naver_reservation', card: 'no', sms: 'yes', picked: 1, started: 1, done: 1 },
+    { route: 'baemin_food', card: 'no', sms: 'yes', picked: 4, started: 4, done: 1 },
+    { route: 'coupang_goods', card: 'no', sms: 'no', picked: 3, started: 2, done: 0 },
+    { route: 'naver_goods', card: 'no', sms: 'no', picked: 2, started: 2, done: 1 },
+    { route: 'baemin_food', card: 'no', sms: 'no', picked: 2, started: 1, done: 0 }
+  ]
+};
+const yn = v => (v === 'yes' ? 'yes' : 'no');
+function personalGroup(c) {
+  // 조건 그룹: 해외카드(또는 간편결제) 있음/없음 × SMS 인증 가능/불가. 모름은 '없음'으로 본다(보수적으로)
+  const card = c ? yn(c.foreignCard === 'yes' || CONFIG.wallets.some(w => c.wallets && c.wallets[w]) ? 'yes' : 'no') : 'no';
+  return { card, sms: c ? yn(c.sms) : 'no' };
+}
+function groupLabel(g, lang) {
+  const ko = (g.card === 'yes' ? '해외카드 있음' : '해외카드 없음') + ' · ' + (g.sms === 'yes' ? 'SMS 인증 가능' : 'SMS 인증 어려움');
+  const en = (g.card === 'yes' ? 'has a foreign card' : 'no foreign card') + ' · ' + (g.sms === 'yes' ? 'can do SMS check' : 'cannot do SMS check');
+  return (lang || state.lang) === 'ko' ? ko : en;
+}
+// 계산만 한다(화면·AI와 분리) — 20문항 점검에서도 같은 함수를 쓴다
+function personalLists(stats, g, routeIds, minStart) {
+  const ids = routeIds.slice();
+  const sum = (id, f, filt) => stats.filter(s => s.route === id && (!filt || filt(s))).reduce((a, s) => a + (Number(s[f]) || 0), 0);
+  // 목록 A: 전체 선택 인원순(동률이면 원래 순서)
+  const A = ids.map(id => ({ route: id, picked: sum(id, 'picked') })).sort((x, y) => y.picked - x.picked);
+  // 목록 B: 같은 조건 그룹의 완료 비율순. 시작 인원이 minStart 미만인 경로는 순위에서 빼고 뒤에 '자료 부족'으로 둔다
+  const same = s => s.card === g.card && s.sms === g.sms;
+  const rows = ids.map(id => { const started = sum(id, 'started', same), done = sum(id, 'done', same); return { route: id, started, done, rate: started ? done / started : 0 }; });
+  const ranked = rows.filter(r => r.started >= minStart).sort((x, y) => (y.rate - x.rate) || (y.started - x.started));
+  const thin = rows.filter(r => r.started < minStart);
+  const groupStarted = rows.reduce((a, r) => a + r.started, 0);
+  const fallback = groupStarted < minStart || ranked.length === 0;
+  return { A, B: fallback ? null : ranked, thin, groupStarted, fallback, totalPicked: A.reduce((a, r) => a + r.picked, 0) };
+}
+function aiPayload(list, lists, g, lang) {
+  const name = id => routeTitle(id);
+  const items = list === 'A'
+    ? lists.A.map(r => ({ name: name(r.route), picked: r.picked }))
+    : lists.B.map(r => ({ name: name(r.route), started: r.started, done: r.done, rate: Math.round(r.rate * 100) / 100 }));
+  return { lang, list, group: list === 'A' ? (lang === 'ko' ? '전체' : 'everyone') : groupLabel(g, lang), items };
+}
+async function askAi(payload) {
+  if (!PERSONAL.aiUrl) return { ok: false, error: 'off' };
+  try {
+    const r = await fetch(PERSONAL.aiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    const j = await r.json().catch(() => ({}));
+    return r.ok && j.ok ? { ok: true, text: String(j.text || '') } : { ok: false, error: j.error || ('http_' + r.status) };
+  } catch (e) { return { ok: false, error: 'network' }; }
+}
+// AI 설명 동의 상자: 보내는 것·안 보내는 것·국외 이전·거부해도 기본 안내 + 만 14세 체크(처리방침 v5 ⑥·D·7절)
+function aiConsentBox(onAgree, onCancel) {
+  return el('div', { class: 'panel ai-consent', role: 'region', 'aria-labelledby': 'ai-cs-h' },
+    el('p', { id: 'ai-cs-h', style: 'font-weight:700;margin:0 0 6px' }, t('aiH')),
+    el('ul', { class: 'small consent-list' }, el('li', {}, t('aiSend')), el('li', {}, t('aiNot')), el('li', {}, t('aiWhere')), el('li', {}, t('aiNo')),
+      privacyLink() ? el('li', {}, privacyLink()) : null),
+    el('div', { class: 'age-check' },
+      el('label', {}, el('input', { type: 'checkbox', 'data-fid': 'age-ai', checked: state.age14,
+        onchange: e => { state.age14 = e.target.checked; state.focusFid = 'age-ai'; render(); } }), ' ', t('age14')),
+      state.age14 ? null : el('p', { class: 'small', id: 'age-need-ai' }, t('aiAgeNeed'))),
+    el('div', { class: 'btn-row' },
+      el('button', { type: 'button', class: 'btn btn-primary', 'data-fid': 'ai-agree', disabled: !state.age14, onclick: onAgree }, t('aiAgree')),
+      el('button', { type: 'button', class: 'btn btn-outline', 'data-fid': 'ai-cancel', onclick: onCancel }, t('aiCancel'))));
+}
+function personalCard(conds) {
+  const P = state.personal || (state.personal = { tab: null, demo: false, ai: {} });
+  if (!P.tab) P.tab = /[?&]first=A/i.test(location.search) ? 'A' : 'B'; // 교차 테스트: ?first=A 이면 목록 A부터
+  const stats = P.demo ? PERSONAL.demoStats : PERSONAL.stats;
+  const g = personalGroup(conds);
+  const ids = dataset().routes.map(r => r.id);
+  const lists = personalLists(stats, g, ids, PERSONAL.minStart);
+  const ko = state.lang === 'ko';
+  const pct = x => Math.round(x * 100) + '%';
+  const tabBtn = (k, label) => el('button', { type: 'button', class: 'opt', 'aria-pressed': String(P.tab === k), 'data-fid': 'pz-tab-' + k,
+    onclick: () => { P.tab = k; state.focusFid = 'pz-tab-' + k; render(); } }, label);
+  let body;
+  if (P.tab === 'A') {
+    body = lists.totalPicked
+      ? el('ol', {}, lists.A.map(r => el('li', {}, routeTitle(r.route) + ' — ' + (ko ? r.picked + '명 선택' : r.picked + ' picked'))))
+      : el('p', { class: 'small' }, ko ? '아직 모인 선택 기록이 없어요. 아래 표의 기본 순서를 보세요.' : 'No choices collected yet. Use the default order in the table below.');
+  } else if (lists.fallback) {
+    body = el('p', { class: 'small' }, ko ? '나와 같은 조건(' + groupLabel(g) + ')에서 시작한 사람이 ' + PERSONAL.minStart + '명보다 적어서, 기본 안내(아래 표의 For you 순서)를 보여 드려요.'
+      : 'Fewer than ' + PERSONAL.minStart + ' people with your conditions (' + groupLabel(g) + ') have started, so we show the default guide (For you order below).');
+  } else {
+    body = [el('ol', {}, lists.B.map(r => el('li', {}, routeTitle(r.route) + ' — ' + (ko ? r.started + '명 중 ' + r.done + '명 완료 (' + pct(r.rate) + ')' : r.done + ' of ' + r.started + ' finished (' + pct(r.rate) + ')')))),
+      lists.thin.length ? el('p', { class: 'small' }, (ko ? '자료 부족(시작 ' + PERSONAL.minStart + '명 미만): ' : 'Not enough data (under ' + PERSONAL.minStart + ' starts): ') + lists.thin.map(r => routeTitle(r.route)).join(', ')) : null];
+  }
+  const canAi = PERSONAL.aiUrl && (P.tab === 'A' ? lists.totalPicked > 0 : !lists.fallback);
+  const aiKey = P.tab + (P.demo ? ':demo' : ':live') + ':' + g.card + g.sms + ':' + state.lang;
+  const ai = P.ai[aiKey];
+  const runAi = async () => {
+    if (!state.aiOn) return; // 동의 전에는 아무것도 보내지 않는다
+    P.ai[aiKey] = { loading: true }; state.focusFid = 'pz-ai'; render();
+    const res = await askAi(aiPayload(P.tab, lists, g, state.lang));
+    P.ai[aiKey] = res; render();
+  };
+  const aiBtn = canAi ? el('button', { type: 'button', class: 'btn btn-small', 'data-fid': 'pz-ai', disabled: ai && ai.loading ? '' : null,
+    onclick: () => { if (state.aiOn) runAi(); else { P.askAi = true; state.focusFid = 'age-ai'; render(); } } }, ko ? 'AI로 이유 보기' : 'Why this order? (AI)') : null;
+  const aiAsk = canAi && P.askAi && !state.aiOn ? aiConsentBox(
+    () => { if (!state.age14) return; state.aiOn = true; P.askAi = false; runAi(); },
+    () => { P.askAi = false; state.focusFid = 'pz-ai'; render(); }) : null;
+  const aiOut = !ai ? null : ai.loading ? el('p', { class: 'small', role: 'status' }, ko ? 'AI가 설명을 쓰는 중…' : 'AI is writing…')
+    : ai.ok ? el('div', { class: 'card', role: 'status' }, el('p', {}, ai.text),
+        el('p', { class: 'small' }, t('aiNote')))
+    : el('p', { class: 'small', role: 'status' }, (ko ? 'AI 설명을 불러오지 못했어요. 위 목록과 숫자는 그대로 맞아요. ' : 'Could not load the AI note. The list and numbers above are still correct. ') + '(' + ai.error + ')');
+  return el('section', { class: 'card no-print', 'aria-labelledby': 'pz-h' },
+    el('h3', { id: 'pz-h' }, ko ? '나에게 맞는 순서' : 'Order for you'),
+    el('p', { class: 'small' }, ko ? '내 조건: ' + groupLabel(g) + '. 금융상품을 추천하지 않고, 제휴 여부는 순서에 넣지 않아요.' : 'Your conditions: ' + groupLabel(g) + '. No financial products are recommended; partnerships do not affect the order.'),
+    el('div', { class: 'req-chips' }, tabBtn('A', ko ? '목록 A · 많이 고른 순' : 'List A · most picked'), tabBtn('B', ko ? '목록 B · 나와 같은 조건 완료율순' : 'List B · finish rate, same conditions')),
+    P.demo ? el('p', { class: 'small', style: 'font-weight:700' }, ko ? '⚠️ 가상 시연 데이터예요. 실제 이용자 숫자가 아니에요.' : '⚠️ Demo data — not real user numbers.') : null,
+    body, aiBtn, aiAsk, aiOut,
+    el('label', { class: 'small', style: 'display:block;margin-top:8px' },
+      el('input', { type: 'checkbox', checked: P.demo ? '' : null, 'data-fid': 'pz-demo', onchange: e => { P.demo = e.target.checked; state.focusFid = 'pz-demo'; render(); } }),
+      ko ? ' 가상 시연 데이터로 보기' : ' Show with demo data'));
+}
+
+/* 20문항 점검(#/ai-check): 계산 규칙과 AI 설명을 한 화면에서 시험한다. 1~14 = 조건 조합(가상 시연 데이터), 15~20 = 가상 극단 조건 */
+function aiCheckCases() {
+  const ids = ['coupang_goods', 'naver_goods', 'naver_reservation', 'baemin_food'];
+  const D = PERSONAL.demoStats;
+  const G = [['yes', 'yes'], ['yes', 'no'], ['no', 'yes'], ['no', 'no']];
+  const cases = [];
+  // 해외카드 없음·SMS 어려움 그룹은 가상 데이터에서도 경로마다 3명 미만 → 기본 안내가 정답
+  G.forEach(([card, sms]) => ['ko', 'en'].forEach(lang => { const fb = card === 'no' && sms === 'no';
+    cases.push({ list: 'B', card, sms, lang, stats: D, expectFallback: fb, desc: '목록 B · ' + groupLabel({ card, sms }, 'ko') + ' · ' + lang + (fb ? ' → 기본 안내' : '') }); }));
+  cases.push({ list: 'A', card: 'yes', sms: 'yes', lang: 'ko', stats: D, desc: '목록 A · 전체 · ko' });
+  cases.push({ list: 'A', card: 'yes', sms: 'yes', lang: 'en', stats: D, desc: '목록 A · 전체 · en' });
+  cases.push({ list: 'B', card: 'yes', sms: 'no', lang: 'ko', stats: D, desc: '목록 B · 쿠팡이 많이 골라졌지만 완료율 낮음 · ko' });
+  cases.push({ list: 'B', card: 'yes', sms: 'yes', lang: 'ko', stats: D, desc: '목록 B · 완료율 100% 경로 포함(3명) · ko' });
+  cases.push({ list: 'A', card: 'no', sms: 'no', lang: 'ko', stats: D, desc: '목록 A · 조건과 상관없이 같은 순서인지 · ko' });
+  cases.push({ list: 'B', card: 'no', sms: 'yes', lang: 'en', stats: D, desc: '목록 B · 자료 부족 경로 표시 · en' });
+  const S = (rows) => rows.map(([route, started, done, picked]) => ({ route, card: 'yes', sms: 'yes', started, done, picked: picked == null ? started : picked }));
+  cases.push({ v: 1, list: 'B', card: 'yes', sms: 'yes', lang: 'ko', stats: [], expectFallback: true, desc: '가상: 기록 0건 → 기본 안내' });
+  cases.push({ v: 1, list: 'B', card: 'yes', sms: 'yes', lang: 'ko', stats: S([['coupang_goods', 2, 2]]), expectFallback: true, desc: '가상: 같은 조건 2명(3명 미만) → 기본 안내' });
+  cases.push({ v: 1, list: 'B', card: 'yes', sms: 'yes', lang: 'ko', stats: S([['coupang_goods', 4, 2], ['naver_goods', 4, 2]]), desc: '가상: 완료율 동률(50%·50%)' });
+  cases.push({ v: 1, list: 'B', card: 'yes', sms: 'yes', lang: 'ko', stats: S([['coupang_goods', 3, 0], ['naver_goods', 3, 0]]), desc: '가상: 모두 완료 0명' });
+  cases.push({ v: 1, list: 'B', card: 'yes', sms: 'yes', lang: 'ko', stats: S([['coupang_goods', 40, 30], ['baemin_food', 5, 5]]), desc: '가상: 큰 표본(40명) vs 작은 표본 100%' });
+  cases.push({ v: 1, list: 'A', card: 'yes', sms: 'yes', lang: 'ko', stats: S([['coupang_goods', 0, 0, 10], ['naver_goods', 0, 0, 10]]), desc: '가상: 선택 인원 동률' });
+  return cases.map((c, i) => Object.assign(c, { n: i + 1, ids }));
+}
+// 자동 판정: 언어, 길이, 금지어(금융상품·보장·제휴), 입력에 없는 숫자
+function aiAutoJudge(text, payload) {
+  const probs = [];
+  if (!text) return ['빈 답'];
+  const hangul = /[가-힣]/.test(text);
+  if (payload.lang === 'ko' && !hangul) probs.push('한국어 아님');
+  if (payload.lang === 'en' && hangul) probs.push('영어 아님');
+  if (text.length > 450) probs.push('너무 김(' + text.length + '자)');
+  const banned = /대출|보험|적금|예금|송금\s*회사|카드를?\s*발급|추천\s*카드|제휴|loan|insurance|remittance company|partner/i;
+  const m = text.match(banned); if (m) probs.push('금지어: ' + m[0]);
+  const allowed = new Set();
+  payload.items.forEach((x, i) => { allowed.add(String(i + 1)); ['picked', 'started', 'done'].forEach(k => x[k] != null && allowed.add(String(x[k])));
+    if (x.rate != null) { allowed.add(String(Math.round(x.rate * 100))); allowed.add(String(x.rate)); } });
+  ['2', '3', '10', '100', '0'].forEach(n => allowed.add(n));
+  (text.match(/\d+(\.\d+)?/g) || []).forEach(n => { if (!allowed.has(n) && !allowed.has(String(Number(n)))) probs.push('입력에 없는 숫자: ' + n); });
+  return probs;
+}
+function viewAiCheck() {
+  const st = state.aiCheck || (state.aiCheck = { results: {}, running: false });
+  const cases = aiCheckCases();
+  const runOne = async c => {
+    const g = { card: c.card, sms: c.sms };
+    const lists = personalLists(c.stats, g, c.ids, PERSONAL.minStart);
+    if (c.list === 'B' && lists.fallback) { st.results[c.n] = { fallback: true, pass: !!c.expectFallback, note: '기본 안내로 전환(AI 호출 안 함)' }; return; }
+    if (c.expectFallback) { st.results[c.n] = { pass: false, note: '기본 안내로 바뀌어야 하는데 안 바뀜' }; return; }
+    const payload = aiPayload(c.list, lists, g, c.lang);
+    const res = await askAi(payload);
+    if (!res.ok) { st.results[c.n] = { pass: false, note: '서버 오류: ' + res.error }; return; }
+    const probs = aiAutoJudge(res.text, payload);
+    st.results[c.n] = { pass: probs.length === 0, text: res.text, note: probs.join(' / ') || '자동 판정 통과', payload };
+  };
+  const runAll = async () => { st.running = true; st.results = {}; render(); for (const c of cases) { await runOne(c); render(); } st.running = false; render(); };
+  const done = Object.keys(st.results).length, pass = Object.values(st.results).filter(r => r.pass).length;
+  return el('section', {},
+    el('h2', {}, 'AI 개인화 20문항 점검'),
+    el('p', { class: 'small' }, '1~14번은 조건 조합(가상 시연 데이터), 15~20번은 가상 극단 조건이에요. 자동 판정 뒤에 사람이 한 번 더 읽고 "맞다/틀리다"를 정해요. 실제 이용자 숫자가 아니에요.'),
+    el('p', {}, el('strong', {}, '결과: ' + done + '/20 실행 · 자동 판정 통과 ' + pass + ' · 오류 ' + (done - pass))),
+    el('button', { type: 'button', class: 'btn', disabled: st.running ? '' : null, onclick: runAll }, st.running ? '점검 중…' : '20문항 전부 실행'),
+    el('table', { style: 'margin-top:12px;width:100%;border-collapse:collapse;font-size:13px', border: '1' },
+      el('thead', {}, el('tr', {}, ['#', '조건', '판정', 'AI 답 / 메모'].map(h => el('th', { scope: 'col' }, h)))),
+      el('tbody', {}, cases.map(c => { const r = st.results[c.n];
+        return el('tr', {}, el('td', {}, String(c.n)), el('td', {}, c.desc),
+          el('td', {}, r ? (r.pass ? '✅' : '❌') : '—'),
+          el('td', {}, r ? [r.text ? el('p', {}, r.text) : null, el('p', { class: 'small' }, r.note)] : ''));
+      }))));
+}
+
 function viewCompare() {
   const cmp = state.compare || { goal: null, highlight: null, recommend: false };
   const byName = (a, b) => pName(a.platform).localeCompare(pName(b.platform), state.lang) || gName(a.goal).localeCompare(gName(b.goal), state.lang);
@@ -4720,6 +4963,7 @@ function viewCompare() {
     cmp.goal ? el('button', { type: 'button', class: 'btn btn-small no-print', 'data-fid': 'show-all', onclick: () => { cmp.goal = null; state.compare = cmp; state.focusFid = 'print'; render(); } }, t('showAll')) : null,
     bestId ? el('p', { class: 'small' }, t('startHereWhy')) : null,
     el('p', { class: 'small' }, t('orderNote')),
+    conds ? personalCard(conds) : null,
     legend, table, cards,
     el('section', { class: 'card no-print', 'aria-labelledby': 'log-h' }, el('h3', { id: 'log-h' }, t('logH')),
       el('ul', { class: 'log-list' }, CONFIG.checkLog.map(x => el('li', {}, el('time', {}, x.date.slice(5).replace('-', '/')), el('span', {}, L(x.text)))))),
@@ -5633,6 +5877,8 @@ function viewInfo() {
               el('button', { type: 'button', class: 'btn btn-primary', 'data-fid': 'delete-yes', onclick: deleteAll }, t('deleteYes')),
               el('button', { type: 'button', class: 'btn btn-outline', onclick: () => { state.confirmDelete = false; state.focusFid = 'delete-all'; render(); } }, t('cancel'))))
           : el('button', { type: 'button', class: 'btn btn-outline', 'data-fid': 'delete-all', onclick: () => { state.confirmDelete = true; state.focusFid = 'delete-yes'; render(); } }, t('deleteAll')))),
+    PERSONAL.aiUrl ? sec(t('aiInfoH'), el('p', { class: 'small' }, t(state.aiOn ? 'aiInfoOn' : 'aiInfoOff')),
+      state.aiOn ? switchBtn('sw-ai', t('aiSwitch'), true, () => { state.aiOn = false; if (state.personal) state.personal.ai = {}; state.focusFid = 'sw-ai'; render(); }) : null) : null,
     sec(t('rTitle'), el('p', { class: 'small' }, t('rNote')), rateSourceLine()),
     sec(t(ADS_ON ? 'ptInfoH' : 'ptInfoHOnly'), el('p', {}, t('ptInfo')), ADS_ON ? el('p', {}, t('adInfo')) : null),
     sec(t('homeH'), el('p', {}, t('homeIos')), el('p', {}, t('homeAndroid')), el('p', { class: 'small' }, t('homeNote'))),
@@ -5660,7 +5906,7 @@ function deleteAll() {
   try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem(RATES_KEY); } catch (e) { storageFailed(); }
   freshState();
   Object.assign(state, { remember: false, expiresAt: null, improve: false, improveExpiresAt: null, counts: emptyCounts(), infoReturn: null, holdWrites: true,
-    consent: null, anonId: null, item: null, survey: { answers: {}, sent: null }, age14: false,
+    consent: null, anonId: null, item: null, survey: { answers: {}, sent: null }, age14: false, aiOn: false,
     interest: { phone_plan: 0, first_remittance: 0 }, interestShown: null, arcNext: null,
     journey: { done: [], stay: '', exp: null }, platformReq: {}, money: emptyMoney(), life: { arrival: '', stamps: {}, arc: '', shop: [], leave: [], jobdocs: [], views: {}, exp: null } });
   addFlash('deleted'); state.focusFid = 'q';
