@@ -1912,6 +1912,12 @@ Object.assign(LIVE_TEXT.en, {
   adP1: 'Every ad is marked "Ad". Ads never appear inside payment routes or steps.', adP2: 'Advertisers pay a flat fee for a period — not per click, visit or booking.',
   adP3: 'We only take ads from hair salons, nail shops, skin care shops (non-medical), cosmetics, makeup and photo studios. Medical ads — clinics and procedures such as Botox, fillers, lasers or injections — are on hold, and ads with medical words are not shown. No discounts, reviews or guaranteed results.',
   psWhere: 'Location', psBook: 'How to book', psLang: 'Languages', psPerk: 'Student offer', psOpen: 'See shop info',
+  psWhat: 'Photos', psPickup: 'Pickup', psNote: 'Please check',
+  ppH: "Nubi's partners", ppAsOf: '(as of November 2026)',
+  pp_seoulstart_n: 'Seoul Start', pp_seoulstart: "a living-in-Korea guide for foreigners. It's a source for Nubi's life info, and we're working on the content together.",
+  pp_madalri_n: 'madalri studio (Konkuk Univ.)', pp_madalri: 'a photo studio. A partner shop with a Nubi-only discount.',
+  pp_chingu_n: 'Chingu Mobile', pp_chingu: "a budget mobile carrier. We're discussing a referral-code partnership.",
+  ppNote: "Partnerships never change Nubi's routes or the order of recommendations. If a partnership pays us a fee, we'll say so on that card.",
   psDisclose: 'Partner: a shop introduced by Nubi (listed until {d}). Nubi does not share your data with the shop, and partners never change payment routes.',
   adCat_hair: 'Hair', adCat_nail: 'Nails', adCat_skincare: 'Skin care shop', adCat_cosmetics: 'Cosmetics', adCat_makeup: 'Makeup', adCat_photo: 'Photo studio',
   adP4: 'No tracking scripts or pixels. Nubi does not share who saw or clicked an ad.', adP5: 'Nubi does not book appointments or recommend a specific clinic.'
@@ -1930,6 +1936,12 @@ Object.assign(LIVE_TEXT.ko, {
   adP1: '모든 광고에 "광고"를 표시해요. 결제 경로·단계 안에는 광고를 넣지 않아요.', adP2: '광고비는 기간 정액이에요 — 클릭·방문·예약 건수로 받지 않아요.',
   adP3: '광고는 미용실·네일샵·피부관리샵(비의료)·화장품·메이크업·사진관만 받아요. 의료 광고(병·의원, 보톡스·필러·레이저·주사 같은 시술)는 보류이고, 의료 표현이 들어간 광고는 싣지 않아요. 할인·후기·효과 보장 문구도 받지 않아요.',
   psWhere: '위치', psBook: '예약 방법', psLang: '외국어 응대', psPerk: '유학생 혜택', psOpen: '매장 정보 보기',
+  psWhat: '촬영', psPickup: '수령', psNote: '꼭 확인해 주세요',
+  ppH: '누비의 제휴·협력', ppAsOf: '(2026년 11월 기준)',
+  pp_seoulstart_n: '서울스타트', pp_seoulstart: '외국인 생활 정보 사이트. 누비 생활 정보의 출처이고, 정보를 함께 다듬고 있어요.',
+  pp_madalri_n: '마달리 스튜디오(건대)', pp_madalri: '사진관. 누비 이용자 전용 할인을 주는 제휴 매장이에요.',
+  pp_chingu_n: '친구모바일', pp_chingu: '알뜰폰. 추천 코드 제휴를 협의하고 있어요.',
+  ppNote: '제휴는 경로 안내와 추천 순서에 영향을 주지 않아요. 제휴로 수수료를 받게 되면 그 카드에 표시할게요.',
   psDisclose: '제휴: 누비가 소개하는 매장이에요({d}까지 게재). 이용자 정보를 매장에 넘기지 않고, 제휴는 결제 경로에 영향을 주지 않아요.',
   adCat_hair: '헤어', adCat_nail: '네일', adCat_skincare: '피부관리샵', adCat_cosmetics: '화장품', adCat_makeup: '메이크업', adCat_photo: '사진관',
   adP4: '추적 스크립트나 픽셀이 없어요. 누가 광고를 보거나 눌렀는지 누비는 공유하지 않아요.', adP5: '누비는 병원 예약을 대신하거나 특정 병원을 추천하지 않아요.'
@@ -2234,6 +2246,27 @@ Object.assign(TEXT.vi, {
   orderNote: 'Thứ tự: theo tên nền tảng. Quan hệ đối tác không thay đổi thứ tự.', sameGoalOnly: 'Ưu tiên hiển thị lộ trình cho {g}.',
   ogSummary: 'Hướng dẫn chính thức', ogBody: 'Nhóm chưa tự thử bước này — làm theo hướng dẫn chính thức của nền tảng.', koTeam: '✅ Nhóm đã kiểm tra chữ', koHelp: 'Theo hướng dẫn của Trung tâm trợ giúp Coupang · Chữ trên màn hình có thể khác', koMayDiffer: 'Chữ trên màn hình có thể khác'
 });
+// 제휴 매장 카드·[정보] 제휴·협력 zh/vi(11-12, 원어민 검수 전)
+Object.assign(TEXT.zh, {
+  ptBadge: '合作', adCat_photo: '照相馆', bnTitle: '留学生优惠', bnPartnerH: '合作优惠', bnIntro: '合作优惠和广告集中在这里。合作和广告不会改变 Nubi 显示的路线。',
+  psWhat: '拍摄', psPickup: '取照', psBook: '预约方式', psPerk: '优惠', psNote: '请注意', psWhere: '位置', psLang: '外语服务', psOpen: '查看店铺信息',
+  psDisclose: '合作：Nubi 介绍的店铺（展示至 {d}）。Nubi 不会把你的信息提供给店铺，合作不影响付款路线。',
+  ppH: 'Nubi 的合作伙伴', ppAsOf: '（截至 2026 年 11 月）',
+  pp_seoulstart_n: 'Seoul Start', pp_seoulstart: '面向外国人的韩国生活信息网站，是 Nubi 生活信息的来源，我们正在一起完善内容。',
+  pp_madalri_n: 'madalri studio（建大）', pp_madalri: '照相馆，为 Nubi 用户提供专属优惠的合作店铺。',
+  pp_chingu_n: 'Chingu Mobile', pp_chingu: '廉价手机运营商，正在洽谈推荐码合作。',
+  ppNote: '合作不会影响路线指引和推荐顺序。如果因合作获得佣金，我们会在相应卡片上注明。'
+});
+Object.assign(TEXT.vi, {
+  ptBadge: 'Đối tác', adCat_photo: 'Studio ảnh', bnTitle: 'Ưu đãi cho du học sinh', bnPartnerH: 'Ưu đãi đối tác', bnIntro: 'Ưu đãi đối tác và quảng cáo ở cùng một chỗ. Đối tác và quảng cáo không thay đổi lộ trình Nubi hiển thị.',
+  psWhat: 'Chụp ảnh', psPickup: 'Nhận ảnh', psBook: 'Cách đặt lịch', psPerk: 'Ưu đãi', psNote: 'Lưu ý', psWhere: 'Vị trí', psLang: 'Ngôn ngữ hỗ trợ', psOpen: 'Xem thông tin cửa hàng',
+  psDisclose: 'Đối tác: cửa hàng do Nubi giới thiệu (hiển thị đến {d}). Nubi không chia sẻ thông tin của bạn với cửa hàng, và đối tác không ảnh hưởng đến lộ trình thanh toán.',
+  ppH: 'Đối tác của Nubi', ppAsOf: '(tính đến tháng 11/2026)',
+  pp_seoulstart_n: 'Seoul Start', pp_seoulstart: 'trang thông tin sinh sống tại Hàn Quốc cho người nước ngoài. Đây là nguồn thông tin đời sống của Nubi, và chúng tôi đang cùng hoàn thiện nội dung.',
+  pp_madalri_n: 'madalri studio (Konkuk)', pp_madalri: 'studio ảnh. Cửa hàng đối tác có ưu đãi riêng cho người dùng Nubi.',
+  pp_chingu_n: 'Chingu Mobile', pp_chingu: 'nhà mạng giá rẻ. Chúng tôi đang thảo luận hợp tác mã giới thiệu.',
+  ppNote: 'Hợp tác không ảnh hưởng đến hướng dẫn hay thứ tự gợi ý của Nubi. Nếu nhận phí từ đối tác, chúng tôi sẽ ghi rõ trên thẻ đó.'
+});
 // 초대 장치 zh/vi(10/29, 원어민 검수 전)
 Object.assign(TEXT.zh, {
   invH: '把这条路线发给同乡朋友', invSub: '付款成功了？用朋友看得懂的语言把同一条路线发给他。链接里只有路线和语言，没有你的名字、银行卡或结果。',
@@ -2488,11 +2521,38 @@ const CONFIG = (() => {
     partners: {
       chingu: { name: B('Chingu Mobile (친구모바일)', '친구모바일'), url: 'TODO', coupon: 'TODO', since: '2026-10' }
     },
-    // 제휴 매장(혜택 화면 '제휴'): 무료 시범 11/14~12/31(준오헤어 건대1호점·토담쓰담 건대점 문의 중, 11/2).
-    // 매장이 게재 문구를 확인하면 ok: true — 그 전에는 화면에 나오지 않는다. 받은 정보만 넣는다(추측 금지). 업종은 광고와 같은 목록, 의료 표현 금지
-    // 예: { id: 'juno', ok: false, category: 'hair', name: B('JUNO HAIR Konkuk Univ. 1', '준오헤어 건대1호점'), where: B('…', '…'),
-    //       book: B('…', '…'), langs: B('…', '…'), perk: null, url: 'https://…', from: '2026-11-14', until: '2026-12-31' }
-    partnerStores: [],
+    // 제휴 매장(혜택 화면 '제휴'): 무료 시범 ~12/31. 매장이 게재 문구를 확인하면 ok: true — 그 전에는 화면에 나오지 않는다.
+    // 받은 정보만 넣는다(추측 금지). 업종은 광고와 같은 목록, 의료 표현 금지. 글은 { en, ko, zh, vi }(zh·vi 원어민 검수 전)
+    // 줄: what 촬영·서비스 · pickup 수령 · book 예약 방법 · perk 혜택 · note 꼭 확인 · where 위치 · langs 외국어 응대(확인된 것만)
+    // links: 버튼 [{ label, url }] — 누르면 ps_click:id 하루 합계. 네이버·카카오톡 주소를 받으면 여기에 줄만 더한다
+    partnerStores: [
+      // 마달리 스튜디오: 11-09 카카오톡 회신으로 문구 확정(5_문서/제휴 관련/마달리스튜디오/마달리스튜디오_회신기록_1109.html).
+      // 원래 11-14 게재 → 11/13 테스트에 맞춰 11-12로 앞당김(사용자 11-12). 네이버 플레이스 주소 11-12 받음(김유리). 카카오톡 채널 주소는 아직 없음 → 글로만
+      { id: 'madalri', ok: true, category: 'photo', from: '2026-11-12', until: '2026-12-31',
+        name: { en: 'madalri studio', ko: '마달리 스튜디오', zh: 'madalri studio', vi: 'madalri studio' },
+        what: { en: 'Passport photos (3.5×4.5 cm, for Alien Registration), visa and profile photos',
+          ko: '여권사진(외국인등록 신청용 3.5×4.5cm)·비자·프로필 사진 촬영',
+          zh: '拍摄护照照片（外国人登录申请用 3.5×4.5 cm）、签证照、形象照',
+          vi: 'Chụp ảnh hộ chiếu (3,5×4,5 cm, dùng để đăng ký người nước ngoài), ảnh visa và ảnh hồ sơ' },
+        pickup: { en: 'Same-day pickup — about 35 minutes after your booking time', ko: '당일 수령 — 예약 시간 후 약 35분',
+          zh: '当天取照——预约时间后约 35 分钟', vi: 'Nhận ảnh trong ngày — khoảng 35 phút sau giờ hẹn' },
+        book: { en: "Naver Booking; if that's hard, madalri KakaoTalk or WhatsApp", ko: '네이버 예약, 어려우면 마달리 카카오톡, WhatsApp',
+          zh: 'Naver 预约；不方便的话可通过 madalri KakaoTalk 或 WhatsApp', vi: 'Naver Booking; nếu khó, nhắn KakaoTalk hoặc WhatsApp của madalri' },
+        perk: { en: 'Nubi-only — KRW 3,000 off visa (KRW 40,000) and profile (KRW 50,000) photos when you pay by bank transfer · No discount on passport photos · Tell the studio "I came from Nubi" when you visit',
+          ko: '누비 전용 — 비자(40,000원)·프로필(50,000원) 촬영 계좌이체 시 3,000원 할인 · 여권사진은 할인 없음 · 방문하실 때 "누비에서 왔어요"라고 알려 주세요',
+          zh: 'Nubi 专属 —— 签证照（40,000 韩元）、形象照（50,000 韩元）银行转账付款减 3,000 韩元 · 护照照片不打折 · 到店时请说"我是从 Nubi 来的"',
+          vi: 'Chỉ dành cho Nubi — giảm 3.000 won khi chuyển khoản cho ảnh visa (40.000 won) và ảnh hồ sơ (50.000 won) · Ảnh hộ chiếu không giảm giá · Khi đến, hãy nói "Tôi đến từ Nubi"' },
+        note: { en: 'Booking only (one photographer takes one person per hour). Please arrive a little early to get ready. If you are 15 minutes or more late, it counts as a no-show because it affects the next customer. The KRW 20,000 deposit is not refunded for lateness or no-shows.',
+          ko: '예약제로 운영돼요(작가님 1명이 1시간에 1명 촬영). 예약시간에 미리 오셔서 준비 부탁드립니다. 예약 시간보다 15분 이상 지각 시 다음 예약자분의 시간에 피해가 발생하므로 노쇼로 처리됩니다. 지각, 노쇼는 예약금(2만원) 환불되지 않습니다.',
+          zh: '预约制（每位摄影师每小时只拍一位）。请提前到店做准备。迟到 15 分钟以上会影响下一位顾客，将按爽约处理。迟到或爽约时，预约金（20,000 韩元）不予退还。',
+          vi: 'Chỉ nhận khách đặt lịch (mỗi thợ ảnh chụp 1 người mỗi giờ). Vui lòng đến sớm để chuẩn bị. Nếu đến muộn từ 15 phút trở lên sẽ bị tính là không đến vì ảnh hưởng đến khách sau. Tiền đặt cọc (20.000 won) không được hoàn lại khi đến muộn hoặc không đến.' },
+        where: { en: 'Konkuk Univ. area · Address and hours: see Naver Place', ko: '건대 · 주소·영업시간: 네이버 플레이스 기준',
+          zh: '建大附近 · 地址和营业时间：以 Naver Place 为准', vi: 'Khu Konkuk · Địa chỉ và giờ mở cửa: theo Naver Place' },
+        links: [{ label: { en: 'Naver Place (booking, map)', ko: '네이버 플레이스(예약·지도)', zh: 'Naver Place（预约·地图）', vi: 'Naver Place (đặt lịch, bản đồ)' },
+          url: 'https://naver.me/GxkJ5rVm' },
+          { label: { en: 'Ask on WhatsApp', ko: 'WhatsApp으로 예약 문의', zh: '通过 WhatsApp 咨询预约', vi: 'Hỏi đặt lịch qua WhatsApp' },
+          url: 'https://wa.me/message/WI332NHAFX3DE1' }] }
+    ],
     // 광고(ADS_ON 판에서만 표시): 기간 정액 광고만. 의료(병·의원·시술) 광고는 보류 — 확장 아이디어 시트 #18, 전문가 확인 전까지 받지 않는다.
     // 미용(헤어·네일·피부관리·화장품) 광고는 '치료·시술' 같은 의료 표현이 없을 때만. 할인·후기·효과 보장 문구는 받지 않는다
     // 받는 업종: hair · nail · skincare(피부관리샵) · cosmetics · makeup · photo(사진관). 그 밖의 업종과 의료 표현이 든 광고는 표시하지 않는다
@@ -5031,9 +5091,11 @@ const MEDICAL_ADS_ON_HOLD = true; // 의료 광고 보류(시트 #18). 풀려면
 const AD_CATEGORIES = ['hair', 'nail', 'skincare', 'cosmetics', 'makeup', 'photo'];
 // 의료 표현: 업종이 맞아도 광고주 이름·문구에 이런 말이 있으면 싣지 않는다(시술·주사 등은 의료행위)
 const MEDICAL_WORDS = /치료|시술|수술|의원|병원|클리닉|보톡스|필러|레이저|주사|성형|treatment|procedure|surgery|clinic|botox|filler|laser|injection|inject|plastic\s*surgery|cosmetic\s*surgery/i;
+// 오늘 날짜(기기 시간 기준 YYYY-MM-DD). toISOString은 UTC라 한국 오전 9시 전엔 전날이 된다
+function localDay() { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
 function adOk(a) {
   if (!a || !a.url || !safeUrl(a.url)) return false;
-  if (a.until && a.until < new Date().toISOString().slice(0, 10)) return false;
+  if (a.until && a.until < localDay()) return false;
   if (a.category === 'medical') return !MEDICAL_ADS_ON_HOLD && !!(a.review && String(a.review).trim());
   if (!AD_CATEGORIES.includes(a.category)) return false;
   return !MEDICAL_WORDS.test([a.advertiser, a.text && a.text.en, a.text && a.text.ko].join(' '));
@@ -5057,20 +5119,26 @@ function adCard(a) {
    '제휴' 표시, 이용자 정보를 매장에 넘기지 않음, 누른 횟수만 하루 합계(ps_click:매장) */
 function storeOk(s) {
   if (!s || s.ok !== true || !/^[a-z]{2,12}$/.test(s.id || '') || !AD_CATEGORIES.includes(s.category)) return false;
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDay();
   if ((s.from && s.from > today) || (s.until && s.until < today)) return false;
-  const words = [s.name, s.where, s.book, s.langs, s.perk].flatMap(v => v == null ? [] : typeof v === 'string' ? [v] : Object.values(v));
+  const words = [s.name, s.what, s.pickup, s.where, s.book, s.langs, s.perk, s.note].flatMap(v => v == null ? [] : typeof v === 'string' ? [v] : Object.values(v));
   return !MEDICAL_WORDS.test(words.join(' '));
 }
 function storeCard(s) {
-  const u = s.url && safeUrl(s.url);
   const row = (k, v) => v ? el('li', {}, el('strong', {}, t(k) + ': '), L(v)) : null;
+  const links = (s.links || (s.url ? [{ url: s.url }] : [])).map(x => ({ u: safeUrl(x.url), label: x.label ? L(x.label) : t('psOpen') })).filter(x => x.u);
   return el('section', { class: 'card partner-card', 'aria-labelledby': 'ps-h-' + s.id },
     el('div', { class: 'partner-head' }, el('span', { class: 'pbadge' }, t('ptBadge') + ' · ' + t('adCat_' + s.category)), el('span', { class: 'partner-name', id: 'ps-h-' + s.id }, L(s.name))),
-    el('ul', { class: 'small' }, row('psWhere', s.where), row('psBook', s.book), row('psLang', s.langs), row('psPerk', s.perk)),
-    u ? el('div', { class: 'btn-row' }, el('a', { href: u, target: '_blank', rel: 'noopener noreferrer sponsored', class: 'btn btn-outline', 'data-fid': 'ps-' + s.id,
-      onclick: () => { if (typeof dailyBump === 'function') dailyBump('ps_click:' + s.id); } }, t('psOpen'))) : null,
+    el('ul', { class: 'small' }, row('psWhat', s.what), row('psPickup', s.pickup), row('psBook', s.book), row('psPerk', s.perk), row('psNote', s.note), row('psWhere', s.where), row('psLang', s.langs)),
+    links.length ? el('div', { class: 'btn-row' }, links.map((x, i) => el('a', { href: x.u, target: '_blank', rel: 'noopener noreferrer sponsored', class: 'btn btn-outline', 'data-fid': 'ps-' + s.id + (i ? '-' + i : ''),
+      onclick: () => { if (typeof dailyBump === 'function') dailyBump('ps_click:' + s.id); } }, x.label))) : null,
     el('p', { class: 'small' }, t('psDisclose', { d: s.until || '—' })));
+}
+/* [정보] 누비의 제휴·협력(11-12): 회신·협의 상태 그대로, '광고' 표현 없음. 바뀌면 문구(ppH·ppList·ppNote)만 고친다 */
+function partnersInfoSec() {
+  return el('section', { class: 'card info-sec' }, el('h3', {}, t('ppH')), el('p', { class: 'small' }, t('ppAsOf')),
+    el('ul', {}, ['seoulstart', 'madalri', 'chingu'].map(k => el('li', {}, el('strong', {}, t('pp_' + k + '_n')), ' — ', t('pp_' + k)))),
+    el('p', { class: 'small' }, t('ppNote')));
 }
 function viewBenefits() {
   const list = CONFIG.ads.filter(adOk);
@@ -5859,6 +5927,7 @@ function viewInfo() {
       el('button', { type: 'button', class: 'btn btn-small', 'data-fid': 'info-close', onclick: closeInfo }, t('close'))),
     state.storageFailed ? el('p', { class: 'warn' }, t('storageFail')) : null,
     sec(t('infoAboutH'), el('p', {}, t('infoAbout'))),
+    partnersInfoSec(),
     sec(t('infoLabelsH'), el('dl', { class: 'info-badges' }, levels.map(st => [el('dt', {}, badge(t('st_' + st), 'st-' + st)), el('dd', {}, t('lb_' + st))])),
       el('p', { class: 'small' }, t('infoDates'))),
     !CONFIG.endpoint ? sec(t('infoShareH'), el('p', {}, t('noConnect')), el('p', { 'data-fid': 'share-off' }, t('shareOffInfo')), opsLines()[1], privacyLink() ? el('p', {}, privacyLink()) : null) :
