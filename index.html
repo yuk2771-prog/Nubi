@@ -2471,6 +2471,45 @@ function buildLive(guidance) {
   const card = get(route('coupang_goods'), 'D-R6');
   card.note = B('VISA, Mastercard or JCB, in the same name as the account. Registration, 3DS and approval vary by card. Never bypass 3DS; ask your issuer or use another supported lawful method.', 'VISA·MASTER·JCB, 회원정보와 동일 명의 조건. 카드 등록·3DS·승인은 카드별로 달라집니다. 3DS를 우회하지 말고 발급사 문의 또는 지원되는 다른 합법적 수단을 이용하세요.');
   get(route('coupang_goods'), 'D-R7').note = B('No team payment approval has been verified.', '팀이 확인한 결제 승인 거래는 없습니다.');
+
+  // 11-13 베타 테스트(테스터 1명이 직접, 팀원 동석) — 사용자 보고로 반영(11-13). 같은 +86 번호 1개.
+  const T13 = '2026-11-13';
+  const t13 = (en, ko, cond) => ev({ kind: 'team_test', sourceLabel: B('Beta test (tester, team member present)', '베타 테스트(테스터 직접, 팀원 동석)'), teamCheckedAt: T13,
+    observedScope: B(en, ko), testedConditions: cond || B('one overseas (+86) number', '해외(+86) 번호 1개') });
+  // 배민: 비회원 주문 연락처 인증 → 알리페이 결제 완료
+  const g2a = get(bm, 'D-R2a'), g2b = get(bm, 'D-R2b');
+  g2a.status = 'tested';
+  g2a.evidence = [t13('Guest-order contact number verified', '비회원 주문 연락처 인증 완료')].concat(g2a.evidence);
+  g2a.info = { kind: 'tested', source: 'test1113', text: B('A tester verified the guest-order contact number with an overseas (+86) number (2026-11-13).', '테스터가 해외(+86) 번호로 비회원 주문 연락처 인증을 마쳤어요(2026-11-13).') };
+  g2a.note = B('In the 2026-11-13 test, an overseas (+86) number passed the guest-order contact verification.', '2026-11-13 테스트에서 해외(+86) 번호로 비회원 주문 연락처 인증이 됐습니다.');
+  g2b.status = 'tested';
+  g2b.evidence = [t13('Paid with Alipay on a guest order; order completed', '비회원 주문을 알리페이로 결제, 주문 완료')].concat(g2b.evidence);
+  g2b.info = { kind: 'tested', source: 'test1113', text: B('A tester paid with Alipay on a guest order while a team member watched (2026-11-13). WeChat Pay, Alipay and Apple Pay were shown as payment options.', '팀원이 옆에서 보는 가운데 테스터가 비회원 주문을 알리페이로 결제했어요(2026-11-13). 결제 수단에 위챗페이·알리페이·애플페이가 보였어요.') };
+  g2b.instructions = [B('In payment methods, choose what you have — WeChat Pay, Alipay and Apple Pay were shown in our test; for a foreign card, check whether it is listed', '결제수단에서 가진 것을 선택 — 테스트에서 위챗페이·알리페이·애플페이가 보였어요. 해외 카드는 목록에 있는지 확인'),
+    B('If your card company or wallet asks for extra verification, complete it', '카드사·간편결제 추가 인증이 뜨면 완료'),
+    B('Check the order-complete screen', '주문 완료 화면 확인')];
+  g2b.note = B('Paid with Alipay in the 2026-11-13 test (one order). Foreign cards were not tried in that test; availability can depend on the store and payment method.', '2026-11-13 테스트에서 알리페이로 결제됨(주문 1건). 해외 카드는 그 테스트에서 시도하지 않았고, 가게·결제수단에 따라 다를 수 있습니다.');
+  // 쿠팡: +86 가입 완료 · 알리페이·위챗페이 없음 · 카드 등록 메뉴 · 브라우저 접속 제한 → 앱
+  const cpr = route('coupang_goods'), c5b = get(cpr, 'V-R5b'), c6 = get(cpr, 'D-R6'), c7 = get(cpr, 'D-R7');
+  c5b.status = 'tested';
+  c5b.evidence = [t13('Sign-up completed', '회원가입 완료')];
+  c5b.info = { kind: 'tested', source: 'test1113', text: B('A tester completed Coupang sign-up with an overseas (+86) number (2026-11-13).', '테스터가 해외(+86) 번호로 쿠팡 회원가입을 마쳤어요(2026-11-13).') };
+  c6.instructions = [c6.instructions[0],
+    B('Register the card first: My Page → Payment methods → Add foreign card', '먼저 카드 등록: 마이페이지 → 결제수단 → 해외카드 등록'),
+    c6.instructions[2]];
+  c6.koLabels = [['마이페이지', 'My Page'], ['결제수단', 'Payment methods'], ['해외카드 등록', 'Add foreign card']].map(([ko, en]) => ({ ko, en })); c6.koLabelsBasis = 'team';
+  c6.evidence = c6.evidence.concat([t13('Alipay and WeChat Pay are not accepted; without a VISA or Mastercard the tester could not pay', '알리페이·위챗페이 결제 안 됨, VISA·MASTER 카드가 없어 결제 못 함')]);
+  c6.note = B('VISA, Mastercard or JCB, in the same name as the account; register it under My Page → Payment methods → Add foreign card before paying. Alipay and WeChat Pay are not accepted (2026-11-13 test). Registration, 3DS and approval vary by card. Never bypass 3DS; ask your issuer or use another supported lawful method.',
+    'VISA·MASTER·JCB, 회원정보와 동일 명의 조건이며 결제 전에 마이페이지 → 결제수단 → 해외카드 등록에서 등록해야 합니다. 알리페이·위챗페이는 안 됩니다(2026-11-13 테스트). 카드 등록·3DS·승인은 카드별로 달라집니다. 3DS를 우회하지 말고 발급사 문의 또는 지원되는 다른 합법적 수단을 이용하세요.');
+  c7.instructions = [B('Find the item in the Coupang app — in our test, product pages in a web browser showed "access denied"', '쿠팡 앱에서 상품 찾기 — 테스트에서 웹 브라우저로는 상품 페이지가 "사용권한이 없습니다"로 막혔어요')].concat(c7.instructions);
+  c7.note = B('No team payment approval has been verified. In the 2026-11-13 test, product pages were blocked ("access denied") in a web browser but opened in the Coupang app.', '팀이 확인한 결제 승인 거래는 없습니다. 2026-11-13 테스트에서 웹 브라우저로는 상품 페이지가 "사용권한이 없습니다"로 막히고, 쿠팡 앱에서는 열렸습니다.');
+  // 네이버 SMS: 10-07엔 인증번호가 왔지만 11-13 같은 번호로는 안 옴(원인 모름)
+  [route('naver_reservation'), route('naver_goods')].forEach(r => {
+    const s = get(r, 'V-R3');
+    s.evidence = s.evidence.concat([t13('The code did not arrive, even after resending with +86 selected (cause unknown)', '+86을 고르고 다시 보내도 인증번호가 안 옴(원인 모름)', B('the same +86 number as 2026-10-07', '2026-10-07과 같은 +86 번호'))]);
+    s.note = B('The code arrived on 2026-10-07, but not on 2026-11-13 with the same number (cause unknown). If it does not arrive, check the country code, resend once, then try another route.',
+      '2026-10-07에는 인증번호가 왔지만 2026-11-13 같은 번호로는 오지 않았습니다(원인 모름). 안 오면 국가 번호를 확인하고 한 번만 다시 보낸 뒤 다른 경로를 보세요.');
+  });
   return d;
 }
 
@@ -2496,6 +2535,7 @@ const CONFIG = (() => {
       seoulstart: { label: 'Seoulstart', url: 'TODO', published: '2026-06', checked: 'TODO' },
       teamSms: { label: 'Nubi team test (one +86 number)', url: null, checked: '2026-10-07' },
       teamBaemin: { label: 'Nubi team attempt', url: null, checked: '2026-10-02' },
+      test1113: { label: 'Nubi beta test — a tester did it while a team member watched', url: null, checked: '2026-11-13' },
       interview5: { label: 'Student interview (#5)', url: null, checked: '2026-10' },
       baeminCeo: { label: 'Baemin CEO site — official (guest order, foreign cards)', url: 'https://ceo.baemin.com/knowhow/12885', published: '2024-07', checked: '2026-10-18' }
     },
