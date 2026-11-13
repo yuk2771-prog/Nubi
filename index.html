@@ -4954,12 +4954,16 @@ function aiPayload(list, lists, g, lang) {
     : lists.B.map(r => ({ name: name(r.route), started: r.started, done: r.done, rate: Math.round(r.rate * 100) / 100 }));
   return { lang, list, group: list === 'A' ? (lang === 'ko' ? '전체' : 'everyone') : groupLabel(g, lang), items };
 }
+// AI 답은 글자 그대로 보여 주므로 마크다운 기호(**굵게**, `코드`, 줄 앞 #·-·*)를 지운다(11-14: 20문항 점검 1·9·13번에서 ** 발견). 글 내용은 바꾸지 않는다
+function aiPlain(v) {
+  return String(v || '').replace(/\*\*|__|`/g, '').replace(/^\s{0,3}(#{1,6}|[-*•])\s+/gm, '').trim();
+}
 async function askAi(payload) {
   if (!PERSONAL.aiUrl) return { ok: false, error: 'off' };
   try {
     const r = await fetch(PERSONAL.aiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
     const j = await r.json().catch(() => ({}));
-    return r.ok && j.ok ? { ok: true, text: String(j.text || '') } : { ok: false, error: j.error || ('http_' + r.status) };
+    return r.ok && j.ok ? { ok: true, text: aiPlain(j.text) } : { ok: false, error: j.error || ('http_' + r.status) };
   } catch (e) { return { ok: false, error: 'network' }; }
 }
 // AI 설명 동의 상자: 보내는 것·안 보내는 것·국외 이전·거부해도 기본 안내 + 만 14세 체크(처리방침 v5 ⑥·D·7절)
