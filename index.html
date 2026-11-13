@@ -2284,6 +2284,15 @@ Object.assign(TEXT.vi, {
   invTextFound: 'Mình đã tra lộ trình thanh toán {p} phù hợp với mình trên Nubi. Bạn xem thử nhé:',
   invArrived: 'Đây là lộ trình bạn của bạn gửi. Các bước có thể khác tùy thẻ và điện thoại của bạn — hãy kiểm tra trước khi thanh toán.'
 });
+// 11-13 테스트 피드백 반영: 결과 남기기 결제 수단(간편결제) · SMS 단계에서 막혔을 때 안내(P1). zh/vi는 원어민 검수 전
+Object.assign(TEXT.en, { rpViaQ: 'How did you pay?', via_card: 'Card',
+  smsStuckTip: "If your number isn't accepted or no code arrives: ① check that the country code matches your number (many sites start at +82) ② resend only once (pressing many times can hit a limit) ③ if it still fails, try a Korean prepaid SIM opened with your passport (not yet reported whether it passes). For food, a Baemin guest order needs no sign-up — paid in our 2026-11-13 test." });
+Object.assign(TEXT.ko, { rpViaQ: '무엇으로 결제했나요?', via_card: '카드',
+  smsStuckTip: '번호를 안 받거나 인증번호가 안 오면: ① 국가 번호가 내 번호의 나라로 되어 있는지 확인(+82가 기본값인 곳이 많아요) ② 한 번만 다시 보내기(여러 번 누르면 한도에 걸릴 수 있어요) ③ 그래도 안 되면 여권으로 개통한 한국 선불 유심 번호로 해 보기(통과 여부는 아직 보고 없음). 음식 주문이면 배민 비회원 주문은 가입이 필요 없어요 — 2026-11-13 테스트에서 결제까지 됐어요.' });
+Object.assign(TEXT.zh, { rpViaQ: '你用什么付款？', via_card: '银行卡',
+  smsStuckTip: '如果号码不被接受或收不到验证码：① 确认国家代码与你的号码一致（很多网站默认 +82）② 只重发一次（多次点击可能达到上限）③ 仍然不行的话，试试用护照开通的韩国预付费 SIM 卡号码（是否能通过尚无报告）。如果是点外卖，Baemin 非会员订单无需注册——在 2026-11-13 的测试中已完成付款。' });
+Object.assign(TEXT.vi, { rpViaQ: 'Bạn đã thanh toán bằng gì?', via_card: 'Thẻ',
+  smsStuckTip: 'Nếu số của bạn không được chấp nhận hoặc không nhận được mã: ① kiểm tra mã quốc gia khớp với số của bạn (nhiều trang mặc định +82) ② chỉ gửi lại một lần (bấm nhiều lần có thể bị giới hạn) ③ nếu vẫn không được, thử số SIM trả trước Hàn Quốc mở bằng hộ chiếu (chưa có báo cáo là có qua được không). Nếu đặt đồ ăn, đặt hàng không cần tài khoản trên Baemin không cần đăng ký — đã thanh toán trong thử nghiệm ngày 2026-11-13.' });
 
 // 증거 한 건. 모르는 값은 null로 두어 화면이 '없는 날짜'를 지어내지 않게 한다.
 function ev(o) {
@@ -2989,7 +2998,9 @@ function emptyConds() {
   return { platform: null, goal: null, arc: null, foreignCard: 'unknown', cardBrand: null,
     wallets: { alipay: false, wechat: false, applepay: false }, sms: 'unknown', contact: 'unknown', payMethod: 'unknown',
     // 버튼 질문용: 결제 수단 질문에 답했는지, 현금 보유(경로 판단에는 쓰지 않음), ARC 답의 세부(없음/기다리는 중)
-    payAnswered: false, cash: false, arcDetail: null, cardCountry: null, cardAuth: null, cardKind: null };
+    payAnswered: false, cash: false, arcDetail: null, cardCountry: null, cardAuth: null, cardKind: null,
+    // 결과 남기기에서 고른 결제 수단(11-13: 간편결제가 '기타 카드'로 기록되던 오류 고침). null이면 카드로 본다
+    payVia: null };
 }
 
 function parseSentence(raw) {
@@ -3322,10 +3333,11 @@ const CARD_COUNTRIES = ['CN', 'VN', 'UZ', 'MN', 'NP', 'JP', 'US', 'KR', 'OT'];
 const CARD_BRANDS = ['visa', 'master', 'jcb', 'unionpay', 'amex', 'other'];
 const CARD_KINDS = ['check', 'credit', 'prepaid'];
 const CARD_AUTHS = ['sms', 'app', 'email', 'unknown'];
+const PAY_WALLETS = ['alipay', 'wechat', 'applepay']; // 결과 남기기의 간편결제(11-13) — 보낼 때 brand 칸에 이 값
 const REPORT_MIN = 3;
 const reportsOf = id => (CONFIG.payReports || []).filter(r => r.stage === id);
 const sumRep = list => list.reduce((a, r) => ({ ok: a.ok + r.ok, n: a.n + r.n }), { ok: 0, n: 0 });
-function repCard(r) { return [r.country ? t('cc_' + r.country) : '', r.brand ? t('b_' + r.brand) : '', r.kind ? t('ck_' + r.kind) : '', r.auth && r.auth !== 'unknown' ? t('ca_' + r.auth) : ''].filter(Boolean).join(' '); }
+function repCard(r) { return [r.country && r.country !== 'unknown' ? t('cc_' + r.country) : '', r.brand ? t((PAY_WALLETS.includes(r.brand) ? 'w_' : 'b_') + r.brand) : '', r.kind ? t('ck_' + r.kind) : '', r.auth && r.auth !== 'unknown' ? t('ca_' + r.auth) : ''].filter(Boolean).join(' '); }
 function fieldTag(s) {
   const sm = sumRep(reportsOf(s.id)); if (sm.n < REPORT_MIN) return null;
   return el('span', { class: 'tag ft' + (sm.ok ? ' ft-ok' : ' ft-no') }, '👥 ' + t('ftTag', { k: String(sm.ok), n: String(sm.n) }));
@@ -3371,16 +3383,22 @@ function reportBox(res, st) {
   const r = res.route; const c = state.conds; const ps = r && payStagesOf(r)[0];
   if (!ps || !c) return null;
   if (st.reported) return el('div', { class: 'panel', role: 'status' }, el('p', { 'data-fid': 'rp-done', tabindex: '-1' }, t(st.reported === 'sent' ? 'rpThanks' : 'rpLocal')));
-  const ready = c.cardCountry && c.cardBrand;
+  // 결제 수단: 카드(기존 질문) 또는 간편결제(카드 질문 없이 brand 칸에 지갑 이름) — 11-13 알리페이가 '기타 카드'로 기록된 오류 고침
+  const wallet = PAY_WALLETS.includes(c.payVia) ? c.payVia : null;
+  const ready = wallet || (c.cardCountry && c.cardBrand);
   const send = () => {
-    const data = { routeId: r.id, stageId: ps.id, result: st.pay === 'yes' ? 'ok' : 'fail', country: c.cardCountry, brand: c.cardBrand, kind: c.cardKind || 'unknown', auth: c.cardAuth || 'unknown' };
+    const data = wallet
+      ? { routeId: r.id, stageId: ps.id, result: st.pay === 'yes' ? 'ok' : 'fail', brand: wallet }
+      : { routeId: r.id, stageId: ps.id, result: st.pay === 'yes' ? 'ok' : 'fail', country: c.cardCountry, brand: c.cardBrand, kind: c.cardKind || 'unknown', auth: c.cardAuth || 'unknown' };
     st.reported = sendReport(data) ? 'sent' : 'local'; state.focusFid = 'rp-done'; render();
   };
   return el('section', { class: 'card', 'aria-labelledby': 'rp-h' }, el('h3', { id: 'rp-h' }, '📮 ' + t('rpH')), el('p', { class: 'small' }, t('rpIntro')),
-    el('p', { class: 'small', style: 'margin-bottom:4px' }, t('ccCountryQ')), cardChips(c, 'cardCountry', CARD_COUNTRIES, v => t('cc_' + v), 'rp-'),
-    el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccBrandQ')), cardChips(c, 'cardBrand', CARD_BRANDS, v => t('b_' + v), 'rp-'),
-    el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccKindQ')), cardChips(c, 'cardKind', CARD_KINDS, v => t('ck_' + v), 'rp-'),
-    el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccAuthQ')), cardChips(c, 'cardAuth', CARD_AUTHS, v => t('ca_' + v), 'rp-'),
+    el('p', { class: 'small', style: 'margin-bottom:4px' }, t('rpViaQ')), cardChips(c, 'payVia', ['card'].concat(PAY_WALLETS), v => v === 'card' ? t('via_card') : t('w_' + v), 'rp-'),
+    wallet ? null : [
+      el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccCountryQ')), cardChips(c, 'cardCountry', CARD_COUNTRIES, v => t('cc_' + v), 'rp-'),
+      el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccBrandQ')), cardChips(c, 'cardBrand', CARD_BRANDS, v => t('b_' + v), 'rp-'),
+      el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccKindQ')), cardChips(c, 'cardKind', CARD_KINDS, v => t('ck_' + v), 'rp-'),
+      el('p', { class: 'small', style: 'margin:10px 0 4px' }, t('ccAuthQ')), cardChips(c, 'cardAuth', CARD_AUTHS, v => t('ca_' + v), 'rp-')],
     el('p', { class: 'small' }, t('rpWhat')), el('p', { class: 'small' }, t('rpKept')),
     ready ? ageCheck('rp') : null,
     ready ? el('button', { type: 'button', class: 'btn btn-primary btn-block', 'data-fid': 'rp-send', disabled: !!CONFIG.endpoint && !state.age14, onclick: send }, t('rpSend'))
@@ -4193,6 +4211,7 @@ function viewSteps() {
         cur.outcome === 'sms' ? partnerCard('stuck') : null,
         st.reason === 'error_message' ? el('p', {}, el('a', { href: '#/korean', onclick: () => { state.helper.tab = 'errors'; } }, t('decodeLink'))) : null,
         el('p', {}, el('a', { href: guideUrl('foreign-community-korea'), target: '_blank', rel: 'noopener noreferrer' }, t('communityLink'))),
+        cur.outcome === 'sms' ? el('p', { class: 'note-line', 'data-fid': 'sms-tip' }, t('smsStuckTip')) : null,
         cur.outcome === 'sms' ? el('p', { class: 'note-line' }, t('phoneNext')) : null) : null);
     kids.push(panel, cur.detour && cur.detour.when === 'sms' ? partnerCard('step') : null, openRow);
   } else if (st.phase === 'end' && res.type === 'A') {
