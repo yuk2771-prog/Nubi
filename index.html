@@ -2286,15 +2286,23 @@ Object.assign(TEXT.vi, {
 });
 // 11-13 테스트 피드백 반영: 결과 남기기 결제 수단(간편결제) · SMS 단계에서 막혔을 때 안내(P1). zh/vi는 원어민 검수 전
 Object.assign(TEXT.en, { rpViaQ: 'How did you pay?', via_card: 'Card',
+  homeInApp: 'No “Add to Home Screen”? You may be inside KakaoTalk, WeChat or a QR scanner — open the page in Safari or Chrome first (look for the compass icon or “Open in browser”).',
+  homeSep: 'Your saved progress stays in the browser where you used Nubi. On iPhone, the home-screen icon may keep its own separate copy — keep opening Nubi from the same place.',
   finishedNoteSaved: 'Ended here. Your condition summary and progress are saved only in this browser on this phone — open the Me tab to see them again, or delete them in Info. Nothing saved here is sent anywhere.',
   smsStuckTip: "If your number isn't accepted or no code arrives: ① check that the country code matches your number (many sites start at +82) ② resend only once (pressing many times can hit a limit) ③ if it still fails, try a Korean prepaid SIM opened with your passport (not yet reported whether it passes). For food, a Baemin guest order needs no sign-up — paid in our 2026-11-13 test." });
 Object.assign(TEXT.ko, { rpViaQ: '무엇으로 결제했나요?', via_card: '카드',
+  homeInApp: '‘홈 화면에 추가’가 안 보이면 카톡·위챗·QR 스캐너 안에서 연 화면일 수 있어요 — 먼저 사파리나 크롬으로 여세요(나침반 아이콘이나 ‘브라우저로 열기’).',
+  homeSep: '진행 상황은 누비를 쓴 그 브라우저에만 저장돼요. 아이폰은 홈 화면 아이콘이 따로 저장할 수 있어요 — 늘 같은 곳에서 누비를 여세요.',
   finishedNoteSaved: '여기서 마쳤습니다. 조건 요약과 진행 단계는 이 폰의 이 브라우저에만 저장돼 있어요 — 나 탭에서 다시 볼 수 있고, 정보에서 지울 수 있어요. 여기 저장한 내용은 어디에도 보내지 않아요.',
   smsStuckTip: '번호를 안 받거나 인증번호가 안 오면: ① 국가 번호가 내 번호의 나라로 되어 있는지 확인(+82가 기본값인 곳이 많아요) ② 한 번만 다시 보내기(여러 번 누르면 한도에 걸릴 수 있어요) ③ 그래도 안 되면 여권으로 개통한 한국 선불 유심 번호로 해 보기(통과 여부는 아직 보고 없음). 음식 주문이면 배민 비회원 주문은 가입이 필요 없어요 — 2026-11-13 테스트에서 결제까지 됐어요.' });
 Object.assign(TEXT.zh, { rpViaQ: '你用什么付款？', via_card: '银行卡',
+  homeInApp: '看不到“添加到主屏幕”？你可能是在 KakaoTalk、微信或二维码扫描器里打开的——请先用 Safari 或 Chrome 打开（找指南针图标或“在浏览器中打开”）。',
+  homeSep: '进度只保存在你使用 Nubi 的那个浏览器里。iPhone 主屏幕图标可能会单独保存——请一直从同一个地方打开 Nubi。',
   finishedNoteSaved: '到此结束。你的条件摘要和进度只保存在这部手机的这个浏览器里——可以在“我的”页面再次查看，也可以在“说明”中删除。这里保存的内容不会发送到任何地方。',
   smsStuckTip: '如果号码不被接受或收不到验证码：① 确认国家代码与你的号码一致（很多网站默认 +82）② 只重发一次（多次点击可能达到上限）③ 仍然不行的话，试试用护照开通的韩国预付费 SIM 卡号码（是否能通过尚无报告）。如果是点外卖，Baemin 非会员订单无需注册——在 2026-11-13 的测试中已完成付款。' });
 Object.assign(TEXT.vi, { rpViaQ: 'Bạn đã thanh toán bằng gì?', via_card: 'Thẻ',
+  homeInApp: 'Không thấy “Thêm vào MH chính”? Có thể bạn đang mở trong KakaoTalk, WeChat hoặc trình quét QR — hãy mở bằng Safari hoặc Chrome trước (biểu tượng la bàn hoặc “Mở trong trình duyệt”).',
+  homeSep: 'Tiến độ chỉ được lưu trong trình duyệt bạn dùng Nubi. Trên iPhone, biểu tượng ở màn hình chính có thể lưu riêng — hãy luôn mở Nubi từ cùng một chỗ.',
   finishedNoteSaved: 'Đã kết thúc tại đây. Tóm tắt điều kiện và tiến độ chỉ được lưu trong trình duyệt này trên điện thoại này — xem lại ở tab Tôi, hoặc xóa trong Thông tin. Nội dung lưu ở đây không được gửi đi đâu cả.',
   smsStuckTip: 'Nếu số của bạn không được chấp nhận hoặc không nhận được mã: ① kiểm tra mã quốc gia khớp với số của bạn (nhiều trang mặc định +82) ② chỉ gửi lại một lần (bấm nhiều lần có thể bị giới hạn) ③ nếu vẫn không được, thử số SIM trả trước Hàn Quốc mở bằng hộ chiếu (chưa có báo cáo là có qua được không). Nếu đặt đồ ăn, đặt hàng không cần tài khoản trên Baemin không cần đăng ký — đã thanh toán trong thử nghiệm ngày 2026-11-13.' });
 
@@ -6013,7 +6021,8 @@ function viewInfo() {
       state.aiOn ? switchBtn('sw-ai', t('aiSwitch'), true, () => { state.aiOn = false; if (state.personal) state.personal.ai = {}; state.focusFid = 'sw-ai'; render(); }) : null) : null,
     sec(t('rTitle'), el('p', { class: 'small' }, t('rNote')), rateSourceLine()),
     sec(t(ADS_ON ? 'ptInfoH' : 'ptInfoHOnly'), el('p', {}, t('ptInfo')), ADS_ON ? el('p', {}, t('adInfo')) : null),
-    sec(t('homeH'), el('p', {}, t('homeIos')), el('p', {}, t('homeAndroid')), el('p', { class: 'small' }, t('homeNote'))),
+    sec(t('homeH'), el('p', {}, t('homeIos')), el('p', {}, t('homeAndroid')), el('p', { class: 'small' }, t('homeNote')),
+      el('p', { class: 'small', 'data-fid': 'home-tip' }, t('homeInApp')), el('p', { class: 'small' }, t('homeSep'))), // 11-13 P8: QR·메신저 안 화면에선 추가 메뉴가 없고 저장도 따로
     sec(t('infoLinksH'), el('p', {}, t('infoLinks')), el('p', { class: 'small' }, t('cardFoot'))),
     el('div', { style: 'margin:12px 0 24px' }, el('button', { type: 'button', class: 'btn btn-outline btn-block', onclick: closeInfo }, t('close'))));
 }
