@@ -2286,12 +2286,16 @@ Object.assign(TEXT.vi, {
 });
 // 11-13 테스트 피드백 반영: 결과 남기기 결제 수단(간편결제) · SMS 단계에서 막혔을 때 안내(P1). zh/vi는 원어민 검수 전
 Object.assign(TEXT.en, { rpViaQ: 'How did you pay?', via_card: 'Card',
+  finishedNoteSaved: 'Ended here. Your condition summary and progress are saved only in this browser on this phone — open the Me tab to see them again, or delete them in Info. Nothing saved here is sent anywhere.',
   smsStuckTip: "If your number isn't accepted or no code arrives: ① check that the country code matches your number (many sites start at +82) ② resend only once (pressing many times can hit a limit) ③ if it still fails, try a Korean prepaid SIM opened with your passport (not yet reported whether it passes). For food, a Baemin guest order needs no sign-up — paid in our 2026-11-13 test." });
 Object.assign(TEXT.ko, { rpViaQ: '무엇으로 결제했나요?', via_card: '카드',
+  finishedNoteSaved: '여기서 마쳤습니다. 조건 요약과 진행 단계는 이 폰의 이 브라우저에만 저장돼 있어요 — 나 탭에서 다시 볼 수 있고, 정보에서 지울 수 있어요. 여기 저장한 내용은 어디에도 보내지 않아요.',
   smsStuckTip: '번호를 안 받거나 인증번호가 안 오면: ① 국가 번호가 내 번호의 나라로 되어 있는지 확인(+82가 기본값인 곳이 많아요) ② 한 번만 다시 보내기(여러 번 누르면 한도에 걸릴 수 있어요) ③ 그래도 안 되면 여권으로 개통한 한국 선불 유심 번호로 해 보기(통과 여부는 아직 보고 없음). 음식 주문이면 배민 비회원 주문은 가입이 필요 없어요 — 2026-11-13 테스트에서 결제까지 됐어요.' });
 Object.assign(TEXT.zh, { rpViaQ: '你用什么付款？', via_card: '银行卡',
+  finishedNoteSaved: '到此结束。你的条件摘要和进度只保存在这部手机的这个浏览器里——可以在“我的”页面再次查看，也可以在“说明”中删除。这里保存的内容不会发送到任何地方。',
   smsStuckTip: '如果号码不被接受或收不到验证码：① 确认国家代码与你的号码一致（很多网站默认 +82）② 只重发一次（多次点击可能达到上限）③ 仍然不行的话，试试用护照开通的韩国预付费 SIM 卡号码（是否能通过尚无报告）。如果是点外卖，Baemin 非会员订单无需注册——在 2026-11-13 的测试中已完成付款。' });
 Object.assign(TEXT.vi, { rpViaQ: 'Bạn đã thanh toán bằng gì?', via_card: 'Thẻ',
+  finishedNoteSaved: 'Đã kết thúc tại đây. Tóm tắt điều kiện và tiến độ chỉ được lưu trong trình duyệt này trên điện thoại này — xem lại ở tab Tôi, hoặc xóa trong Thông tin. Nội dung lưu ở đây không được gửi đi đâu cả.',
   smsStuckTip: 'Nếu số của bạn không được chấp nhận hoặc không nhận được mã: ① kiểm tra mã quốc gia khớp với số của bạn (nhiều trang mặc định +82) ② chỉ gửi lại một lần (bấm nhiều lần có thể bị giới hạn) ③ nếu vẫn không được, thử số SIM trả trước Hàn Quốc mở bằng hộ chiếu (chưa có báo cáo là có qua được không). Nếu đặt đồ ăn, đặt hàng không cần tài khoản trên Baemin không cần đăng ký — đã thanh toán trong thử nghiệm ngày 2026-11-13.' });
 
 // 증거 한 건. 모르는 값은 null로 두어 화면이 '없는 날짜'를 지어내지 않게 한다.
@@ -4227,7 +4231,7 @@ function viewSteps() {
         el('button', { type: 'button', class: 'btn btn-outline', onclick: editConds }, t('editConds')))));
   } else if (st.phase === 'finished') {
     kids.push(el('article', { class: 'card' },
-      el('p', { tabindex: '-1', 'data-fid': 'end-title' }, t('finishedNote')),
+      el('p', { tabindex: '-1', 'data-fid': 'end-title' }, t(state.remember ? 'finishedNoteSaved' : 'finishedNote')), // 11-13: 기억하기가 켜져 있으면 '저장 안 됨'이 사실과 달라 나눔
       el('div', { class: 'btn-row' },
         el('button', { type: 'button', class: 'btn btn-primary', onclick: seeOther }, t('otherOptions')),
         el('button', { type: 'button', class: 'btn btn-outline', onclick: restart }, t('startOver')))));
