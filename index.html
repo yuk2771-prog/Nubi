@@ -679,6 +679,14 @@ body.has-tabbar{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
   .wrap{max-width:none}
   .small{font-size:10px}
 }
+/* 11-13 단계 제한 안내 상자(쿠팡 인증 국가 등) */
+.wbox{margin:8px 0 12px;padding:12px 14px;border-radius:12px;background:var(--warn-bg);color:var(--warn-text);border-left:4px solid var(--warn)}
+.wbox-h{margin:0 0 10px;font-weight:700;font-size:15px;line-height:1.45}
+.wbox-cc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;padding:0;list-style:none}
+.wbox-cc li{display:inline-flex;align-items:baseline;gap:4px;font-size:13px;line-height:1.2;padding:5px 10px;border-radius:999px;background:var(--card);color:var(--text);border:1px solid var(--border);white-space:nowrap}
+.wbox-cc .cc{font-size:11px;color:var(--sub)}
+.wbox-do{margin:0;font-size:14px;line-height:1.55}
+.wbox-src{margin:8px 0 0;font-size:12px;opacity:.85}
 </style>
 </head>
 <body>
@@ -2531,12 +2539,16 @@ function buildLive(guidance) {
     ['+81', '일본', 'Japan', '日本', 'Nhật Bản'], ['+855', '캄보디아', 'Cambodia', '柬埔寨', 'Campuchia'], ['+976', '몽골', 'Mongolia', '蒙古', 'Mông Cổ'],
     ['+886', '대만', 'Taiwan', '台湾', 'Đài Loan'], ['+1', '캐나다', 'Canada', '加拿大', 'Canada'], ['+61', '호주', 'Australia', '澳大利亚', 'Úc'],
     ['+60', '말레이시아', 'Malaysia', '马来西亚', 'Malaysia'], ['+852', '홍콩', 'Hong Kong', '香港', 'Hồng Kông'], ['+44', '영국', 'UK', '英国', 'Anh'], ['+65', '싱가포르', 'Singapore', '新加坡', 'Singapore']];
-  const cpList = i => CP_SMS.map(x => x[i] + '(' + x[0] + ')').join(i === 1 || i === 3 ? '·' : ', ');
   const cpSms = get(cpr, 'V-R5');
-  cpSms.warn = { ko: '쿠팡 휴대폰 인증은 이 나라 번호만 고를 수 있어요: ' + cpList(1) + ' (2026-11-13 확인). 다른 나라 번호(예: 베트남)라면 쿠팡 가입이 안 돼요 — 먼저 여권으로 한국 선불 유심을 개통하세요. 조건에서 ‘SMS 번호’를 ‘없음’으로 바꾸면 선불 유심 단계가 앞에 나와요.',
-    en: "Coupang's phone verification only lets you pick these countries: " + cpList(2) + ' (checked 2026-11-13). With a number from another country (e.g., Vietnam) you cannot sign up — get a Korean prepaid SIM with your passport first. Set “SMS number” to No in your conditions to see the prepaid-SIM step.',
-    zh: 'Coupang 手机验证只能选择以下国家/地区的号码：' + cpList(3) + '（2026-11-13 确认）。其他国家/地区的号码（例如越南）无法注册——请先用护照开通韩国预付费 SIM 卡。在条件中把短信号码（SMS number）改为没有，就会显示预付费 SIM 卡步骤。',
-    vi: 'Xác minh điện thoại của Coupang chỉ cho chọn số của các nước sau: ' + cpList(4) + ' (kiểm tra ngày 2026-11-13). Số của nước khác (ví dụ Việt Nam) không đăng ký được — hãy mở SIM trả trước Hàn Quốc bằng hộ chiếu trước. Đổi số nhận SMS (“SMS number”) thành không có trong điều kiện để thấy bước SIM trả trước.' };
+  // 11-13 디자인 고침(사용자 '못생겼고 가독성 안 좋음'): 한 덩어리 글 → 제목 · 나라 칩 · 할 일 · 확인 날짜
+  cpSms.warn = { list: CP_SMS.map(x => ({ ko: x[1], en: x[2], zh: x[3], vi: x[4], cc: x[0] })),
+    title: { ko: '쿠팡 휴대폰 인증은 아래 16개 나라 번호만 돼요', en: "Coupang's phone check only accepts numbers from these 16 countries",
+      zh: 'Coupang 手机验证只接受以下 16 个国家/地区的号码', vi: 'Xác minh điện thoại của Coupang chỉ nhận số của 16 nước sau' },
+    action: { ko: '내 번호의 나라가 없다면(예: 베트남) 그 번호로는 쿠팡 가입이 안 돼요. 먼저 여권으로 한국 선불 유심을 만드세요 — 조건에서 ‘SMS 번호: 없음’을 고르면 그 단계부터 안내해요.',
+      en: "Not on the list (e.g., Vietnam)? You can't sign up to Coupang with that number. Get a Korean prepaid SIM with your passport first — choose “SMS number: No” in your conditions and Nubi starts with that step.",
+      zh: '你的号码所属国家不在列表里（例如越南）？用这个号码无法注册 Coupang。请先用护照开通韩国预付费 SIM 卡——在条件中把短信号码（SMS number）选为没有，Nubi 就会从这一步开始。',
+      vi: 'Nước của số bạn không có trong danh sách (ví dụ Việt Nam)? Bạn không thể đăng ký Coupang bằng số đó. Hãy mở SIM trả trước Hàn Quốc bằng hộ chiếu trước — chọn “SMS number: không có” trong điều kiện, Nubi sẽ bắt đầu từ bước đó.' },
+    src: { ko: '2026-11-13 쿠팡 회원가입 화면에서 확인', en: 'Checked on the Coupang sign-up screen, 2026-11-13', zh: '2026-11-13 在 Coupang 注册页面确认', vi: 'Đã kiểm tra trên màn hình đăng ký Coupang, 2026-11-13' } };
   cpSms.evidence = cpSms.evidence.concat([ev({ kind: 'team_test', sourceLabel: B('Team check of the Coupang sign-up screen', '쿠팡 회원가입 화면 팀 확인'), teamCheckedAt: T13,
     observedScope: B('Phone verification country list: 16 countries (no Vietnam)', '휴대폰 인증 국가 목록 16개(베트남 없음)') })]);
 
@@ -3464,13 +3476,22 @@ function infoPanel(s) {
   if (s.note) lines.push(el('p', {}, L(s.note)));
   return el('div', { class: 'info-panel', role: 'region', 'aria-label': t('ik_title') }, lines);
 }
+/* 단계 제한 안내 상자(11-13): 제목 · 나라 칩 · 할 일 · 확인 날짜. 글 한 덩어리로 두지 않는다 */
+function warnBox(w) {
+  if (!w) return null;
+  return el('div', { class: 'wbox', role: 'note' },
+    el('p', { class: 'wbox-h' }, el('span', { 'aria-hidden': 'true' }, '⚠ '), L(w.title)),
+    w.list ? el('ul', { class: 'wbox-cc', 'aria-label': L(w.title) }, w.list.map(x => el('li', {}, L(x), el('span', { class: 'cc' }, x.cc)))) : null,
+    w.action ? el('p', { class: 'wbox-do' }, L(w.action)) : null,
+    w.src ? el('p', { class: 'wbox-src' }, L(w.src)) : null);
+}
 function stageInfo(entry, tag) {
   const s = entry.stage;
   const kids = [el('div', { class: 'stn-head' }, el('span', { class: 'stn-title' }, L(s.title)), [].concat(tag || []).map(x => el('span', { class: 'tag' }, x)), fieldTag(s), nvTag(s), infoBtn(s)), ogNote(s)];
   // 멈추는 이유(막힘·조건 부족)는 근거 배지가 아니므로 그대로 보인다
   if (s.status === 'blocked') kids.push(el('p', { class: 'stopline' }, t('blockedLine')));
   if (entry.state === 'skipped') kids.push(el('p', { class: 'skip' }, t('skippedV', { x: L(entry.bypass.label) })));
-  if (s.warn && s.status !== 'blocked') kids.push(el('p', { class: 'note-line' }, '⚠ ' + L(s.warn)));
+  if (s.warn && s.status !== 'blocked') kids.push(warnBox(s.warn));
   if (s.requirements.length && s.status !== 'blocked') kids.push(el('p', { class: 'small' }, t('requires', { x: s.requirements.map(reqLabel).join(', ') })));
   if (s.excludes.length) kids.push(el('p', { class: 'small' }, t('notFor', { x: s.excludes.map(reqLabel).join(', ') })));
   if (entry.state === 'stopped' && entry.reason === 'unmet') kids.push(el('p', { class: 'missing' }, missingSentence(entry.missing, 'missingFor', 'excludedFor')));
@@ -4241,7 +4262,7 @@ function viewSteps() {
         st.reason === 'error_message' ? el('p', {}, el('a', { href: '#/korean', onclick: () => { state.helper.tab = 'errors'; } }, t('decodeLink'))) : null,
         el('p', {}, el('a', { href: guideUrl('foreign-community-korea'), target: '_blank', rel: 'noopener noreferrer' }, t('communityLink'))),
         cur.outcome === 'sms' ? el('p', { class: 'note-line', 'data-fid': 'sms-tip' }, t('smsStuckTip')) : null,
-        cur.warn ? el('p', { class: 'note-line' }, '⚠ ' + L(cur.warn)) : null,
+        cur.warn ? warnBox(cur.warn) : null,
         cur.outcome === 'sms' ? el('p', { class: 'note-line' }, t('phoneNext')) : null) : null);
     kids.push(panel, cur.detour && cur.detour.when === 'sms' ? partnerCard('step') : null, openRow);
   } else if (st.phase === 'end' && res.type === 'A') {
