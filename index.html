@@ -2584,9 +2584,11 @@ const CONFIG = (() => {
     // 단계 출처(ⓘ). url·checked가 'TODO'면 화면에도 TODO로 보인다 — 추측해서 채우지 않는다.
     sources: {
       naverPress: {label: 'NAVER official press release — Naver Map', url: 'https://navercorp.com/media/pressReleasesDetail?seq=10034359', published: '2026-06-09', checked: null},
-      coupangHelp: { label: 'Coupang Help Center', url: 'TODO', checked: 'TODO' },
+      // 11-14 Claude Code: 쿠팡 뉴스룸 FAQ 원문 확인 — '해외에서 발급받은 카드 중 Visa, Mastercard, JCB 본인 명의 카드는 쿠페이에 등록하여 쿠페이 결제만 가능' (키 이름은 그대로 둠)
+      coupangHelp: { label: 'Coupang Newsroom — FAQ: Orders & Payment ep.4', url: 'https://news.coupang.com/archives/64322/', published: '2026-07-15', checked: '2026-11-14' },
       asiae: { label: 'Asia Economy article', url: 'https://view.asiae.co.kr/article/2026060910365545350', published: '2026-06-09', checked: 'TODO' },
-      seoulstart: { label: 'Seoulstart', url: 'TODO', published: '2026-06', checked: 'TODO' },
+      // 11-14 Claude Code: 서울스타트 한국 유심 가이드 원문 확인 — '선불요금제는 여권만으로 개통할 수 있어요'(서울스타트 회신 11-03에 받은 주소)
+      seoulstart: { label: 'Seoulstart — Korea SIM card guide', url: 'https://seoulstart.com/ko/guides/korea-sim-card-guide', published: '2026-06', checked: '2026-11-14' },
       teamSms: { label: 'Nubi team test (one +86 number)', url: null, checked: '2026-10-07' },
       teamBaemin: { label: 'Nubi team attempt', url: null, checked: '2026-10-02' },
       test1113: { label: 'Nubi beta test — a tester did it while a team member watched', url: null, checked: '2026-11-13' },
