@@ -2345,7 +2345,7 @@ function buildVerified() {
         observedScope: B('Said they used guest ordering with a foreign card', '해외 카드로 비회원 주문을 사용했다고 진술') })] });
   const smsEvidence = () => [ev({ kind: 'team_test', teamCheckedAt: '2026-10-07',
     observedScope: B('Up to the SMS verification step; sign-up not completed', 'SMS 본인인증 단계까지, 회원가입 완료는 미진행'),
-    testedConditions: B('one overseas (+86) number', '해외(+86) 번호 1건') })];
+    testedConditions: B('one overseas number', '해외 번호 1건') })];
   const VR3 = stage({ id: 'V-R3', title: B('SMS verification', 'SMS 본인인증'), outcome: 'sms', status: 'verified',
     requirements: ['sms'],
     instructions: [B('Start sign-up', '회원가입 시작'),
@@ -2589,7 +2589,7 @@ const CONFIG = (() => {
       asiae: { label: 'Asia Economy article', url: 'https://view.asiae.co.kr/article/2026060910365545350', published: '2026-06-09', checked: 'TODO' },
       // 11-14 Claude Code: 서울스타트 한국 유심 가이드 원문 확인 — '선불요금제는 여권만으로 개통할 수 있어요'(서울스타트 회신 11-03에 받은 주소)
       seoulstart: { label: 'Seoulstart — Korea SIM card guide', url: 'https://seoulstart.com/ko/guides/korea-sim-card-guide', published: '2026-06', checked: '2026-11-14' },
-      teamSms: { label: 'Nubi team test (one +86 number)', url: null, checked: '2026-10-07' },
+      teamSms: { label: 'Nubi team test (one overseas number)', url: null, checked: '2026-10-07' },
       teamBaemin: { label: 'Nubi team attempt', url: null, checked: '2026-10-02' },
       test1113: { label: 'Nubi beta test — a tester did it while a team member watched', url: null, checked: '2026-11-13' },
       interview5: { label: 'Student interview (#5)', url: null, checked: '2026-10' },
@@ -2607,7 +2607,7 @@ const CONFIG = (() => {
     // 최근 확인 기록(비교표에 표시): 팀이 실제로 확인한 것만. 새로 확인하면 맨 위에 추가한다
     checkLog: [
       { date: '2026-10-16', text: B('Captured the Coupang Help Center foreign-card guide', '쿠팡 고객센터 해외카드 안내 캡처') },
-      { date: '2026-10-07', text: B('Tested SMS verification on Coupang and Naver with one +86 number', '쿠팡·네이버 SMS 인증을 +86 번호 1건으로 시험') },
+      { date: '2026-10-07', text: B('Tested SMS verification on Coupang and Naver with one overseas number', '쿠팡·네이버 SMS 인증을 해외 번호 1건으로 시험') },
       { date: '2026-10-02', text: B('Tried Baemin sign-up — blocked without a Korean phone', '배민 회원가입 시도 — 한국 휴대폰 없이 막힘') }
     ],
     // 단계별 동료 성공 보고(공유에 동의한 보고를 팀이 시트에서 집계해 넣는다). 비어 있으면 ⓘ에 표시하지 않는다
