@@ -2294,24 +2294,28 @@ Object.assign(TEXT.vi, {
 });
 // 11-13 테스트 피드백 반영: 결과 남기기 결제 수단(간편결제) · SMS 단계에서 막혔을 때 안내(P1). zh/vi는 원어민 검수 전
 Object.assign(TEXT.en, { rpViaQ: 'How did you pay?', via_card: 'Card',
+  arcNoteH: 'You said you have an ARC', arcNoteBody: 'Having an ARC does not always mean you already have a Korean phone number or a Korean card. The route below is based on what you told us you have now (card, SMS number, contact number), so it still fits. Once you get a Korean number or card, normal sign-up and payment may also work.', arcNoteGo: 'After-ARC to-do checklist →',
   consentShort: 'Only which steps worked or got stuck and your payment answer are sent, with a random anonymous ID. Never your name, phone, card number or anything you type. Deleted after 1 year — turn it off anytime in Info.', consentMore: 'Details: what is sent and how to delete it',
   homeInApp: 'No “Add to Home Screen”? You may be inside KakaoTalk, WeChat or a QR scanner — open the page in Safari or Chrome first (look for the compass icon or “Open in browser”).',
   homeSep: 'Your saved progress stays in the browser where you used Nubi. On iPhone, the home-screen icon may keep its own separate copy — keep opening Nubi from the same place.',
   finishedNoteSaved: 'Ended here. Your condition summary and progress are saved only in this browser on this phone — open the Me tab to see them again, or delete them in Info. Nothing saved here is sent anywhere.',
   smsStuckTip: "If your number isn't accepted or no code arrives: ① check that the country code matches your number (many sites start at +82) ② resend only once (pressing many times can hit a limit) ③ if it still fails, try a Korean prepaid SIM opened with your passport (not yet reported whether it passes). For food, a Baemin guest order needs no sign-up — paid in our 2026-11-13 test." });
 Object.assign(TEXT.ko, { rpViaQ: '무엇으로 결제했나요?', via_card: '카드',
+  arcNoteH: 'ARC가 있다고 답했어요', arcNoteBody: 'ARC가 있어도 한국 휴대폰 번호나 국내 카드가 아직 없을 수 있어요. 아래 경로는 지금 가진 것(카드·SMS 받는 번호·연락 번호)으로 고른 거라 그대로 맞아요. 한국 번호나 국내 카드가 생기면 일반 회원가입·결제도 될 수 있어요.', arcNoteGo: 'ARC 받은 뒤 할 일 체크리스트 →',
   consentShort: '어느 단계가 됐는지·막혔는지와 결제 응답만 임의의 익명 ID로 보내요. 이름·전화번호·카드 번호·입력한 문장은 보내지 않고, 1년 뒤 자동 삭제해요. 정보에서 언제든 끌 수 있어요.', consentMore: '자세히: 보내는 항목과 삭제 방법',
   homeInApp: '‘홈 화면에 추가’가 안 보이면 카톡·위챗·QR 스캐너 안에서 연 화면일 수 있어요 — 먼저 사파리나 크롬으로 여세요(나침반 아이콘이나 ‘브라우저로 열기’).',
   homeSep: '진행 상황은 누비를 쓴 그 브라우저에만 저장돼요. 아이폰은 홈 화면 아이콘이 따로 저장할 수 있어요 — 늘 같은 곳에서 누비를 여세요.',
   finishedNoteSaved: '여기서 마쳤습니다. 조건 요약과 진행 단계는 이 폰의 이 브라우저에만 저장돼 있어요 — 나 탭에서 다시 볼 수 있고, 정보에서 지울 수 있어요. 여기 저장한 내용은 어디에도 보내지 않아요.',
   smsStuckTip: '번호를 안 받거나 인증번호가 안 오면: ① 국가 번호가 내 번호의 나라로 되어 있는지 확인(+82가 기본값인 곳이 많아요) ② 한 번만 다시 보내기(여러 번 누르면 한도에 걸릴 수 있어요) ③ 그래도 안 되면 여권으로 개통한 한국 선불 유심 번호로 해 보기(통과 여부는 아직 보고 없음). 음식 주문이면 배민 비회원 주문은 가입이 필요 없어요 — 2026-11-13 테스트에서 결제까지 됐어요.' });
 Object.assign(TEXT.zh, { rpViaQ: '你用什么付款？', via_card: '银行卡',
+  arcNoteH: '你说你已经有 ARC', arcNoteBody: '有了 ARC，也可能还没有韩国手机号或韩国银行卡。下面的路线是按你现在拥有的（银行卡、能收短信的号码、联系号码）选出来的，所以依然适用。等有了韩国手机号或韩国银行卡，也可以试试正常注册和付款。', arcNoteGo: '拿到 ARC 后的待办清单 →',
   consentShort: '只发送哪些步骤成功或卡住、以及付款回答，并附带随机匿名 ID。不发送姓名、电话、卡号或你输入的文字。1 年后自动删除，可随时在“说明”中关闭。', consentMore: '详细：发送内容和删除方法',
   homeInApp: '看不到“添加到主屏幕”？你可能是在 KakaoTalk、微信或二维码扫描器里打开的——请先用 Safari 或 Chrome 打开（找指南针图标或“在浏览器中打开”）。',
   homeSep: '进度只保存在你使用 Nubi 的那个浏览器里。iPhone 主屏幕图标可能会单独保存——请一直从同一个地方打开 Nubi。',
   finishedNoteSaved: '到此结束。你的条件摘要和进度只保存在这部手机的这个浏览器里——可以在“我的”页面再次查看，也可以在“说明”中删除。这里保存的内容不会发送到任何地方。',
   smsStuckTip: '如果号码不被接受或收不到验证码：① 确认国家代码与你的号码一致（很多网站默认 +82）② 只重发一次（多次点击可能达到上限）③ 仍然不行的话，试试用护照开通的韩国预付费 SIM 卡号码（是否能通过尚无报告）。如果是点外卖，Baemin 非会员订单无需注册——在 2026-11-13 的测试中已完成付款。' });
 Object.assign(TEXT.vi, { rpViaQ: 'Bạn đã thanh toán bằng gì?', via_card: 'Thẻ',
+  arcNoteH: 'Bạn nói bạn đã có ARC', arcNoteBody: 'Có ARC chưa chắc đã có số điện thoại hay thẻ ngân hàng Hàn Quốc. Lộ trình dưới đây được chọn theo những gì bạn đang có (thẻ, số nhận SMS, số liên lạc) nên vẫn phù hợp. Khi có số hoặc thẻ Hàn Quốc, bạn cũng có thể thử đăng ký và thanh toán bình thường.', arcNoteGo: 'Danh sách việc cần làm sau khi có ARC →',
   consentShort: 'Chỉ gửi bước nào thành công hay bị kẹt và câu trả lời về thanh toán, kèm một ID ẩn danh ngẫu nhiên. Không gửi tên, số điện thoại, số thẻ hay nội dung bạn nhập. Tự xóa sau 1 năm — tắt bất cứ lúc nào trong Thông tin.', consentMore: 'Chi tiết: nội dung gửi và cách xóa',
   homeInApp: 'Không thấy “Thêm vào MH chính”? Có thể bạn đang mở trong KakaoTalk, WeChat hoặc trình quét QR — hãy mở bằng Safari hoặc Chrome trước (biểu tượng la bàn hoặc “Mở trong trình duyệt”).',
   homeSep: 'Tiến độ chỉ được lưu trong trình duyệt bạn dùng Nubi. Trên iPhone, biểu tượng ở màn hình chính có thể lưu riêng — hãy luôn mở Nubi từ cùng một chỗ.',
@@ -4173,12 +4177,21 @@ function confirmConds() {
   let target;
   if (!c.platform) { state.compare = { goal: c.goal, highlight: null, recommend: true }; state.result = null; target = '#/compare'; }
   else { state.result = matchRoute(findRoute(c.platform, c.goal), c, state.mode); target = '#/result'; }
-  // ARC 있음으로 확정되면 S6(ARC 이후)부터 보여 주고, 같은 조건의 판단 결과로 돌아갈 길을 남긴다
-  if (c.arc === 'have') { state.arcNext = target; go('#/arc'); return; }
+  // 11-15 고침(테스터 피드백 '배민 결제법을 찾는데 체크리스트가 나옴'): ARC가 있어도 고른 플랫폼의 결과를 먼저 보여 주고,
+  // 결과·비교 화면 맨 위의 안내(arcNote)에서 'ARC 받은 뒤 할 일' 체크리스트로 갈 수 있게 한다. (전: ARC 있음이면 #/arc로 먼저 보냄)
+  state.arcNext = null;
   go(target);
 }
 
 /* S3 경로 결과 */
+/* ARC 있음이라고 답한 사람에게 결과·비교 화면 맨 위에: ARC가 있어도 한국 번호·국내 카드가 없을 수 있음 → 경로는 지금 가진 것 기준이라 그대로 맞음 + 체크리스트 링크(11-15, 사용자 지적으로 문장 고침) */
+function arcNote() {
+  if (!(state.conds && state.conds.arc === 'have')) return null;
+  return el('div', { class: 'panel arc-note', role: 'note', 'data-fid': 'arc-note', style: 'margin:0 0 16px;padding:12px 14px;border-radius:12px;background:var(--accent-soft, rgba(15,118,110,.08))' },
+    el('p', { style: 'margin:0 0 6px' }, el('strong', {}, '🪪 ' + t('arcNoteH'))),
+    el('p', { class: 'small', style: 'margin:0 0 8px' }, t('arcNoteBody')),
+    el('a', { href: '#/arc', 'data-fid': 'arc-note-go', onclick: () => { state.arcNext = location.hash; } }, t('arcNoteGo')));
+}
 function viewResult() {
   const res = state.result; const r = res.route;
   const title = r ? pName(r.platform) + ' · ' + gName(r.goal) : (state.conds ? [state.conds.platform && pName(state.conds.platform), state.conds.goal && gName(state.conds.goal)].filter(Boolean).join(' · ') : '');
@@ -4195,6 +4208,7 @@ function viewResult() {
     : el('button', { type: 'button', class: 'btn btn-primary', 'data-fid': 'edit', onclick: editConds }, t(res.noConds ? 'tellUs' : 'editConds'));
   const smsMissing = res.stop && res.stop.reason === 'unmet' && res.stop.missing.includes('sms') && !res.noConds;
   const card = el('article', { class: 'card', 'aria-labelledby': 'route-title' },
+    arcNote(), // 11-15: ARC 있음이면 결과 카드 맨 위에 안내(빌드 패치가 section 반환 줄을 쓰므로 카드 안에 둔다)
     el('div', { class: 'result-head' }, el('h3', { id: 'route-title' }, title), el('div', { class: 'badges' }, typeBadges(res))),
     el('p', { class: 'why' }, el('strong', {}, t('why') + ' '), whyText(res)),
     res.stop && res.guidedCount > 0 && res.stop.reason !== 'unmet' ? el('p', { class: 'stopline' }, t('stopAt', { stage: L(res.stop.stage.title), status: statusText(res.stop.stage) })) : null,
@@ -5143,6 +5157,7 @@ function viewCompare() {
     CONFIG.statusOrder.filter(st => dataset().routes.some(r => r.stages.some(s => s.status === st))).map(s => badge(t('st_' + s), 'st-' + s)));
   return el('section', {},
     el('h2', {}, t('s5Title')),
+    arcNote(),
     el('div', { class: 'meta' },
       el('span', { class: 'small' }, t('asOf', { date: asOfDate() }))),
     cmp.goal ? el('p', { class: 'note-line' }, t('sameGoalOnly', { g: gName(cmp.goal) })) : null,
