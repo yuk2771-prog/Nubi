@@ -680,6 +680,9 @@ body.has-tabbar{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
   .small{font-size:10px}
 }
 /* 11-13 단계 제한 안내 상자(쿠팡 인증 국가 등) */
+.sim-card{margin:12px 0;padding:14px;border-radius:12px;border:2px solid var(--accent);background:var(--card,#fff)}
+.sim-card h4{margin:0 0 6px;font-size:17px;text-transform:none;letter-spacing:0;color:var(--text)}
+.sim-card .btn{margin:6px 0}
 .wbox{margin:8px 0 12px;padding:12px 14px;border-radius:12px;background:var(--warn-bg);color:var(--warn-text);border-left:4px solid var(--warn)}
 .wbox-h{margin:0 0 10px;font-weight:700;font-size:15px;line-height:1.45}
 .wbox-cc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;padding:0;list-style:none}
@@ -2316,6 +2319,9 @@ Object.assign(TEXT.en, { rpViaQ: 'How did you pay?', via_card: 'Card',
   homeInApp: 'No “Add to Home Screen”? You may be inside KakaoTalk, WeChat or a QR scanner — open the page in Safari or Chrome first (look for the compass icon or “Open in browser”).',
   homeSep: 'Your saved progress stays in the browser where you used Nubi. On iPhone, the home-screen icon may keep its own separate copy — keep opening Nubi from the same place.',
   finishedNoteSaved: 'Ended here. Your condition summary and progress are saved only in this browser on this phone — open the Me tab to see them again, or delete them in Info. Nothing saved here is sent anywhere.',
+  simH: "No code arriving? Try a Korean prepaid SIM number", simH2: "No code arriving?", simLead: "No number that can receive SMS, or not sure? Start with a Korean prepaid SIM (passport only, no ARC).", simBody: "You can open one with just your passport, no ARC needed. Then verify again with that number (whether each platform accepts it is still being checked).",
+  simGo: "Show the prepaid SIM step first", simTips: "First check: the country code matches your number, and resend the code only once.",
+  simBaemin: "Ordering food? A Baemin guest order needs no sign-up (paid in our 2026-11-13 test).", simBaeminGo: "See the Baemin route",
   smsStuckTip: "If your number isn't accepted or no code arrives: ① check that the country code matches your number (many sites start at +82) ② resend only once (pressing many times can hit a limit) ③ if it still fails, try a Korean prepaid SIM opened with your passport (not yet reported whether it passes). For food, a Baemin guest order needs no sign-up — paid in our 2026-11-13 test." });
 Object.assign(TEXT.ko, { rpViaQ: '무엇으로 결제했나요?', via_card: '카드',
   arcNotePostpaid: '선불 번호를 쓰고 있다면 ARC로 같은 번호를 본인 명의 후불 요금제로 바꿀 수 있어요 — 체크리스트에서 보기.',
@@ -2324,6 +2330,9 @@ Object.assign(TEXT.ko, { rpViaQ: '무엇으로 결제했나요?', via_card: '카
   homeInApp: '‘홈 화면에 추가’가 안 보이면 카톡·위챗·QR 스캐너 안에서 연 화면일 수 있어요 — 먼저 사파리나 크롬으로 여세요(나침반 아이콘이나 ‘브라우저로 열기’).',
   homeSep: '진행 상황은 누비를 쓴 그 브라우저에만 저장돼요. 아이폰은 홈 화면 아이콘이 따로 저장할 수 있어요 — 늘 같은 곳에서 누비를 여세요.',
   finishedNoteSaved: '여기서 마쳤습니다. 조건 요약과 진행 단계는 이 폰의 이 브라우저에만 저장돼 있어요 — 나 탭에서 다시 볼 수 있고, 정보에서 지울 수 있어요. 여기 저장한 내용은 어디에도 보내지 않아요.',
+  simH: '인증번호가 안 오나요? 한국 선불 유심 번호로 해 보세요', simH2: '인증번호가 안 오나요?', simLead: '문자 받을 번호가 없거나 잘 모르겠다면, 한국 선불 유심(여권만, ARC 없이)부터 시작하세요.', simBody: '여권만 있으면 ARC 없이 개통할 수 있어요. 개통한 번호로 다시 인증하면 돼요(플랫폼별 통과 여부는 확인 중).',
+  simGo: '선불 유심 단계부터 보기', simTips: '먼저 확인: 국가 번호가 내 번호의 나라인지, 인증번호는 한 번만 다시 보내기.',
+  simBaemin: '음식 주문이면 배민 비회원 주문은 가입이 필요 없어요(2026-11-13 테스트에서 결제 완료).', simBaeminGo: '배민 경로 보기',
   smsStuckTip: '번호를 안 받거나 인증번호가 안 오면: ① 국가 번호가 내 번호의 나라로 되어 있는지 확인(+82가 기본값인 곳이 많아요) ② 한 번만 다시 보내기(여러 번 누르면 한도에 걸릴 수 있어요) ③ 그래도 안 되면 여권으로 개통한 한국 선불 유심 번호로 해 보기(통과 여부는 아직 보고 없음). 음식 주문이면 배민 비회원 주문은 가입이 필요 없어요 — 2026-11-13 테스트에서 결제까지 됐어요.' });
 Object.assign(TEXT.zh, { rpViaQ: '你用什么付款？', via_card: '银行卡',
   arcNotePostpaid: '在用预付费号码吗？有了 ARC 可以把同一个号码转为本人名下的后付费套餐——见清单。',
@@ -2332,6 +2341,9 @@ Object.assign(TEXT.zh, { rpViaQ: '你用什么付款？', via_card: '银行卡',
   homeInApp: '看不到“添加到主屏幕”？你可能是在 KakaoTalk、微信或二维码扫描器里打开的——请先用 Safari 或 Chrome 打开（找指南针图标或“在浏览器中打开”）。',
   homeSep: '进度只保存在你使用 Nubi 的那个浏览器里。iPhone 主屏幕图标可能会单独保存——请一直从同一个地方打开 Nubi。',
   finishedNoteSaved: '到此结束。你的条件摘要和进度只保存在这部手机的这个浏览器里——可以在“我的”页面再次查看，也可以在“说明”中删除。这里保存的内容不会发送到任何地方。',
+  simH: '收不到验证码？试试韩国预付费 SIM 卡号码', simH2: '收不到验证码？', simLead: '没有能接收短信的号码或不确定？先办一张韩国预付费 SIM 卡（只需护照，不需要 ARC）。', simBody: '只需护照即可开通，不需要 ARC。开通后用这个号码重新验证（各平台是否接受仍在确认中）。',
+  simGo: '先看预付费 SIM 卡步骤', simTips: '先确认：国家代码与你的号码一致；验证码只重发一次。',
+  simBaemin: '如果是点外卖，Baemin 非会员订单无需注册（2026-11-13 测试中已完成付款）。', simBaeminGo: '查看 Baemin 路线',
   smsStuckTip: '如果号码不被接受或收不到验证码：① 确认国家代码与你的号码一致（很多网站默认 +82）② 只重发一次（多次点击可能达到上限）③ 仍然不行的话，试试用护照开通的韩国预付费 SIM 卡号码（是否能通过尚无报告）。如果是点外卖，Baemin 非会员订单无需注册——在 2026-11-13 的测试中已完成付款。' });
 Object.assign(TEXT.vi, { rpViaQ: 'Bạn đã thanh toán bằng gì?', via_card: 'Thẻ',
   arcNotePostpaid: 'Đang dùng số trả trước? Có ARC rồi, bạn có thể chuyển chính số đó sang gói trả sau đứng tên bạn — xem danh sách.',
@@ -2340,6 +2352,9 @@ Object.assign(TEXT.vi, { rpViaQ: 'Bạn đã thanh toán bằng gì?', via_card:
   homeInApp: 'Không thấy “Thêm vào MH chính”? Có thể bạn đang mở trong KakaoTalk, WeChat hoặc trình quét QR — hãy mở bằng Safari hoặc Chrome trước (biểu tượng la bàn hoặc “Mở trong trình duyệt”).',
   homeSep: 'Tiến độ chỉ được lưu trong trình duyệt bạn dùng Nubi. Trên iPhone, biểu tượng ở màn hình chính có thể lưu riêng — hãy luôn mở Nubi từ cùng một chỗ.',
   finishedNoteSaved: 'Đã kết thúc tại đây. Tóm tắt điều kiện và tiến độ chỉ được lưu trong trình duyệt này trên điện thoại này — xem lại ở tab Tôi, hoặc xóa trong Thông tin. Nội dung lưu ở đây không được gửi đi đâu cả.',
+  simH: 'Không nhận được mã? Hãy thử số SIM trả trước Hàn Quốc', simH2: 'Không nhận được mã?', simLead: 'Không có số nhận SMS hoặc không chắc? Hãy bắt đầu với SIM trả trước Hàn Quốc (chỉ cần hộ chiếu, không cần ARC).', simBody: 'Chỉ cần hộ chiếu là mở được, không cần ARC. Sau đó xác minh lại bằng số đó (việc từng nền tảng có chấp nhận hay không vẫn đang được kiểm tra).',
+  simGo: 'Xem bước SIM trả trước trước', simTips: 'Kiểm tra trước: mã quốc gia khớp với số của bạn; chỉ gửi lại mã một lần.',
+  simBaemin: 'Nếu đặt đồ ăn, đặt hàng không cần tài khoản trên Baemin không cần đăng ký (đã thanh toán trong thử nghiệm ngày 2026-11-13).', simBaeminGo: 'Xem lộ trình Baemin',
   smsStuckTip: 'Nếu số của bạn không được chấp nhận hoặc không nhận được mã: ① kiểm tra mã quốc gia khớp với số của bạn (nhiều trang mặc định +82) ② chỉ gửi lại một lần (bấm nhiều lần có thể bị giới hạn) ③ nếu vẫn không được, thử số SIM trả trước Hàn Quốc mở bằng hộ chiếu (chưa có báo cáo là có qua được không). Nếu đặt đồ ăn, đặt hàng không cần tài khoản trên Baemin không cần đăng ký — đã thanh toán trong thử nghiệm ngày 2026-11-13.' });
 
 // 증거 한 건. 모르는 값은 null로 두어 화면이 '없는 날짜'를 지어내지 않게 한다.
@@ -3617,8 +3632,8 @@ function viewStart() {
       el('h1', {}, t('heroTitle')),
       el('p', { class: 'hero-sub' }, t('heroSub')),
       el('ol', { class: 'how', 'aria-label': t('howLabel') }, ['how1', 'how2', 'how3'].map(k => el('li', {}, t(k))))),
-    // 11-14 사용자 요청: 처음 여는 기기(아직 고르지 않음)는 첫 화면에서 바로 익명 공유 동의를 묻는다. 고르면 사라지고, 같은 카드가 결과 화면에서 두 번 나오지 않는다
-    CONFIG.endpoint && state.consent === null ? shareCard(true) : null,
+    // ⑫(11-17, 모의 심사 D '랜딩은 질문에 대답부터'): 첫 화면엔 동의 카드를 두지 않는다 → 결과 카드 바로 아래(짧은 판)와 [정보]에서 묻는다.
+    // 동의 전에는 하루 합계(사람 구분 없는 횟수) 말고 아무것도 보내지 않는다
     el('div', { class: 'card start-card' },
       el('p', { class: 'start-q', id: 'start-q' }, t('q_platform')),
       el('div', { class: 'plat-row', role: 'group', 'aria-labelledby': 'start-q' },
@@ -3809,7 +3824,8 @@ function viewJobDocs() {
    받는 주소(CONFIG.endpoint)가 비어 있으면 아무것도 보내지 않는다. 키는 정해진 모양만(open · scr:화면 · sr:화면 · pt_seen · pt_click · btn:버튼 · ps_click:매장 · inv_send/inv_open/inv_valid:언어)
    btn: 은 아래 목록의 버튼만 센다. 거절 진단의 답(해외 결제 켜짐/꺼짐 등)은 세지 않는다. 수집 스크립트(익명수집_생성.gs)의 DAILY_KEY_RE 와 같게 유지 */
 // ⑨-4(11-15): code_card_show/click(SMS 막힘에서 학생 코드 카드) · postpaid_click(체크리스트 후불 전환) · ch:school(학교 안내 QR로 열림) — 사람 구분 없는 건수
-const DAILY_KEY_RE = /^(open|pt_seen|pt_click|code_card_(show|click)|postpaid_click|ch:school|(scr|sr):[a-z]{2,12}|btn:(route_start|route_switch|step_done|didnt_work|dw_(declined|error_message|missing_item|looks_different|other)|dx_retry|pt_other|print_jobdocs)|ps_click:[a-z]{2,12}|inv_(send|open|valid):(en|ko|zh|vi))$/;
+// ⑪·⑬(11-17): ch:채널 이름을 넓힘(school·share — 다음 채널부터 스크립트 재배포 불필요) · sh_send:언어(일반 공유 보내기) · btn:sim_detour·sim_baemin(문자 인증 막힘 카드)
+const DAILY_KEY_RE = /^(open|pt_seen|pt_click|code_card_(show|click)|postpaid_click|ch:[a-z]{2,12}|(scr|sr):[a-z]{2,12}|btn:(route_start|route_switch|step_done|didnt_work|dw_(declined|error_message|missing_item|looks_different|other)|dx_retry|pt_other|print_jobdocs|sim_detour|sim_baemin)|ps_click:[a-z]{2,12}|(inv_(send|open|valid)|sh_send):(en|ko|zh|vi))$/;
 const DAILY = {}; let DAILY_ONCE = new Set();
 function dailyBump(key) { if (!DAILY_KEY_RE.test(key)) return; DAILY[key] = (DAILY[key] || 0) + 1; }
 function dailyOnce(key) { if (DAILY_ONCE.has(key)) return; DAILY_ONCE.add(key); dailyBump(key); }
@@ -4235,7 +4251,7 @@ function viewResult() {
     el('p', { class: 'why' }, el('strong', {}, t('why') + ' '), whyText(res)),
     res.stop && res.guidedCount > 0 && res.stop.reason !== 'unmet' ? el('p', { class: 'stopline' }, t('stopAt', { stage: L(res.stop.stage.title), status: statusText(res.stop.stage) })) : null,
     res.type === 'C' && !res.noConds ? el('p', { class: 'small' }, t('typeCNote')) : null,
-    smsMissing ? el('p', { class: 'note-line' }, t('phoneNext')) : null,
+    smsMissing ? simLeadBox(r) : null, // ⑬(11-17): 글로 '조건을 바꾸라'던 줄 → 한 번에 선불 유심 단계로
     r ? routeMap(res, null) : null,
     // 제휴 고지: 회색 작은 글씨, 버튼처럼 보이지 않게, 배지보다 크지 않게
     r && r.partner ? el('p', { class: 'partner' }, el('span', { class: 'partner-label' }, L(r.partner.label)), ' ', L(r.partner.disclosure)) : null,
@@ -4246,12 +4262,12 @@ function viewResult() {
     el('div', { class: 'btn-row cta-sticky' }, leftBtn,
       el('button', { type: 'button', class: 'btn btn-outline', 'data-fid': 'other', onclick: seeOther }, t('otherOptions'))));
   // 멈추는 경로(막힘·조건 부족)는 같은 목적의 대안을 바로 아래에 보여 준다
-  const alt = [cardCheck(res), r && res.stop && !res.noConds ? el('section', { class: 'card', 'aria-labelledby': 'alt-h' }, el('h3', { id: 'alt-h' }, t('altH')), rerouteBlock(r, state.conds, true)) : null];
+  const alt = [CONFIG.endpoint && state.consent === null && r ? shareCard(true) : null, cardCheck(res), r && res.stop && !res.noConds ? el('section', { class: 'card', 'aria-labelledby': 'alt-h' }, el('h3', { id: 'alt-h' }, t('altH')), rerouteBlock(r, state.conds, true)) : null];
   // 준비물은 [단계 시작] 전에 보도록 대안 다음·물건 찾기 앞에 둔다. 법적 문구(cardFoot)는 Info에만 있다
   const needsSim = r && res.steps.some(x => x.stage.detour && x.stage.detour.when === 'sms' && x.state === 'guided');
   return el('section', {}, el('h2', {}, t('s3Title')), card, needsSim ? partnerCard('result') : null, alt, items.length ? prepBox(items, ready) : null, r ? itemBox(r) : null,
     r && !res.noConds && res.guidedCount > 0 ? inviteBox(res, res, false) : null,
-    CONFIG.endpoint && state.consent === null && r ? shareCard() : null, r ? askBox() : null);
+    r ? askBox() : null);
 }
 function startSteps() { dailyBump('btn:route_start'); state.steps = { idx: 0, phase: 'steps', stuck: false, pay: null }; go('#/steps'); }
 function editConds() {
@@ -4292,6 +4308,8 @@ function viewSteps() {
         el('button', { type: 'button', class: 'btn btn-primary', 'data-fid': 'next', onclick: nextStep }, t('finished')),
         el('button', { type: 'button', class: 'btn btn-outline', 'data-fid': 'stuck', 'aria-expanded': String(!!st.dw),
           onclick: () => { st.dw = !st.dw; st.stuck = false; if (st.dw) dailyBump('btn:didnt_work'); state.focusFid = st.dw ? 'dw-0' : 'stuck'; render(); } }, t('didntWork'))),
+      // ⑬(11-17, 모의 심사 E): 문자 인증 단계에서 [안 됐어요]를 누르면 이유를 고르기 전에 선불 유심·배민 비회원 안내를 맨 위에
+      (st.dw || st.stuck) && cur.outcome === 'sms' ? simStuckCard(r) : null,
       // 이유는 버튼으로만 고른다(자유 입력 없음). 고르면 같은 목적의 다른 경로를 바로 다시 찾는다(K1)
       st.dw ? el('div', { class: 'ask', role: 'group', 'aria-label': t('dwQ') }, el('p', { class: 'small' }, t('dwQ')),
         el('div', { class: 'chips' }, (cur.outcome === 'payment' ? ['declined'].concat(DW_REASONS) : DW_REASONS).map((k, i) => el('button', { type: 'button', class: 'chip', 'data-fid': 'dw-' + i,
@@ -4307,9 +4325,7 @@ function viewSteps() {
         cur.outcome === 'sms' ? partnerCard('stuck') : null,
         st.reason === 'error_message' ? el('p', {}, el('a', { href: '#/korean', onclick: () => { state.helper.tab = 'errors'; } }, t('decodeLink'))) : null,
         el('p', {}, el('a', { href: guideUrl('foreign-community-korea'), target: '_blank', rel: 'noopener noreferrer' }, t('communityLink'))),
-        cur.outcome === 'sms' ? el('p', { class: 'note-line', 'data-fid': 'sms-tip' }, t('smsStuckTip')) : null,
-        cur.warn ? warnBox(cur.warn) : null,
-        cur.outcome === 'sms' ? el('p', { class: 'note-line' }, t('phoneNext')) : null) : null);
+        cur.warn ? warnBox(cur.warn) : null) : null);
     kids.push(panel, cur.detour && cur.detour.when === 'sms' ? partnerCard('step') : null, openRow);
   } else if (st.phase === 'end' && res.type === 'A') {
     kids.push(payCheck(res, st), openRow);
@@ -4318,7 +4334,7 @@ function viewSteps() {
     kids.push(el('article', { class: 'card' },
       el('h3', { tabindex: '-1', 'data-fid': 'end-title' }, t('stepsDonePartial')),
       el('p', {}, s.reason === 'unmet' ? '"' + L(s.stage.title) + '": ' + missingSentence(s.missing, 'whyMissing', 'whyExcluded') : t('stepsDoneNote', { stage: L(s.stage.title) })),
-      s.reason === 'unmet' && s.missing.includes('sms') ? el('p', { class: 'note-line' }, t('phoneNext')) : null,
+      s.reason === 'unmet' && s.missing.includes('sms') ? simLeadBox(r) : null,
       el('div', { class: 'btn-row' },
         el('button', { type: 'button', class: 'btn btn-primary', onclick: seeOther }, t('otherOptions')),
         el('button', { type: 'button', class: 'btn btn-outline', onclick: editConds }, t('editConds')))));
@@ -4334,6 +4350,44 @@ function viewSteps() {
   kids.push(routeMap(res, { idx: st.idx, phase: st.phase, stuck: st.stuck }, { alt: !!tr }));
   kids.push(askBox());
   return el('section', {}, kids);
+}
+/* ⑬(11-17): 문자 인증에서 막혔을 때 — 선불 유심 우회(같은 경로에 D-SIM 단계를 넣어 처음부터) · 음식이면 배민 비회원 주문.
+   이미 'SMS 번호 없음'(우회 단계를 지나옴)이면 우회 버튼은 숨긴다. 누른 횟수만 하루 합계 */
+function simStuckCard(r) {
+  const canDetour = r.stages.some(s => s.detour && s.detour.when === 'sms') && state.conds && reqValue('sms', state.conds) !== 'no';
+  const food = r.platform !== 'baemin' && dataset().routes.some(x => x.id === 'baemin_food');
+  return el('div', { class: 'sim-card', role: 'note', 'aria-labelledby': 'sim-h', 'data-fid': 'sim-card' },
+    el('h4', { id: 'sim-h' }, t(canDetour ? 'simH' : 'simH2')),
+    canDetour ? el('p', {}, t('simBody')) : null,
+    canDetour ? el('button', { type: 'button', class: 'btn btn-primary btn-block', 'data-fid': 'sim-go', onclick: useSimDetour }, t('simGo')) : null,
+    el('p', { class: 'small' }, t('simTips')),
+    food ? el('p', { class: 'small' }, t('simBaemin'), ' ', el('button', { type: 'button', class: 'linkbtn', 'data-fid': 'sim-baemin', onclick: openBaeminFromSim }, t('simBaeminGo'))) : null);
+}
+// 배민은 '주문 연락 번호' 조건이 더 필요하다 — 이미 답했으면 단계로, 아니면 그 질문부터(조건 수정 화면)
+function openBaeminFromSim() {
+  const r = dataset().routes.find(x => x.id === 'baemin_food'); if (!r || !state.conds) return;
+  dailyBump('btn:sim_baemin');
+  state.transfer = null; state.prep = null; state.infoOpen = null;
+  state.conds.platform = r.platform; state.conds.goal = r.goal;
+  state.result = matchRoute(r, state.conds, state.mode);
+  if (state.result.guidedCount > 0 && !state.result.noConds) { state.steps = { idx: 0, phase: 'steps', stuck: false, pay: null }; state.focusFid = 'step-title'; render(); }
+  else editConds();
+}
+// 결과·단계 끝 화면에서 SMS 번호가 없음/모름으로 막혔을 때: 'SMS 번호 없음'으로 바꿔 선불 유심 단계를 넣은 결과를 바로 보여 준다
+function simLeadBox(r) {
+  if (!r || !state.conds || !r.stages.some(s => s.detour && s.detour.when === 'sms')) return el('p', { class: 'note-line' }, t('phoneNext'));
+  return el('div', { class: 'sim-card', 'data-fid': 'sim-lead' }, el('p', {}, t('simLead')),
+    el('button', { type: 'button', class: 'btn btn-primary btn-block', 'data-fid': 'sim-go-res', onclick: () => {
+      state.conds.sms = 'no'; state.result = matchRoute(r, state.conds, state.mode); state.prep = null; state.transfer = null;
+      dailyBump('btn:sim_detour'); state.focusFid = 'route-title'; go('#/result'); } }, t('simGo')));
+}
+function useSimDetour() {
+  const r = state.result && state.result.route; if (!r || !state.conds) return;
+  state.conds.sms = 'no'; state.result = matchRoute(r, state.conds, state.mode);
+  state.transfer = null; state.prep = null; state.infoOpen = null;
+  state.steps = { idx: 0, phase: 'steps', stuck: false, pay: null };
+  dailyBump('btn:sim_detour');
+  state.focusFid = 'step-title'; render();
 }
 function nextStep() {
   const st = state.steps; const N = state.result.guidedCount;
@@ -5916,8 +5970,9 @@ function shareBox(where, custom) {
   // 11-14(사용자 결정 ⑦): 찾아본 경로가 있으면 일반 공유 카드도 초대 카드와 같은 경로 링크(?to=경로&lang=언어)를 보낸다.
   // 위챗 등에 [링크 복사]로 붙여도 친구가 그 경로·언어로 바로 열린다. 경로가 없으면 예전처럼 앱 주소. 경로 링크를 보낼 때는 초대 카드처럼 inv_send로 센다
   const rid = state.result && state.result.route ? state.result.route.id : null;
-  const url = rid ? (inviteLink(rid, state.lang) || shareLink()) : shareLink(); const text = custom || t('shareText');
-  const sent = () => { if (rid) dailyBump('inv_send:' + state.lang); };
+  // ⑪(11-17): 경로가 없을 때 보내는 앱 주소에도 ?ch=share를 붙여, 그 링크로 열린 횟수(ch:share)와 보내기 누른 횟수(sh_send:언어)를 센다 — 보낸 사람·받는 사람 구분 없음
+  const url = rid ? (inviteLink(rid, state.lang) || shareLink()) : chLink('share'); const text = custom || t('shareText');
+  const sent = () => dailyBump(rid ? 'inv_send:' + state.lang : 'sh_send:' + state.lang);
   const copyShare = u => { sent(); copyText(u).then(ok => { state.shareMsg = ok ? 'copied' : 'copyFail'; render(); }); };
   const native = () => { if (navigator.share) { sent(); navigator.share({ title: 'Nubi', text, url }).catch(() => {}); } else copyShare(url); };
   return el('section', { class: 'card share-card no-print', 'aria-labelledby': 'sh-h-' + where },
@@ -5941,6 +5996,10 @@ function snsRow(text, url, onGo) {
 /* 초대 장치(과업 ①, 킥오프 기준): 결과 화면에서 찾은 경로를, 결제 완료 화면에서 결제한 경로를 친구가 읽는 언어로 보낸다.
    문구만 다르다(paid: "이 경로로 결제했어" / 그 외: "내 조건의 경로를 찾아봤어"). 링크엔 경로·언어만(?to=경로&lang=언어, to가 초대 표시) — 보낸 사람 ID·조건·결과 없음.
    보내기·복사·SNS를 누른 횟수만 하루 합계(inv_send:언어)로 센다. 실제로 보냈는지는 알 수 없다 */
+function chLink(ch) {
+  const base = shareLink(); if (!base) return '';
+  try { const u = new URL(base); u.hash = ''; u.searchParams.set('ch', ch); return u.toString(); } catch (e) { return base; }
+}
 function inviteLink(routeId, lang) {
   const base = shareLink(); if (!base) return '';
   try { const u = new URL(base); u.hash = ''; u.searchParams.set('to', routeId); u.searchParams.set('lang', lang); return u.toString(); } catch (e) { return ''; }
@@ -6195,7 +6254,8 @@ try {
   const saved = loadStore();
   if (saved) restoreSaved(saved);
   // ⑨-3(11-15): 학교 OT·원스탑지원센터 안내문 QR(?ch=school&lang=xx)로 연 횟수 — 초대 링크(?to=)와 따로 센다. 주소창에서는 ch를 지운다
-  try { const q0 = new URLSearchParams(location.search); if (q0.get('ch') === 'school') { dailyBump('ch:school'); q0.delete('ch'); history.replaceState(null, '', location.pathname + (q0.toString() ? '?' + q0 : '') + location.hash); } } catch (e) { /* 주소 해석 실패는 무시 */ }
+  // ⑪(11-17): 일반 공유 링크(?ch=share)도 같은 방식으로 센다(ch:share)
+  try { const q0 = new URLSearchParams(location.search); const ch0 = q0.get('ch'); if (ch0 === 'school' || ch0 === 'share') { dailyBump('ch:' + ch0); q0.delete('ch'); history.replaceState(null, '', location.pathname + (q0.toString() ? '?' + q0 : '') + location.hash); } } catch (e) { /* 주소 해석 실패는 무시 */ }
   const invited = openInvite();
   writeStore(); // 만료 삭제를 즉시 반영하고, 저장이 막힌 브라우저면 첫 화면에서 안내한다
   // ARC 받음 표시가 있으면 생활 탭부터. 단계 진행 중(#/steps)이면 그대로 이어서 — 결제를 끊지 않는다. 대화·결과는 나 탭 '저장된 진행'에서 다시 연다
