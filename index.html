@@ -13,6 +13,8 @@
 <meta name="description" content="Step-by-step payment routes on Coupang, Naver and Baemin for international students before their ARC arrives.">
 <meta property="og:title" content="Nubi — payment routes for international students">
 <meta property="og:description" content="Tell us your situation in one sentence and get a route you can try now. No sign-up.">
+<!-- 디자인 이식(11-18) 글꼴 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css">
 <style>
 /* 색은 명세 숫자 그대로. 다크 모드는 같은 의미를 유지하되 대비만 다시 맞춘다. */
 :root{
@@ -690,6 +692,625 @@ body.has-tabbar{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 .wbox-cc .cc{font-size:11px;color:var(--sub)}
 .wbox-do{margin:0;font-size:14px;line-height:1.55}
 .wbox-src{margin:8px 0 0;font-size:12px;opacity:.85}
+/* ===== 디자인 이식(11-18) 시작 — 빌드스크립트/design_port_1118.py가 넣음. 여기 안은 손으로 고치지 말고 시험본 스크립트를 고친 뒤 다시 돌리기 ===== */
+
+/* ===== 디자인 A 시험본(11-17): 노선도 + C의 큰 글씨 — 이 블록이 위의 모든 규칙을 덮어쓴다 ===== */
+:root{
+  --bg:#F6F7F9; --card:#FFFFFF; --text:#14213D; --sub:#566176; --border:#E1E4EA;
+  --accent:#14213D; --accent-bg:#14213D; --accent-ink:#14213D; --accent-soft:#EEF0F4; --accent-soft2:#E1E4EA; --on-accent:#FFFFFF;
+  --line:#F2B705; --focus:#14213D; --user-bg:#14213D; --user-tx:#FFFFFF; --ring:#FFFFFF; --radius:12px; --shadow:none; --xfer:#C2410C;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0F1420; --card:#171D2B; --text:#EEF1F6; --sub:#A3ACBD; --border:#2A3244;
+    --accent:#F2B705; --accent-bg:#F2B705; --accent-ink:#F5C842; --accent-soft:#222A3B; --accent-soft2:#2A3244; --on-accent:#14213D;
+    --line:#F2B705; --focus:#F5C842; --user-bg:#F2B705; --user-tx:#14213D; --ring:#171D2B; --xfer:#FB923C;
+  }
+}
+body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","PingFang SC","Noto Sans SC",system-ui,sans-serif;letter-spacing:-.01em}
+.dtest-banner{background:var(--line);color:#14213D;font-size:12.5px;font-weight:700;text-align:center;padding:5px 12px}
+/* 상단 바·로고: 노란 고리 하나 */
+.brand-dot{background:transparent!important;border:4px solid var(--line);border-radius:50%!important;width:22px!important;height:22px!important}
+.brand-dot::after{display:none}
+/* 카드: 그림자·연한 면 없이 선으로만 */
+.card{box-shadow:none;border-radius:var(--radius);border:1px solid var(--border)}
+.btn-primary{box-shadow:none}
+.btn-outline{background:var(--card);color:var(--text);border:2px solid var(--text)}
+.btn-outline:hover{background:var(--accent-soft)}
+.badge{background:transparent!important;border:1px solid var(--border);color:var(--sub)!important;font-weight:600}
+.why{background:transparent;padding:0;border-radius:0}
+.chip{background:var(--card);border:1.5px solid var(--border)}
+.flash{background:var(--accent-soft);color:var(--text)}
+.privacy-line::before{content:none}
+/* ── 시작 화면: 큰 질문 하나(C) + 플랫폼 = 호선(A) ── */
+.hero .eyebrow,.hero .how,.hero h1{display:none}
+.hero{padding:0}
+.start-card{border:0;background:transparent;padding:4px 0 0;box-shadow:none}
+.start-q{font-size:32px;line-height:1.18;font-weight:800;letter-spacing:-.035em;margin:22px 0 8px}
+.start-card .hero-sub{font-size:16px;color:var(--sub);margin:0 0 20px}
+.plat-row{display:flex!important;flex-direction:column;gap:0;border-top:2px solid var(--text);margin:0 0 4px}
+.plat-row .btn.plat{display:grid!important;grid-template-columns:42px 1fr auto;grid-template-rows:auto auto;column-gap:14px;align-items:center;justify-items:start;
+  min-height:76px;width:100%;padding:12px 2px;border:0!important;border-bottom:1px solid var(--border)!important;border-radius:0!important;background:transparent!important;text-align:left}
+.plat-row .btn.plat:hover{background:var(--accent-soft)!important}
+.plat .ico{display:none!important}
+.plat::before{grid-row:1/3;grid-column:1;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:18px;font-weight:800}
+.plat::after{content:"›";grid-row:1/3;grid-column:3;font-size:26px;color:var(--sub);font-weight:400}
+[data-fid="plat-coupang"]::before{content:"C";background:#14213D}
+[data-fid="plat-naver"]::before{content:"N";background:#2F6F4F}
+[data-fid="plat-baemin"]::before{content:"B";background:#3A7CA5}
+@media (prefers-color-scheme: dark){[data-fid="plat-coupang"]::before{background:#3B4A6B}}
+.plat .nm{grid-column:2;grid-row:1;font-size:20px!important;font-weight:800}
+.plat .sb{grid-column:2;grid-row:2;font-size:14px!important}
+/* 시작 화면 아래 메뉴: 아이콘 타일 → 글자 목록 */
+.menu-group{background:transparent;border:0;border-top:1px solid var(--border);border-radius:0;box-shadow:none;padding:14px 0 0}
+.menu-grid{grid-template-columns:1fr 1fr!important;gap:0 14px}
+.tile{flex-direction:row!important;justify-content:space-between;align-items:center;text-align:left!important;padding:13px 2px!important;border-bottom:1px solid var(--border);border-radius:0!important}
+.tile .ti{display:none!important}
+.tile .tt{font-size:15px!important}
+.tile::after{content:"›";color:var(--sub);font-size:20px}
+.search-card,.to-life{box-shadow:none}
+.link-list{box-shadow:none}
+/* ── 대화: 질문은 크게(C), 누비 표시는 노란 동그라미 ── */
+.bubble{box-shadow:none}
+.bot{font-size:18px;font-weight:600;line-height:1.45}
+.bot::before{background:var(--line)!important;color:#14213D!important;border-radius:50%!important}
+.user{font-weight:600}
+.answers .btn{min-height:56px;font-size:17px}
+/* ── 노선도(A): 노란 선 + 남색 고리 역 ── */
+.line{margin-top:18px}
+.stn{padding-bottom:22px}
+.stn::before{border-left:5px solid var(--line)!important;left:16px!important}
+.stn.seg-off::before{border-left:5px dashed var(--border)!important}
+.dot{background:var(--card)!important;border:4px solid var(--text)!important;box-shadow:none!important}
+.stn.done .dot{background:var(--text)!important}
+.stn.done .dot::after{color:var(--card)}
+.stn.current .dot{box-shadow:0 0 0 4px var(--line)!important}
+.dest.reached .dot{background:var(--text)!important;box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--text)!important}
+.stn-title{font-size:17px;font-weight:800}
+.stn.detour::after{border-top:4px dashed var(--sub)!important}
+.line.alt .stn::before{border-left-color:var(--alt)!important}
+.line.alt .dot{border-color:var(--alt)!important}
+/* ── 결과 화면 ── */
+#route-title{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.25}
+.result-head{display:block}
+.result-head .badges{margin-top:6px}
+.basis-line{font-size:13.5px}
+/* 부가 카드는 한 줄로 접는다(C) — 제목을 누르면 펼침 */
+.dt-fold{border:0!important;border-top:1px solid var(--border)!important;border-radius:0!important;margin:0!important;padding:14px 2px!important;background:transparent!important}
+.dt-fold>*:not(h3){display:none!important}
+.dt-fold.dt-open>*:not(h3){display:revert!important}
+.dt-fold>h3{margin:0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:16px}
+.dt-fold>h3::after{content:"+";font-size:22px;font-weight:400;color:var(--sub)}
+.dt-fold.dt-open>h3::after{content:"−"}
+.dt-fold.dt-open>h3{margin-bottom:10px}
+.dt-fold-end{border-bottom:1px solid var(--border)!important}
+/* ── 단계 화면: 역 이름 크게, 한국어 글자는 키캡처럼 ── */
+.step-dots li{height:5px;border-radius:0;background:var(--border)}
+.step-dots li.done,.step-dots li.cur{background:var(--line);opacity:1}
+.step-card h3{font-size:26px!important;letter-spacing:-.03em;line-height:1.25}
+.step-card ol li{font-size:17px;line-height:1.5}
+.step-card ol li::before{background:var(--text);color:var(--card)}
+.ko-labels{background:transparent!important;padding:0!important;border:0!important}
+.ko-labels ul{gap:8px}
+.ko-labels li{background:var(--card)!important;border:1px solid var(--sub)!important;border-bottom-width:3px!important;border-radius:7px!important;padding:3px 8px!important;font-weight:700;font-size:13.5px}
+/* 단계 화면: 화면 제목은 빼고 역 이름이 제목(C) */
+body[data-scr="steps"] main>section>h2{display:none}
+/* 노선도 안 제한 안내(16개국 등): 제목만 보이고 눌러서 펼침(C) */
+.dt-wfold .wbox-h{cursor:pointer}
+.dt-wfold .wbox-h::after{content:" ▾";font-weight:400}
+.dt-wfold.dt-open .wbox-h::after{content:" ▴"}
+.dt-wfold:not(.dt-open) .wbox-cc,.dt-wfold:not(.dt-open) .wbox-do{display:none}
+/* 막혔을 때 = 환승 카드 */
+.sim-card{border:2px solid var(--xfer)!important;border-radius:14px!important;background:var(--card)!important}
+.sim-card h4{display:flex;align-items:center;gap:8px;color:var(--xfer)!important}
+.sim-card h4::before{content:"⇄";flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border:2px solid var(--xfer);border-radius:7px;font-size:15px}
+.sim-card .btn-primary{background:var(--xfer);color:#fff}
+.wbox{border-radius:10px}
+/* ── 레퍼런스 반영(11-17 12:20): ①정거장 도장 ②캐릭터+말풍선 ③상태색 ④큰 숫자 ⑤한 단어 색 ⑥검정 캡슐 탭 ── */
+:root{--band-ok:#DCF3E4;--band-det:#FFE8D2;--band-stop:#E6E8EC;--ok-ink:#17643A;--det-ink:#9A3412;--stop-ink:#3B4457}
+@media (prefers-color-scheme: dark){:root{--band-ok:#173A27;--band-det:#43290F;--band-stop:#262C3A;--ok-ink:#8FE0B0;--det-ink:#FDBA74;--stop-ink:#C3CAD8}}
+.nb-band{display:grid;grid-template-columns:64px 1fr;gap:4px 12px;align-items:center;margin:-18px -18px 16px;padding:16px 18px;border-radius:var(--radius) var(--radius) 0 0;background:var(--band-ok)}
+.nb-band.st-det{background:var(--band-det)}.nb-band.st-stop{background:var(--band-stop)}
+.nb-band.nb-solo{margin:10px 0 14px;border-radius:16px}
+.nb-face{width:64px;height:64px;grid-row:1/3}
+.nb-face svg{width:64px;height:64px;display:block}
+.nb-say{position:relative;justify-self:start;background:var(--card);color:var(--text);font-weight:700;font-size:15px;line-height:1.4;padding:8px 12px;border-radius:14px;border:1.5px solid var(--text)}
+.nb-say::before{content:"";position:absolute;left:-8px;top:50%;width:12px;height:12px;background:var(--card);border-left:1.5px solid var(--text);border-bottom:1.5px solid var(--text);transform:translateY(-50%) rotate(45deg)}
+.nb-big{display:flex;align-items:baseline;gap:8px;color:var(--ok-ink)}
+.st-det .nb-big{color:var(--det-ink)}.st-stop .nb-big{color:var(--stop-ink)}
+.nb-big b{font-size:44px;font-weight:900;letter-spacing:-.04em;line-height:1}
+.nb-big span{font-size:14px;font-weight:700}
+.nb-start{display:flex;align-items:center;gap:12px;margin:18px 0 -8px}
+.nb-start .nb-face,.nb-start .nb-face svg{width:52px;height:52px}
+.nb-hl{background:linear-gradient(transparent 58%,var(--line) 58%);padding:0 2px}
+@media (prefers-color-scheme: dark){.nb-hl{background:none;color:var(--line)}}
+/* 단계 진행: 막대 → 역(동그라미)으로 */
+.step-dots{gap:0!important;align-items:center;margin:12px 6px 14px!important}
+.step-dots li{position:relative;flex:1;height:5px!important;border-radius:0!important;background:var(--border)!important;opacity:1!important}
+.step-dots li::before{content:"";position:absolute;left:-7px;top:50%;width:16px;height:16px;border-radius:50%;transform:translateY(-50%);background:var(--card);border:3px solid var(--text);box-sizing:border-box}
+.step-dots li.done{background:var(--line)!important}
+.step-dots li.done::before{background:var(--text)}
+.step-dots li.cur::before{box-shadow:0 0 0 4px var(--line)}
+/* 노선도 통과 도장·지금 여기 */
+.nb-stamp{display:inline-block;margin-left:6px;font-size:11px;font-weight:900;letter-spacing:.04em;color:var(--ok-ink);border:2px solid var(--ok-ink);border-radius:6px;padding:0 6px;transform:rotate(-6deg)}
+/* 도장·'지금 여기'가 같은 뜻의 작은 표시(완료·현재 단계)를 대신한다 — '아직 확인 전' 같은 근거 표시(.nv)는 그대로 */
+.line .stn.done .stn-head .tag:not(.nv),body[data-scr="steps"] .line .stn.current .stn-head .tag:not(.nv){display:none}
+.nb-here{display:inline-block;margin-left:6px;font-size:11.5px;font-weight:800;color:#14213D;background:var(--line);border-radius:999px;padding:1px 8px}
+/* 아래 탭: 검정 캡슐 + 흰 알약 */
+#tabbar{left:12px!important;right:12px!important;bottom:calc(10px + env(safe-area-inset-bottom))!important;max-width:440px;margin:0 auto;background:#14213D!important;border:0!important;border-radius:999px;padding:6px;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:0 8px 24px -8px rgba(20,33,61,.5)}
+@media (prefers-color-scheme: dark){#tabbar{background:#000!important}}
+#tabbar .tb-in{gap:4px}
+#tabbar a{flex-direction:row!important;gap:6px!important;min-height:46px!important;border-radius:999px!important;color:#AEB6C6!important;font-size:13px!important}
+#tabbar a[aria-current="page"]{background:#fff!important;color:#14213D!important}
+body.has-tabbar{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
+body.has-tabbar .cta-sticky{bottom:calc(70px + env(safe-area-inset-bottom))}
+
+/* ── 11-17 12:40 사용자: 동글동글 + 글로우 + 생활 탭 점검 · 색은 팔레트 안 2(날씨 앱 감각, 색_팔레트_1117.html) ── */
+:root{
+  --bg:#F6F4E6; --card:#FFFFFF; --text:#102A21; --sub:#5B6B63; --border:#E7E3D2;
+  --accent:#00482F; --accent-bg:#00482F; --accent-ink:#00482F; --accent-soft:#E6F1EA; --accent-soft2:#D3E7DA; --on-accent:#FFFFFF;
+  --line:#F2C94C; --focus:#00482F; --user-bg:#00482F; --user-tx:#FFFFFF; --radius:24px;
+  --band-ok:#0A8A58; --band-det:#B85A1F; --band-stop:#4F6372; --ok-ink:#FFFFFF; --det-ink:#FFFFFF; --stop-ink:#FFFFFF;
+  --glow:rgba(242,201,76,.55); --glow-g:rgba(10,138,88,.35); --soft:0 12px 32px -18px rgba(16,42,33,.35);
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0E1714; --card:#16221D; --text:#EAF1EC; --sub:#A7B8AE; --border:#25352E;
+  --accent:#F2C94C; --accent-bg:#F2C94C; --accent-ink:#F5D670; --accent-soft:#1F2E27; --accent-soft2:#2A3C33; --on-accent:#102A21;
+  --user-bg:#F2C94C; --user-tx:#102A21; --band-ok:#0A7A4E; --band-det:#9E4C19; --band-stop:#41525F;
+  --glow:rgba(242,201,76,.45); --glow-g:rgba(46,204,140,.3); --soft:0 12px 32px -18px rgba(0,0,0,.7);
+}}
+/* 동글동글: 카드 24 · 버튼·칩 알약 · 입력 18 */
+.card,.menu-group,.link-list,.jlist,.search-card,.to-life{border-radius:24px!important}
+.card{border:1px solid var(--border);box-shadow:var(--soft)}
+.btn{border-radius:999px!important}
+.chip,.opt,.badge,.tag,.lang-select,.seg,.btn-small{border-radius:999px!important}
+input,textarea,.item-in,.search{border-radius:18px!important}
+.bubble{border-radius:22px!important}
+.ko-labels li{border-radius:12px!important}
+.wbox{border-radius:18px!important}
+.sim-card{border-radius:22px!important}
+/* 글로우: 주 버튼·현재 역·캐릭터·선택된 것 */
+.btn-primary{box-shadow:0 10px 24px -10px var(--glow-g),inset 0 1px 0 rgba(255,255,255,.18)!important}
+.btn-primary:hover{box-shadow:0 12px 30px -8px var(--glow-g),0 0 0 4px var(--accent-soft)!important}
+.btn-outline{border-width:2px}
+.chip[aria-pressed="true"],.opt-row[aria-pressed="true"],.answers .btn[aria-pressed="true"]{box-shadow:0 0 0 4px var(--accent-soft),0 6px 18px -8px var(--glow-g)}
+.stn.current .dot{box-shadow:0 0 0 4px var(--line),0 0 18px 6px var(--glow)!important;animation:nbPulse 2.2s ease-in-out infinite}
+.step-dots li.cur::before{box-shadow:0 0 0 4px var(--line),0 0 14px 5px var(--glow);animation:nbPulse 2.2s ease-in-out infinite}
+@keyframes nbPulse{50%{box-shadow:0 0 0 6px var(--line),0 0 26px 10px var(--glow)}}
+@media (prefers-reduced-motion: reduce){.stn.current .dot,.step-dots li.cur::before{animation:none}}
+.nb-face svg{filter:drop-shadow(0 0 10px var(--glow)) drop-shadow(0 4px 6px rgba(0,0,0,.12))}
+/* 상태 띠: 진한 색 + 캐릭터 뒤 빛 번짐(날씨 앱) */
+.nb-band{background:radial-gradient(circle at 46px 46%,rgba(255,255,255,.42) 0,rgba(255,255,255,.12) 46px,transparent 80px),var(--band-ok)!important;color:#fff}
+.nb-band.st-det{background:radial-gradient(circle at 46px 46%,rgba(255,236,200,.5) 0,rgba(255,236,200,.14) 46px,transparent 80px),var(--band-det)!important}
+.nb-band.st-stop{background:radial-gradient(circle at 46px 46%,rgba(220,235,245,.4) 0,rgba(220,235,245,.1) 46px,transparent 80px),var(--band-stop)!important}
+.nb-band{border-radius:24px 24px 0 0}
+.nb-band.nb-solo{border-radius:24px!important;box-shadow:0 14px 30px -18px rgba(0,0,0,.45)}
+.nb-say{border:0!important;box-shadow:0 6px 16px -8px rgba(0,0,0,.35)}
+.nb-say::before{border:0!important}
+.nb-big b{text-shadow:0 0 22px rgba(255,255,255,.35)}
+.nb-big span{opacity:.9}
+.nb-stamp{color:var(--accent-ink);border-color:var(--accent-ink);border-radius:999px}
+@media (prefers-color-scheme: dark){.nb-stamp{color:var(--line);border-color:var(--line)}}
+.nb-start .nb-say{border:1.5px solid var(--border)!important}
+/* 시작: 플랫폼 = 둥근 카드 3개 */
+.start-card{border:0!important;box-shadow:none!important;background:transparent!important;padding:0!important}
+.plat-row{border-top:0!important;gap:10px!important}
+.plat-row .btn.plat{background:var(--card)!important;border:1px solid var(--border)!important;border-radius:24px!important;box-shadow:var(--soft);padding:12px 14px!important}
+.plat-row .btn.plat:hover{box-shadow:0 0 0 4px var(--accent-soft),var(--soft)}
+.plat::before{box-shadow:0 0 0 4px rgba(255,255,255,.9),0 6px 16px -6px rgba(0,0,0,.35)}
+[data-fid="plat-coupang"]::before{background:#00482F}[data-fid="plat-naver"]::before{background:#0A8A58}[data-fid="plat-baemin"]::before{background:#365EAD}
+/* 메뉴 타일: 글자 목록 → 둥근 아이콘 타일(직접 그린 선 아이콘) */
+.menu-group{background:var(--card)!important;border:1px solid var(--border)!important;box-shadow:var(--soft)!important;padding:16px 10px 10px!important;margin-top:14px!important}
+.menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+.tile{flex-direction:column!important;align-items:center!important;text-align:center!important;border:0!important;border-radius:18px!important;padding:10px 2px!important;gap:8px!important}
+.tile::after{content:none!important}
+.tile .ti{display:grid!important;width:54px;height:54px;border-radius:50%!important;background:radial-gradient(circle at 35% 30%,#fff 0,var(--accent-soft) 60%)!important;color:var(--accent-ink);box-shadow:0 8px 18px -10px var(--glow-g),inset 0 0 0 1px var(--accent-soft2);font-size:0}
+.tile .ti svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tile .tt{font-size:13px!important}
+.tile:hover .ti{box-shadow:0 0 0 4px var(--line),0 8px 22px -6px var(--glow)}
+@media (prefers-color-scheme: dark){.tile .ti{background:radial-gradient(circle at 35% 30%,#2A3C33 0,var(--accent-soft) 60%)!important}}
+/* 접힌 카드도 둥근 알약 줄로 */
+.dt-fold{border:1px solid var(--border)!important;border-radius:22px!important;margin:10px 0!important;padding:14px 18px!important;background:var(--card)!important;box-shadow:var(--soft)}
+.dt-fold-end{border-bottom:1px solid var(--border)!important}
+.dt-fold>h3::after{width:28px;height:28px;border-radius:50%;background:var(--text);color:var(--card)!important;display:grid;place-items:center;font-size:18px!important;line-height:1}
+/* 생활 탭: 진행 막대(체크리스트·도장) + 체크·도장 둥글게 빛나게 */
+.nb-prog{height:12px;border-radius:999px;background:var(--accent-soft);margin:6px 0 12px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.08)}
+.nb-prog i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--line),#F7DC7A);box-shadow:0 0 12px 2px var(--glow);min-width:12px}
+.jcheck{border-radius:50%!important}
+.jcheck[aria-pressed="true"]{box-shadow:0 0 0 4px var(--accent-soft),0 0 14px 2px var(--glow-g)}
+.stage .when{border-radius:999px;box-shadow:0 4px 12px -6px var(--glow-g)}
+.stamps{gap:10px!important}
+.stamp{border-radius:50%!important;aspect-ratio:1/1;border:2px dashed var(--border)!important;background:var(--card)!important;justify-content:center}
+.stamp .nm{font-size:11.5px!important}
+.stamp[aria-pressed="true"]{border:3px solid var(--line)!important;box-shadow:0 0 0 4px rgba(242,201,76,.25),0 0 22px 4px var(--glow)!important}
+.arc-card{background:radial-gradient(circle at 90% 0,rgba(242,201,76,.35),transparent 55%),var(--card)!important}
+
+/* ===== 시험본 2(11-17 13시): 비비드 + if(kakao)25 글로우 + 곰돌이 · 위 규칙을 덮어쓴다 ===== */
+:root{
+  --bg:#F7F8FC; --card:#FFFFFF; --text:#0B1640; --sub:#4A5578; --border:#E3E7F2;
+  --accent:#2F5BFF; --accent-bg:#2F5BFF; --accent-ink:#1F45E0; --accent-soft:#EAF0FF; --accent-soft2:#D5E0FF; --on-accent:#FFFFFF;
+  --line:#FFC400; --focus:#2F5BFF; --user-bg:#2F5BFF; --user-tx:#FFFFFF;
+  --pink:#FF4FA3; --mint:#12C79A; --sky:#38C6F4; --coral:#FF6B57; --violet:#8B5CF6;
+  --glow:rgba(255,196,0,.6); --glow-g:rgba(47,91,255,.45); --glow-p:rgba(255,79,163,.45); --glow-m:rgba(18,199,154,.45);
+  --soft:0 14px 34px -20px rgba(11,22,64,.35);
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0B1020; --card:#141A2E; --text:#EEF1FF; --sub:#AEB6D3; --border:#262E4A;
+  --accent:#6E8BFF; --accent-bg:#6E8BFF; --accent-ink:#9DB0FF; --accent-soft:#1B2442; --accent-soft2:#26305A; --on-accent:#0B1640;
+  --user-bg:#6E8BFF; --user-tx:#0B1640; --glow-g:rgba(110,139,255,.5); --soft:0 14px 34px -20px rgba(0,0,0,.8);
+}}
+body{background:var(--bg)}
+.dtest-banner{background:linear-gradient(90deg,var(--pink),var(--violet),var(--accent));color:#fff}
+.brand-dot{border-color:var(--line)!important;box-shadow:0 0 12px 2px var(--glow)}
+/* 주 버튼: 비비드 파랑 + 파란 빛 */
+.btn-primary{background:var(--accent-bg)!important;color:var(--on-accent)!important;box-shadow:0 10px 26px -8px var(--glow-g),inset 0 1px 0 rgba(255,255,255,.25)!important}
+.btn-outline{border-color:var(--text)!important;color:var(--text)!important}
+/* 상태 띠: 비비드 그라데이션 + 안쪽 빛 */
+.nb-band{background:radial-gradient(circle at 46px 50%,rgba(255,255,255,.5) 0,rgba(255,255,255,.12) 44px,transparent 82px),radial-gradient(circle at 92% 10%,rgba(255,196,0,.55),transparent 40%),linear-gradient(135deg,#08866A,#0FA77F)!important}
+.nb-band.st-det{background:radial-gradient(circle at 46px 50%,rgba(255,255,255,.5) 0,rgba(255,255,255,.12) 44px,transparent 82px),radial-gradient(circle at 92% 10%,rgba(255,79,163,.5),transparent 40%),linear-gradient(135deg,#E0461F,#FF6B3D)!important}
+.nb-band.st-stop{background:radial-gradient(circle at 46px 50%,rgba(255,255,255,.45) 0,rgba(255,255,255,.1) 44px,transparent 82px),radial-gradient(circle at 92% 10%,rgba(56,198,244,.55),transparent 40%),linear-gradient(135deg,#4C4CE0,#7B61FF)!important}
+.nb-band.nb-solo{box-shadow:0 16px 34px -18px rgba(224,70,31,.55)}
+/* 곰돌이 */
+.bot::before{content:"\1F43B"!important;background:radial-gradient(circle,#fff 0,#FFF3C4 70%)!important;font-size:17px!important;box-shadow:0 0 10px 2px var(--glow)}
+.nb-bear{display:grid!important;place-items:center;font-size:46px;line-height:1;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95) 0,rgba(255,255,255,.55) 55%,transparent 72%);filter:drop-shadow(0 0 12px var(--glow))}
+.nb-start .nb-bear{font-size:38px;width:56px;height:56px;background:radial-gradient(circle,#fff 0,#FFF3C4 60%,transparent 74%)}
+/* 시작 화면: if(kakao)25 같은 빛나는 도형 */
+main>section{position:relative}
+.nb-orbs{position:absolute;left:-16px;right:-16px;top:-8px;height:180px;overflow:hidden;pointer-events:none;z-index:0}
+main>section>*:not(.nb-orbs){position:relative;z-index:1}
+.nb-orbs i{position:absolute;display:block}
+.nb-orbs .o1{width:110px;height:110px;right:-38px;top:-16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFB3DA,#FF4FA3 60%,#C2187A);box-shadow:0 0 40px 10px var(--glow-p);opacity:.9}
+.nb-orbs .o2{width:44px;height:44px;right:74px;top:-16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#BFD0FF,#2F5BFF 65%);box-shadow:0 0 26px 6px var(--glow-g);opacity:.9}
+.nb-orbs .o3{width:34px;height:34px;right:10px;top:106px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF1A8,#FFC400 70%);box-shadow:0 0 22px 6px var(--glow)}
+.nb-orbs .o4{width:18px;height:18px;right:86px;top:58px;border-radius:50%;background:var(--mint);box-shadow:0 0 16px 4px var(--glow-m)}
+.nb-orbs .o5{width:12px;height:12px;right:124px;top:6px;border-radius:50%;background:var(--sky);box-shadow:0 0 12px 3px rgba(56,198,244,.5)}
+.nb-orbs [class^="b"]{height:8px;border-radius:999px;opacity:.9}
+.nb-orbs .b1{width:46px;background:var(--violet);right:8px;top:70px;transform:rotate(-38deg);box-shadow:0 0 12px rgba(139,92,246,.6)}
+.nb-orbs .b2{width:36px;background:var(--line);right:100px;top:16px;transform:rotate(52deg);box-shadow:0 0 12px var(--glow)}
+.nb-orbs .b3{width:30px;background:var(--coral);right:-8px;top:146px;transform:rotate(18deg);box-shadow:0 0 10px rgba(255,107,87,.6)}
+.nb-orbs .b4{width:26px;background:var(--sky);right:150px;top:-4px;transform:rotate(-12deg)}
+.nb-orbs .b5,.nb-orbs .b6{display:none}
+@media (prefers-reduced-motion: no-preference){
+  .nb-orbs i{animation:nbFloat 6s ease-in-out infinite}
+  .nb-orbs i:nth-child(2n){animation-duration:7.5s;animation-direction:alternate-reverse}
+  .nb-orbs i:nth-child(3n){animation-duration:9s}
+}
+@keyframes nbFloat{50%{translate:0 -8px}}
+.start-q{text-shadow:0 0 18px var(--bg),0 0 2px var(--bg)}
+.nb-hl{background:linear-gradient(transparent 56%,var(--line) 56%)!important;color:inherit!important;box-shadow:none}
+/* 플랫폼 카드: 비비드 동그라미 + 빛 */
+[data-fid="plat-coupang"]::before{background:linear-gradient(135deg,#2F5BFF,#5B7CFF)!important;box-shadow:0 0 0 4px #fff,0 8px 20px -6px var(--glow-g)!important}
+[data-fid="plat-naver"]::before{background:linear-gradient(135deg,#0FA77F,#12C79A)!important;box-shadow:0 0 0 4px #fff,0 8px 20px -6px var(--glow-m)!important}
+[data-fid="plat-baemin"]::before{background:linear-gradient(135deg,#E8368F,#FF4FA3)!important;box-shadow:0 0 0 4px #fff,0 8px 20px -6px var(--glow-p)!important}
+/* 메뉴 아이콘: 칸마다 다른 비비드 빛 */
+.menu-grid .tile:nth-child(6n+1) .ti{background:radial-gradient(circle at 35% 30%,#fff,#DCE5FF 65%)!important;color:#2F5BFF;box-shadow:0 8px 20px -8px var(--glow-g)}
+.menu-grid .tile:nth-child(6n+2) .ti{background:radial-gradient(circle at 35% 30%,#fff,#FFD9EC 65%)!important;color:#D0277A;box-shadow:0 8px 20px -8px var(--glow-p)}
+.menu-grid .tile:nth-child(6n+3) .ti{background:radial-gradient(circle at 35% 30%,#fff,#CFF5EA 65%)!important;color:#0A8F6E;box-shadow:0 8px 20px -8px var(--glow-m)}
+.menu-grid .tile:nth-child(6n+4) .ti{background:radial-gradient(circle at 35% 30%,#fff,#FFF0B8 65%)!important;color:#9A6B00;box-shadow:0 8px 20px -8px var(--glow)}
+.menu-grid .tile:nth-child(6n+5) .ti{background:radial-gradient(circle at 35% 30%,#fff,#E9DFFF 65%)!important;color:#6D3FE0;box-shadow:0 8px 20px -8px rgba(139,92,246,.5)}
+.menu-grid .tile:nth-child(6n+6) .ti{background:radial-gradient(circle at 35% 30%,#fff,#D3F1FD 65%)!important;color:#0B84B5;box-shadow:0 8px 20px -8px rgba(56,198,244,.5)}
+/* 도장·지금 여기 표시 빼기 → 지난 역 = 빛나는 체크, 지금 역 = 곰돌이 */
+.nb-stamp,.nb-here{display:none!important}
+.line .stn.done .stn-head .tag:not(.nv){display:inline-flex!important}
+.stn.done .dot{background:var(--mint)!important;border-color:var(--mint)!important;box-shadow:0 0 0 4px rgba(18,199,154,.18),0 0 14px 3px var(--glow-m)!important}
+.stn.done .dot::after{color:#fff!important}
+.stn::before{border-left-color:var(--line)!important}
+body[data-scr="steps"] .stn.current .dot{width:34px!important;height:34px!important;left:1px!important;top:-7px!important;background:#fff!important;border:3px solid var(--line)!important;animation:nbPulse 2.2s ease-in-out infinite}
+body[data-scr="steps"] .stn.current .dot::after{content:"\1F43B";position:absolute;inset:0;display:grid;place-items:center;font-size:19px;line-height:1}
+/* 진행 막대(단계): 지난 점 = 민트 체크, 지금 = 곰돌이 + 위 말풍선 */
+.step-dots{margin-top:44px!important}
+.step-dots li.done{background:var(--line)!important}
+.step-dots li.done::before{background:var(--mint)!important;border-color:var(--mint)!important;box-shadow:0 0 10px 2px var(--glow-m)}
+.step-dots li.cur::before{content:"\1F43B";display:grid;place-items:center;width:34px!important;height:34px!important;left:-14px!important;background:#fff!important;border:3px solid var(--line)!important;font-size:18px;line-height:1}
+.step-dots li.cur::after{content:attr(data-tip);position:absolute;left:4px;bottom:24px;transform:translateX(-50%);white-space:nowrap;background:var(--text);color:var(--card);font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;box-shadow:0 6px 16px -6px rgba(11,22,64,.5)}
+/* 진행 막대(생활): 비비드 그라데이션 */
+.nb-prog i{background:linear-gradient(90deg,var(--pink),var(--line))!important;box-shadow:0 0 14px 2px var(--glow-p)!important}
+.stamp[aria-pressed="true"]{border-color:var(--pink)!important;box-shadow:0 0 0 4px rgba(255,79,163,.18),0 0 22px 4px var(--glow-p)!important}
+.jcheck[aria-pressed="true"]{box-shadow:0 0 0 4px rgba(18,199,154,.2),0 0 14px 2px var(--glow-m)!important}
+/* 아래 탭: 남색 캡슐 + 파란 빛 */
+#tabbar{background:#0B1640!important;box-shadow:0 10px 30px -10px var(--glow-g)!important}
+#tabbar a[aria-current="page"]{box-shadow:0 0 16px 2px rgba(255,255,255,.35)}
+.arc-card{background:radial-gradient(circle at 92% 0,rgba(255,79,163,.28),transparent 50%),radial-gradient(circle at 0 100%,rgba(47,91,255,.18),transparent 45%),var(--card)!important}
+.dt-fold>h3::after{background:var(--accent-bg)!important;color:#fff!important;box-shadow:0 4px 12px -4px var(--glow-g)}
+
+/* ===== 시험본 2 수정(11-17 13:20) — 사용자: '못생김', 새 레퍼런스(if(kakao)25 첫 화면 전체 · 씨네큐브 앱) 다시 보기,
+   흰 배경에 대비되게 · 글로우 줄이기 · 그라데이션 쓰지 않기. → 흰 바탕 + 검정 글자·검정 알약 버튼 + 라임 포인트 + 단색 도형(번짐 없음) ===== */
+:root{
+  --bg:#FFFFFF; --card:#FFFFFF; --surface:#F2F3F5; --text:#111111; --sub:#5C6370; --border:#E6E8EC;
+  --accent:#111111; --accent-bg:#111111; --accent-ink:#111111; --accent-soft:#F2F3F5; --accent-soft2:#E6E8EC; --on-accent:#FFFFFF;
+  --line:#C8F04B; --lime:#C8F04B; --lime-ink:#3F6B00; --focus:#111111; --user-bg:#111111; --user-tx:#FFFFFF;
+  --k-blue:#2F6BFF; --k-pink:#F28AE6; --k-coral:#F0644F; --k-yellow:#FFD84A; --k-mint:#4FD1A0; --k-sky:#6FD3F5; --k-violet:#B48CF2;
+  --soft:none; --glow:transparent; --glow-g:transparent; --glow-p:transparent; --glow-m:transparent;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0F0F10; --card:#1A1B1E; --surface:#24262A; --text:#F3F4F6; --sub:#A9AFBA; --border:#2E3036;
+  --accent:#C8F04B; --accent-bg:#C8F04B; --accent-ink:#C8F04B; --accent-soft:#24262A; --accent-soft2:#2E3036; --on-accent:#111111;
+  --user-bg:#C8F04B; --user-tx:#111111; --lime-ink:#C8F04B;
+}}
+body{background:var(--bg)!important}
+#top{background:var(--bg)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.dtest-banner{background:#111!important;color:var(--lime)!important}
+.brand-dot{border-color:var(--text)!important;box-shadow:none!important;background:var(--lime)!important}
+/* 그라데이션·빛 번짐 없애기: 카드·버튼은 선과 면으로만 */
+.card,.menu-group,.plat-row .btn.plat,.dt-fold,.nb-band.nb-solo{box-shadow:none!important}
+.card,.menu-group{border:1.5px solid var(--border)!important}
+.btn-primary{background:var(--accent-bg)!important;color:var(--on-accent)!important;box-shadow:none!important}
+.btn-primary:hover{box-shadow:0 0 0 3px var(--lime)!important}
+.btn-outline{background:var(--card)!important;border:2px solid var(--text)!important;color:var(--text)!important}
+.chip[aria-pressed="true"],.opt-row[aria-pressed="true"],.answers .btn[aria-pressed="true"]{box-shadow:0 0 0 3px var(--lime)!important}
+.bubble.user{background:var(--user-bg)!important;color:var(--user-tx)!important}
+/* 상태 띠: 단색 + 검정 글자(라임 = 결제까지 · 주황 = 우회 · 회색 = 막힘) */
+.nb-band{background:var(--lime)!important;color:#111!important}
+.nb-band.st-det{background:#FFA94D!important}
+.nb-band.st-stop{background:#DADDE3!important}
+.nb-big,.st-det .nb-big,.st-stop .nb-big{color:#111!important}
+.nb-big b{text-shadow:none!important}
+.nb-say{background:#fff!important;color:#111!important;border:2px solid #111!important;box-shadow:none!important}
+.nb-say::before{background:#fff!important;border-left:2px solid #111!important;border-bottom:2px solid #111!important}
+.nb-start .nb-say{border:2px solid #111!important}
+/* 곰돌이: 빛 대신 흰 동그라미 + 검정 테두리 */
+.nb-bear{background:#fff!important;border:2px solid #111;filter:none!important;width:62px!important;height:62px!important;font-size:40px!important}
+.nb-start .nb-bear{width:54px!important;height:54px!important;font-size:34px!important;background:var(--lime)!important}
+.bot::before{background:var(--lime)!important;box-shadow:none!important;border:1.5px solid #111}
+/* 시작 화면 도형: if(kakao)25처럼 단색·번짐 없음 */
+.nb-orbs i{box-shadow:none!important;opacity:1!important;filter:none!important}
+.nb-orbs .o1{background:var(--k-pink)!important}
+.nb-orbs .o2{background:var(--k-blue)!important}
+.nb-orbs .o3{background:var(--k-yellow)!important}
+.nb-orbs .o4{background:var(--k-mint)!important}
+.nb-orbs .o5{background:var(--k-coral)!important}
+.nb-orbs .b1{background:var(--k-violet)!important}.nb-orbs .b2{background:var(--k-yellow)!important}
+.nb-orbs .b3{background:var(--k-coral)!important}.nb-orbs .b4{background:var(--k-sky)!important}
+.start-q{text-shadow:none!important}
+.nb-hl{background:var(--lime)!important;color:#111!important;border-radius:6px;padding:0 4px}
+.start-card.card{border:0!important;background:transparent!important}
+/* 플랫폼 카드: 회색 면 + 단색 동그라미 */
+.plat-row .btn.plat{background:var(--surface)!important;border:0!important}
+.plat-row .btn.plat:hover{box-shadow:0 0 0 2px var(--text)!important}
+[data-fid="plat-coupang"]::before{background:var(--k-blue)!important;box-shadow:none!important}
+[data-fid="plat-naver"]::before{background:#1E9E6A!important;box-shadow:none!important}
+[data-fid="plat-baemin"]::before{background:#D6457F!important;box-shadow:none!important}
+/* 메뉴 타일: 씨네큐브처럼 회색 둥근 네모 + 검정 선 아이콘 */
+.menu-group{background:var(--card)!important}
+.menu-grid{gap:8px!important}
+.tile{background:var(--surface)!important;border-radius:18px!important;padding:14px 4px 12px!important}
+.tile .ti,.menu-grid .tile:nth-child(n) .ti{background:transparent!important;box-shadow:none!important;color:var(--text)!important;width:34px!important;height:34px!important}
+.tile .ti svg{width:28px!important;height:28px!important;stroke-width:1.8}
+.tile:hover{box-shadow:0 0 0 2px var(--text)}
+.tile:hover .ti{box-shadow:none!important}
+/* 노선도·진행: 라임 선 + 검정 역, 빛은 아주 조금만(지금 역) */
+.stn::before{border-left-color:var(--lime)!important}
+.dot{border-color:var(--text)!important}
+.stn.done .dot{background:var(--text)!important;border-color:var(--text)!important;box-shadow:none!important}
+.stn.done .dot::after{color:var(--lime)!important}
+body[data-scr="steps"] .stn.current .dot,.stn.current .dot{animation:none!important;box-shadow:0 0 0 4px var(--lime)!important;border-color:var(--text)!important}
+body[data-scr="steps"] .stn.current .dot{border:2px solid var(--text)!important}
+.step-dots li{background:var(--border)!important}
+.step-dots li.done{background:var(--lime)!important}
+.step-dots li.done::before{background:var(--text)!important;border-color:var(--text)!important;box-shadow:none!important}
+.step-dots li.cur::before{animation:none!important;border:2px solid var(--text)!important;box-shadow:0 0 0 4px var(--lime)!important;background:#fff!important}
+.step-dots li.cur::after{background:#111!important;color:var(--lime)!important;box-shadow:none!important}
+/* 접기·진행 막대·도장·체크 */
+.dt-fold{background:var(--surface)!important;border:0!important}
+.dt-fold>h3::after{background:#111!important;color:var(--lime)!important;box-shadow:none!important}
+.nb-prog{background:var(--surface)!important;box-shadow:none!important}
+.nb-prog i{background:var(--text)!important;box-shadow:none!important}
+.jcheck[aria-pressed="true"]{box-shadow:0 0 0 3px var(--lime)!important}
+.stamp{background:var(--surface)!important;border:0!important}
+.stamp[aria-pressed="true"]{background:var(--lime)!important;border:2px solid #111!important;box-shadow:none!important}
+.arc-card{background:var(--surface)!important;border:0!important}
+.wbox{background:#FFF4E5!important;border-left-color:#FFA94D!important}
+.sim-card{border-color:#111!important}
+.sim-card h4{color:#111!important}
+.sim-card h4::before{border-color:#111!important;background:var(--lime)}
+.sim-card .btn-primary{background:#111!important;color:#fff!important}
+/* 아래 탭: 검정 캡슐 + 라임 알약 */
+#tabbar{background:#111!important;box-shadow:none!important}
+#tabbar a[aria-current="page"]{background:var(--lime)!important;color:#111!important;box-shadow:none!important}
+@media (prefers-color-scheme: dark){
+  .nb-say,.nb-say::before{background:#fff!important}
+  .tile .ti,.menu-grid .tile .ti{color:var(--text)!important}
+  .step-dots li.cur::before{background:var(--card)!important}
+}
+
+/* ===== 시험본 2 · 도장깨기 = 스탬프 여정(11-17 13:30) — ABC Camp 출석 길 레퍼런스: 굽이진 길 + 번호 + 잉크 도장 ===== */
+.stamps{position:relative;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:30px 26px!important;max-width:400px;margin:18px auto 8px!important;padding:14px 14px 6px;counter-reset:nbst;box-sizing:border-box;width:100%}
+.stamp{min-width:0;width:100%;min-height:0!important;height:auto!important;aspect-ratio:1/1!important;overflow:visible}
+.stamp .ico{font-size:24px!important;line-height:1}
+.stamp[aria-pressed="true"] .nm{font-size:10.5px!important;line-height:1.15}
+.stamp[aria-pressed="true"] .dt{margin-top:1px!important}
+.stamp .nm{white-space:normal!important;word-break:keep-all;overflow-wrap:anywhere;font-size:11px!important}
+.nb-path{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+.nb-path path{fill:none;stroke:#C9CDD4;stroke-width:4;stroke-dasharray:2 9;stroke-linecap:round}
+.nb-path path.on{stroke:#111;stroke-dasharray:none;stroke-width:5}
+.stamp{position:relative;z-index:1;counter-increment:nbst;border-radius:50%!important;aspect-ratio:1/1;background:#fff!important;border:2px dashed #C9CDD4!important;box-shadow:none!important;padding:6px!important;gap:2px!important;transition:transform .15s ease}
+.stamp::before{content:counter(nbst);position:absolute;top:-8px;left:-6px;min-width:24px;height:24px;padding:0 6px;border-radius:999px;background:#fff;border:2px solid #C9CDD4;color:var(--sub);font-size:12px;font-weight:800;display:grid;place-items:center;line-height:1}
+.stamp:first-of-type::before{content:"START";background:#111;border-color:#111;color:var(--lime)}
+.stamp .ico{font-size:28px!important}
+.stamp .nm{font-size:11.5px!important;font-weight:700}
+/* 받은 도장: 잉크 도장처럼 이중 테두리 + 살짝 기울임 */
+.stamp[aria-pressed="true"]{background:var(--lime)!important;border:3px solid #111!important;box-shadow:inset 0 0 0 4px var(--lime),inset 0 0 0 6px #111!important;transform:rotate(-7deg)}
+.stamp[aria-pressed="true"]:nth-of-type(even){transform:rotate(6deg)}
+.stamp[aria-pressed="true"]::before{background:#111;border-color:#111;color:var(--lime)}
+.stamp[aria-pressed="true"] .dt{display:inline-block;margin-top:2px;background:#111;color:var(--lime);font-size:10.5px;font-weight:800;padding:1px 7px;border-radius:999px}
+.stamp:active{transform:scale(.96)}
+/* 찍히는 움직임은 뺌: 화면이 다시 그려질 때마다 모든 도장이 다시 움직여서 */
+@keyframes nbStampIn{0%{transform:scale(1.25) rotate(-12deg);opacity:.4}100%{transform:rotate(-7deg);opacity:1}}
+/* 도착 표시 */
+.nb-goal{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px auto 4px;max-width:420px;padding:10px 14px;border-radius:999px;background:#111;color:#fff;font-weight:800;font-size:14px}
+.nb-goal b{color:var(--lime);font-size:18px}
+.nb-goal span.bear{font-size:22px;line-height:1}
+@media (prefers-color-scheme: dark){.stamp{background:var(--card)!important}.stamp::before{background:var(--card)}}
+
+/* ===== 시험본 2 · 겉줄 얇게(11-17 14시) — 디자인 피드백 '겉줄이 너무 굵다': 검정 2~4px 테두리 → 없애거나 1~1.5px ===== */
+/* 로고: 굵은 고리 → 라임 동그라미 + 가운데 작은 검정 점 */
+.brand-dot{border:0!important;background:var(--lime)!important;position:relative}
+.brand-dot::after{content:""!important;display:block!important;position:absolute;inset:7px;border-radius:50%;background:#111}
+/* 곰돌이·대화 아바타: 테두리 없이 면만 */
+.nb-bear,.nb-start .nb-bear{border:0!important}
+.bot::before{border:0!important}
+/* 말풍선: 검정 2px → 연회색 1px */
+.nb-say,.nb-start .nb-say{border:1px solid #DADDE3!important}
+.nb-say::before{border-left:1px solid #DADDE3!important;border-bottom:1px solid #DADDE3!important}
+.nb-band .nb-say{border-color:transparent!important}
+.nb-band .nb-say::before{border-color:transparent!important}
+/* 카드·버튼·칩 */
+.card,.menu-group{border-width:1px!important}
+.btn-outline{border-width:1.5px!important}
+.chip{border-width:1px!important}
+.ko-labels li{border:1px solid #C9CDD4!important;border-bottom-width:2px!important}
+.sim-card{border-width:1.5px!important}
+.sim-card h4::before{border-width:1.5px!important}
+.wbox{border-left-width:3px!important}
+/* 노선도 역·진행 점 */
+.dot{border-width:2.5px!important}
+body[data-scr="steps"] .stn.current .dot{border-width:1.5px!important}
+.step-dots li::before{border-width:2px!important}
+.step-dots li.cur::before{border-width:1.5px!important}
+.nb-path path{stroke-width:3!important}
+.nb-path path.on{stroke-width:3!important}
+/* 도장: 이중 테두리를 얇게(바깥 2px + 안쪽 1px) */
+.stamp{border-width:1.5px!important}
+.stamp::before{border-width:1.5px!important}
+.stamp[aria-pressed="true"]{border:2px solid #111!important;box-shadow:inset 0 0 0 3px var(--lime),inset 0 0 0 4px #111!important}
+
+/* ===== 겉줄 다시(11-17 15시) — 사용자: '줄이 아예 사라졌다' → 없애지 말고 검정 선을 얇게(2~4px → 1.5px) ===== */
+.brand-dot{border:2px solid #111!important;background:var(--lime)!important}
+.brand-dot::after{display:none!important}
+.nb-bear,.nb-start .nb-bear{border:1.5px solid #111!important}
+.bot::before{border:1px solid #111!important}
+.nb-say,.nb-start .nb-say,.nb-band .nb-say{border:1.5px solid #111!important}
+.nb-say::before,.nb-band .nb-say::before{border-left:1.5px solid #111!important;border-bottom:1.5px solid #111!important}
+
+/* ===== 주 버튼 줄 고정(11-17 15:20) — 사용자: '단계 시작' 줄이 아래 탭 위로 떠다니지 말고 원래 자리(카드 끝)에 그대로 ===== */
+.cta-sticky,body.has-tabbar .cta-sticky{position:static!important;bottom:auto!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:transparent!important;box-shadow:none!important;border-top:1px solid var(--border)!important}
+
+/* 11-17 15:40 사용자: 접힌 카드에 제목이 두 개(건강보험 '보험료는 이렇게 정해져요'+'안 내면 이렇게 돼요')라 [+]가 겹쳐 보임
+   → 접혀 있을 땐 첫 제목만, 펼치면 두 번째 제목은 보통 제목으로(동그라미 없음) */
+.dt-fold:not(.dt-open)>h3~h3{display:none!important}
+.dt-fold>h3~h3{cursor:auto!important}
+.dt-fold>h3~h3::after{content:none!important;display:none!important}
+.dt-fold.dt-open>h3~h3{display:block!important;margin:16px 0 8px!important}
+
+/* 11-18 사용자: 'Over 30 days old(30일 지난 근거)' 문구는 처음엔 표시만, 누르면 문구가 보이게
+   (11-18 수정) 표시는 동그라미 대신 펼친 모양과 같은 연주황 상자 + ⚠ 세모 · 같은 칸의 같은 문구는 하나만 */
+.warn.nb-wf{cursor:pointer}
+.warn.nb-wf:not(.open){display:inline-flex!important;align-items:center;justify-content:center;width:auto;height:auto;min-width:0;padding:3px 9px!important;margin:6px 0 2px!important;border:0!important;border-left:4px solid var(--warn,#F08C00)!important;border-radius:4px!important;background:var(--warn-bg,#FFF3E0)!important;font-size:0!important;line-height:1;color:transparent!important;vertical-align:middle}
+.warn.nb-wf:not(.open)::before{content:"\26A0";font-size:15px;line-height:1.2;color:var(--warn-text,#7A4600)}
+.warn.nb-wf.open{display:block}
+.warn.nb-wf:focus-visible{outline:2px solid #111;outline-offset:2px}
+.warn.nb-dup{display:none!important}
+.warn.nb-more:not(.show){display:none!important}
+
+/* 첫 역일 때 '지금 1역' 말풍선이 화면 왼쪽 밖으로 잘리지 않게 */
+.step-dots li.cur:first-child::after{transform:none!important;left:-14px!important}
+/* ===== 글 줄이기(11-18) — 사용자: 비교표 칸·단계 진행 때 글자가 너무 많다. 내용은 지우지 않고 '처음엔 접고 누르면 보기' ===== */
+/* 단계 화면: '할 일' 머리말·한국어 키 설명 줄·도우미 링크 숨김, 진행 글('4단계 중 1단계')은 말풍선과 겹쳐 화면에서만 숨김 */
+body[data-scr="steps"] .step-card>h4,
+body[data-scr="steps"] .ko-labels>strong,body[data-scr="steps"] .ko-labels>p.small,
+body[data-scr="steps"] .step-card>p.small{display:none!important}
+body[data-scr="steps"] #prog{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* 노선도(결과·단계): 역 이름만 보이고, 설명(필요 조건·제외·근거)은 역 이름을 누르면 */
+.line .stn.nb-hasdet:not(.nb-open) .stn-body>*:not(.stn-head):not(.wbox){display:none!important}
+/* (11-18 수정) ⓘ가 유일한 펼침 단추 — 열리면 ⓘ 테두리 강조 */
+/* 11-18 사용자: 열린 ⓘ 라임이 너무 큼 → 작게 / 'i가 묘하게 중앙이 아님' → 글자(ⓘ) 대신 직접 그린 i 아이콘(20px)을 정확히 가운데에.
+   누르는 영역 44px은 그대로, 열리면 라임 동그라미 28px */
+.info-btn{font-size:0!important;color:transparent!important;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8.4' fill='none' stroke='%235C6370' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='6.3' r='1.15' fill='%235C6370'/%3E%3Cpath d='M10 9.2v5.2' stroke='%235C6370' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/20px 20px no-repeat!important}
+.line .stn.nb-open .stn-head .info-btn{background:var(--lime,#C8F04B) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8.4' fill='none' stroke='%23111111' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='6.3' r='1.15' fill='%23111111'/%3E%3Cpath d='M10 9.2v5.2' stroke='%23111111' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/20px 20px no-repeat!important;background-clip:content-box!important;padding:8px!important;border-radius:50%!important;box-sizing:border-box}
+.line .dest .stn-body>p{display:none!important}
+/* 결과 '이유' 문단: 머리말만 보이고 누르면 */
+.why.nb-why{cursor:pointer}
+.why.nb-why:not(.open){font-size:0!important}
+.why.nb-why:not(.open)>strong{font-size:14px!important;color:var(--sub)!important;font-weight:700}
+.why.nb-why>strong::after{content:" \25BE";font-weight:400}
+.why.nb-why.open>strong::after{content:" \25B4"}
+/* 비교표 칸: 긴 근거 줄은 '근거' 버튼을 눌러야 */
+td .cell-line.small.nb-evh,.cmp-cell .cell-line.small.nb-evh,.cell-line.small.nb-evh{display:none!important}
+.nb-ev-open .cell-line.small.nb-evh{display:block!important}
+.nb-evbtn{display:inline-flex;align-items:center;gap:4px;margin:6px 6px 2px 0;padding:3px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card);font-size:12.5px;font-weight:700;color:var(--text);cursor:pointer;vertical-align:middle}
+.nb-evbtn::after{content:"\25BE";font-weight:400}
+.nb-ev-open .nb-evbtn::after{content:"\25B4"}
+
+/* 11-18 사용자: 비교표 칸 색이 뭘 뜻하는지 알 수 없음 — 덮개가 배지 색을 지워 범례가 흰 칩이 된 탓.
+   범례 칩을 칸과 같은 색 + 왼쪽 색 점으로 되돌리고, 표 바로 위에 붙여 보이게 */
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:10px 0 12px!important}
+.legend .badge{display:inline-flex!important;align-items:center;gap:6px;border:1px solid rgba(0,0,0,.08)!important;font-weight:700!important;color:var(--text)!important;padding:4px 10px!important}
+.legend .badge::before{content:"";width:10px;height:10px;border-radius:50%;flex:none}
+.legend .badge.st-tested,.legend .badge.st-verified{background:var(--st-verified-bg)!important}.legend .badge.st-tested::before,.legend .badge.st-verified::before{background:#1E6B34}
+.legend .badge.st-guide{background:var(--st-public-bg)!important}.legend .badge.st-guide::before{background:#1F4E9C}
+.legend .badge.st-unknown{background:var(--st-pending-bg)!important}.legend .badge.st-unknown::before{background:#8A9099}
+.legend .badge.st-reported{background:var(--st-reported-bg)!important}.legend .badge.st-reported::before{background:#5B2B8A}
+.legend .badge.st-blocked{background:var(--st-blocked-bg)!important}.legend .badge.st-blocked::before{background:#202020}
+/* 칸 안 배지에도 같은 색 점 — 칸 색과 범례를 바로 짝지을 수 있게 */
+[class*="bg-"] .badges .badge{display:inline-flex!important;align-items:center;gap:6px}
+[class*="bg-"] .badges .badge::before{content:"";width:8px;height:8px;border-radius:50%;flex:none;background:#8A9099}
+[class*="bg-"] .badges .badge.st-tested::before,[class*="bg-"] .badges .badge.st-verified::before{background:#1E6B34}
+[class*="bg-"] .badges .badge.st-guide::before{background:#1F4E9C}
+[class*="bg-"] .badges .badge.st-reported::before{background:#5B2B8A}
+[class*="bg-"] .badges .badge.st-blocked::before{background:#202020}
+
+/* ===== 비교표 '돼요/안 돼요' 판정(11-18) — 사용자: 색·'Tested by Nubi'만으로는 되는지 안 되는지 확연히 안 보임.
+   칸 맨 위에 결과를 크게(✓ 돼요 · 안내상 돼요 · ? 아직 몰라요 · ✕ 안 돼요), 출처 배지는 그 아래 작게 ===== */
+.nb-verdict{display:inline-flex;align-items:center;gap:4px;margin:0 0 4px;padding:2px 9px;border-radius:999px;font-weight:800;font-size:12px;line-height:1.3;white-space:nowrap}
+/* 11-18 사용자 '결과 작게' — 판정 알약 15px → 12px, 테두리 1px */
+.nb-verdict.v-guide,.nb-verdict.v-unk,.nb-verdict.v-no{border-width:1px!important}
+.nb-verdict.v-ok{background:#111;color:var(--lime,#C8F04B)}
+.nb-verdict.v-stu{background:#111;color:var(--lime,#C8F04B)}
+.nb-verdict.v-guide{background:#fff;color:#1F4E9C;border:1.5px solid #1F4E9C}
+.nb-verdict.v-unk{background:#fff;color:#5C6370;border:1.5px dashed #9AA1AC}
+.nb-verdict.v-no{background:#FDE8E8;color:#B42318;border:1.5px solid #B42318}
+[class*="bg-"]>.badges .badge{font-size:11.5px!important;padding:2px 8px!important;opacity:.85}
+.legend .nb-lv{font-weight:900;margin-right:2px}
+
+/* 11-18 사용자: 시작 화면 장식 도형 없애고 작은 노선으로 */
+.nb-orbs{display:none!important}
+.nb-mini{display:inline-block;vertical-align:middle;margin-left:10px;line-height:0}
+.nb-mini svg{width:88px;height:auto;overflow:visible;display:block}
+
+/* 11-18 사용자: 단계 화면 진행 줄 — '지금 N역' 말풍선이 위 배지와, 곰돌이가 아래 카드와 겹침 → 위·아래 띄우기 */
+body[data-scr="steps"] main>section>.badges{margin-bottom:0!important}
+body[data-scr="steps"] .step-dots{margin:58px 8px 34px!important}
+body[data-scr="steps"] .step-dots li.cur::after{bottom:26px!important}
+
+/* 11-18 사용자: '이 기기에 저장된 … 복원했습니다' 안내가 위 칸 아래 선에 딱 붙음 → 아래로 띄우기 */
+.flash{margin:10px 0 14px!important}
+
+/* 11-18: 위 칸 아래 선과 단계 화면 첫 배지도 붙어 있어서 띄우기 */
+body[data-scr="steps"] main>section>.badges{margin-top:16px!important}
+
+main>.nb-flash-moved{padding:0!important;max-width:none!important}
+main>.nb-flash-moved .flash,main>.nb-flash-moved .mt-note{margin:12px 0 4px!important}
+
+/* ===== 내 도장(11-18) — 사용자: 도장깨기를 고치거나 직접 추가(나만의 위시리스트). 시험본: 이 기기에만 저장(보내지 않음) ===== */
+.stamp.nb-hide{display:none!important}
+.stamp:first-of-type::before{content:counter(nbst)!important;background:#fff;border-color:#C9CDD4;color:var(--sub)}
+.stamp[aria-pressed="true"]:first-of-type::before{background:#111;border-color:#111;color:var(--lime)}
+.stamp.nb-first::before{content:"START"!important;background:#111!important;border-color:#111!important;color:var(--lime)!important}
+.stamp.nb-cst .nm{font-weight:800}
+.stamps.nb-editing .stamp{animation:nbWiggle .9s ease-in-out infinite}
+.stamps.nb-editing .stamp::after{content:"\2715";position:absolute;top:-6px;right:-4px;width:24px;height:24px;border-radius:50%;background:#B42318;color:#fff;font-size:12px;font-weight:900;display:grid;place-items:center;line-height:1}
+.stamps.nb-editing .stamp.nb-cst::after{content:"\270E";background:#111;color:var(--lime)}
+@keyframes nbWiggle{50%{transform:rotate(-2deg)}}
+@media (prefers-reduced-motion: reduce){.stamps.nb-editing .stamp{animation:none}}
+.nb-stools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px auto 4px;max-width:400px}
+.nb-stools button{border-radius:999px;padding:8px 14px;font:inherit;font-size:14px;font-weight:800;cursor:pointer;border:1.5px solid #111;background:#fff;color:#111}
+.nb-stools button.main{background:#111;color:var(--lime);border-color:#111}
+.nb-sform{max-width:400px;margin:10px auto 0;padding:14px;border-radius:18px;background:var(--surface,#F2F3F5)}
+.nb-sform p{margin:0 0 8px;font-weight:800;font-size:14px}
+.nb-sform .ems{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.nb-sform .ems button{width:40px;height:40px;border-radius:50%;border:1.5px solid #C9CDD4;background:#fff;font-size:20px;cursor:pointer}
+.nb-sform .ems button[aria-pressed="true"]{border:2px solid #111;background:var(--lime)}
+.nb-sform input{width:100%;min-height:44px;border-radius:14px;border:1.5px solid #C9CDD4;padding:0 12px;font:inherit;font-size:16px;margin:0 0 10px;box-sizing:border-box}
+.nb-sform .row{display:flex;gap:8px;flex-wrap:wrap}
+.nb-sform .row button{flex:1;min-height:44px;border-radius:999px;font:inherit;font-weight:800;cursor:pointer;border:1.5px solid #111;background:#fff;color:#111}
+.nb-sform .row button.main{background:#111;color:var(--lime)}
+.nb-sform .row button.del{flex:0 0 auto;border-color:#B42318;color:#B42318}
+.nb-snote{max-width:400px;margin:8px auto 0;font-size:12.5px;color:var(--sub);text-align:center}
+
+
+.nb-sform .nb-shint{margin:-4px 0 10px;font-size:12.5px;font-weight:400;color:var(--sub)}
+
+/* ===== 디자인 이식(11-18) 끝 ===== */
 </style>
 </head>
 <body>
@@ -3333,7 +3954,7 @@ function render() {
 function resetApp() {
   // 지운 뒤 다시 쓰지 않게 막고(해시 변경 → render → writeStore 방지), 해시 없이 새로 연다 → 시작 화면
   if (typeof state === 'object' && state) state.holdWrites = true;
-  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); } catch (e) { /* 저장소가 막혀도 새로고침은 한다 */ }
+  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); } catch (e) { /* 저장소가 막혀도 새로고침은 한다 */ }
   location.replace(location.pathname + location.search);
 }
 function showLoadFail(err) {
@@ -6211,7 +6832,7 @@ function confirmImprove() {
 }
 // 모두 삭제: 확인 1번 → 이 앱의 키(이전 키 포함)와 메모리를 지우고 S1로
 function deleteAll() {
-  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem(RATES_KEY); } catch (e) { storageFailed(); }
+  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem(RATES_KEY); } catch (e) { storageFailed(); }
   freshState();
   Object.assign(state, { remember: false, expiresAt: null, improve: false, improveExpiresAt: null, counts: emptyCounts(), infoReturn: null, holdWrites: true,
     consent: null, anonId: null, item: null, survey: { answers: {}, sent: null }, age14: false, aiOn: false,
@@ -6286,5 +6907,381 @@ window.__payPathReady = true;
   if (document.readyState === 'complete') fallback(); else window.addEventListener('load', fallback);
 })();
 </script>
+<!-- 디자인 이식(11-18) 시작 -->
+<script>
+/* 디자인 A 시험본(11-17): 그린 뒤 손보기 — 기능·문구는 바꾸지 않는다 */
+(function () {
+  var EMO = /^[\s‍️]*(?:[☀-➿⬀-⯿←-⇿⌀-⏿]|\ud83c[\udc00-\udfff]|\ud83d[\udc00-\udfff]|\ud83e[\udc00-\udfff])+[\s‍️]*/;
+  var open = {};
+  function strip(el) {
+    if (el.closest('.wbox') || el.dataset.dtS) return;
+    var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    var n = w.nextNode();
+    while (n && !n.nodeValue.trim()) n = w.nextNode();
+    if (n && EMO.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(EMO, '');
+    el.dataset.dtS = '1';
+  }
+  function fix() {
+    var scr = '';
+    try { scr = resolveScreen() || ''; } catch (e) {}
+    document.body.dataset.scr = scr;
+    var main = document.querySelector('main'); if (!main) return;
+    main.querySelectorAll('h2,h3,h4,summary,.menu-h,.tile .tt,.to-life strong,.to-life span,.ko-labels li,.ko-labels .small,.fb-line a,[data-fid="privacy-link"],.panel>p').forEach(strip);
+    // 시작 화면: 소개 한 줄을 큰 질문 바로 아래로
+    var sub = main.querySelector('.hero .hero-sub'), q = main.querySelector('.start-q');
+    if (sub && q) q.insertAdjacentElement('afterend', sub);
+    // 결과·단계 화면: 주인공(결과 카드·단계 카드·동의) 말고 부가 카드는 한 줄로 접기
+    if (scr === 'result' || scr === 'steps' || scr === 'start') {
+      var cards = Array.prototype.filter.call(main.querySelectorAll(':scope > section > section.card'), function (c) {
+        if (scr === 'start') return c.classList.contains('share-card') && c.querySelector(':scope > h3');
+        return !c.querySelector('#share-h') && !c.classList.contains('partner-card') && c.querySelector(':scope > h3');
+      });
+      cards.forEach(function (c, i) {
+        var h = c.querySelector(':scope > h3'); var key = scr + ':' + h.textContent;
+        c.classList.add('dt-fold'); c.classList.toggle('dt-open', !!open[key]); c.classList.toggle('dt-fold-end', i === cards.length - 1);
+        if (!h.dataset.dtF) { h.dataset.dtF = '1'; h.setAttribute('role', 'button'); h.tabIndex = 0;
+          var tg = function () { open[key] = !open[key]; c.classList.toggle('dt-open', open[key]); };
+          h.addEventListener('click', tg); h.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tg(); } }); }
+      });
+    }
+  }
+  function wfold() {
+    document.querySelectorAll('.line .wbox').forEach(function (b) {
+      if (b.dataset.dtW) return; b.dataset.dtW = '1'; b.classList.add('dt-wfold');
+      var h = b.querySelector('.wbox-h'); if (!h) return; var key = 'w:' + h.textContent; if (open[key]) b.classList.add('dt-open');
+      h.setAttribute('role', 'button'); h.tabIndex = 0;
+      var tg = function () { open[key] = !open[key]; b.classList.toggle('dt-open', open[key]); };
+      h.addEventListener('click', tg); h.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tg(); } });
+    });
+  }
+
+  // ── 레퍼런스 반영(11-17 12:20): 누비 캐릭터·말풍선·상태색·큰 숫자·도장·한 단어 색 ──
+  var NB = {
+    start: { ko: 'ARC 없어도 길이 있어요!', en: 'No ARC yet? There is still a way!', zh: '没有 ARC 也有路！', vi: 'Chưa có ARC vẫn có đường!' },
+    resA: { ko: '이 길이면 결제까지 가요!', en: 'This route gets you to payment!', zh: '这条路可以走到付款！', vi: 'Lộ trình này đi được tới thanh toán!' },
+    resD: { ko: '옆길 하나만 들르면 돼요!', en: 'Just one detour on the way!', zh: '只要绕一小段路！', vi: 'Chỉ cần đi vòng một đoạn!' },
+    resB: { ko: '중간까지는 안내할 수 있어요', en: 'I can guide you part of the way', zh: '可以带你走一段', vi: 'Mình dẫn bạn được một đoạn' },
+    resC: { ko: '지금 조건으론 막혀요. 조건을 바꿔 볼까요?', en: 'Blocked with these conditions. Try changing them?', zh: '按现在的条件走不通，换个条件试试？', vi: 'Với điều kiện này thì bị chặn. Thử đổi điều kiện nhé?' },
+    step: { ko: '{n}역이에요. 천천히 해요', en: 'Stop {n}. Take your time', zh: '第 {n} 站，慢慢来', vi: 'Trạm {n}, cứ từ từ nhé' },
+    stuck: { ko: '여기서 막혔군요. 옆길이 있어요!', en: 'Stuck here? There is a side road!', zh: '卡在这里了？还有别的路！', vi: 'Kẹt ở đây à? Có đường khác đấy!' },
+    done: { ko: '해냈어요!', en: 'You did it!', zh: '成功了！', vi: 'Bạn làm được rồi!' },
+    bigA: { ko: ['{n}역', '결제까지'], en: ['{n} stops', 'to payment'], zh: ['{n} 站', '到付款'], vi: ['{n} trạm', 'đến thanh toán'] },
+    bigB: { ko: ['{n}역', '까지 안내'], en: ['{n} stops', 'guided'], zh: ['{n} 站', '可引导'], vi: ['{n} trạm', 'được hướng dẫn'] },
+    stamp: { ko: '통과', en: 'PASSED', zh: '通过', vi: 'XONG' },
+    here: { ko: '지금 여기', en: 'You are here', zh: '当前位置', vi: 'Bạn ở đây' },
+    payWord: { ko: '결제', en: 'pay', zh: '付款', vi: 'thanh toán' },
+    tip: { ko: '지금 {n}역', en: 'Now: stop {n}', zh: '现在 第{n}站', vi: 'Đang ở trạm {n}' }
+  };
+  function L2(k) { var o = NB[k]; var l = (typeof state !== 'undefined' && state.lang) || 'en'; return o[l] || o.en; }
+  // 시험본 2: 캐릭터 = 곰 얼굴 이모지(아이폰에서는 애플 곰돌이로 보임). 표정 구분 없음
+  function face(mood) { var d = document.createElement('span'); d.className = 'nb-face nb-bear'; d.setAttribute('aria-hidden', 'true'); d.textContent = '\uD83D\uDC3B'; return d; }
+  function mk(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function band(st, mood, say, big) {
+    var b = mk('div', 'nb-band st-' + st); b.appendChild(face(mood)); b.appendChild(mk('p', 'nb-say', say));
+    if (big) { var g = mk('p', 'nb-big'); g.appendChild(mk('b', null, big[0])); g.appendChild(mk('span', null, big[1])); b.appendChild(g); }
+    return b;
+  }
+  function hlWord(el, word) {
+    if (!el || el.dataset.nbH) return; el.dataset.nbH = '1';
+    var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = w.nextNode())) { var i = n.nodeValue.toLowerCase().indexOf(word.toLowerCase()); if (i < 0) continue;
+      var r = n.splitText(i); r.splitText(word.length); var sp = mk('span', 'nb-hl'); r.parentNode.insertBefore(sp, r); sp.appendChild(r); return; }
+  }
+  function nb() {
+    var main = document.querySelector('main'); if (!main || typeof state === 'undefined') return;
+    var scr = document.body.dataset.scr;
+    if (scr === 'start') {
+      var q = main.querySelector('.start-q');
+      if (q && !main.querySelector('.nb-start')) { var row = mk('div', 'nb-start'); row.appendChild(face('happy')); row.appendChild(mk('p', 'nb-say', L2('start'))); q.parentNode.insertBefore(row, q); }
+      hlWord(q, L2('payWord'));
+    }
+    var res = state.result;
+    if (scr === 'result' && res && res.route) {
+      var card = main.querySelector('#route-title') && main.querySelector('#route-title').closest('article');
+      if (card && !card.querySelector('.nb-band')) {
+        var det = res.steps.some(function (x) { return x.stage.detour && x.state === 'guided'; });
+        var n = res.guidedCount, bg;
+        if (res.type === 'A') bg = band(det ? 'det' : 'ok', 'happy', L2(det ? 'resD' : 'resA'), n ? [L2('bigA')[0].replace('{n}', n), L2('bigA')[1]] : null);
+        else if (n > 0) bg = band('det', 'happy', L2('resB'), [L2('bigB')[0].replace('{n}', n), L2('bigB')[1]]);
+        else bg = band('stop', 'worry', L2('resC'), null);
+        card.insertBefore(bg, card.firstChild);
+      }
+      var rt = main.querySelector('#route-title'); if (rt && res.route) hlWord(rt, rt.textContent.split(' · ')[0]);
+    }
+    if (scr === 'steps' && res && state.steps) {
+      var st = state.steps, sec = main.querySelector(':scope > section');
+      if (sec && !sec.querySelector('.nb-band')) {
+        var paid = st.phase === 'end' && st.pay === 'yes';
+        var b2 = paid ? band('ok', 'cheer', L2('done'), null)
+          : (st.stuck || st.dw) ? band('det', 'worry', L2('stuck'), null)
+          : null; // 시험본 2: '천천히 해요' 같은 평소 멘트는 뺌
+        if (b2) { b2.classList.add('nb-solo'); var dots = sec.querySelector('.step-dots'); if (dots) dots.insertAdjacentElement('afterend', b2); else sec.insertBefore(b2, sec.firstChild); }
+      }
+    }
+    // 시험본 2: '통과' 도장 대신 지난 역 = 빛나는 체크 동그라미(CSS) · 지금 역 = 곰돌이 + 진행 막대 위 말풍선(ABC Camp '현재 1점' 레퍼런스)
+    if (scr === 'steps' && state.steps) { var cur = main.querySelector('.step-dots li.cur'); if (cur) cur.dataset.tip = L2('tip').replace('{n}', state.steps.idx + 1); }
+    // 11-18 사용자: 장식 도형은 없애고 '작은 노선'으로 — 곰돌이 말풍선 줄 오른쪽에 라임 선 + 역 3개(출발 검정·중간·도착 깃발)
+    // (11-18 수정) 말풍선이 두 줄로 눌려서 → 질문 끝('…하나요?' 뒤)에 붙인다
+    if (scr === 'start') { var row0 = main.querySelector('.start-q');
+      if (row0 && !row0.querySelector('.nb-mini')) { var mi = mk('span', 'nb-mini'); mi.setAttribute('aria-hidden', 'true');
+        mi.innerHTML = '<svg viewBox="0 0 120 36"><path d="M10 18 H104" stroke="#C8F04B" stroke-width="6" stroke-linecap="round"/>'
+          + '<circle cx="12" cy="18" r="7" fill="#111"/><circle cx="58" cy="18" r="6.5" fill="#fff" stroke="#111" stroke-width="2"/>'
+          + '<circle cx="104" cy="18" r="6.5" fill="#fff" stroke="#111" stroke-width="2"/><path d="M104 11 V-1" stroke="#111" stroke-width="2"/><path d="M104 -1 L116 3 L104 7 Z" fill="#111"/></svg>';
+        row0.appendChild(mi); } }
+  }
+
+  // ── 11-17 12:40: 메뉴 타일 선 아이콘(직접 그림, 이모지 대신) · 생활 탭 진행 막대 · 긴 화면 카드 접기 ──
+  var ICON = {
+    compare: '<path d="M3 4h2l2.4 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',
+    money: '<rect x="3" y="6" width="18" height="13" rx="3.5"/><path d="M3 10.5h18M16 15h2"/>',
+    safety: '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/>',
+    rates: '<path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/>',
+    benefits: '<rect x="3.5" y="9" width="17" height="11.5" rx="2.5"/><path d="M3.5 13h17M12 9v11.5M12 9c-1.5-3.8-6-4-6-1.4C6 9 9.5 9 12 9zm0 0c1.5-3.8 6-4 6-1.4C18 9 14.5 9 12 9z"/>',
+    shop: '<path d="M4 9.5h16l-1.6 9.4a2 2 0 0 1-2 1.6H7.6a2 2 0 0 1-2-1.6z"/><path d="M8.5 9.5L12 4.5l3.5 5"/>',
+    situations: '<path d="M4.5 5h15a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5H10l-5 4v-4h-.5A1.5 1.5 0 0 1 3 14.5v-8A1.5 1.5 0 0 1 4.5 5z"/><path d="M8 9.5h8M8 12.5h5"/>',
+    korean: '<rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10 18.5h4M9 8h6M9 11h4"/>',
+    seasons: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+    arc: '<rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4M14.5 10h3.5M14.5 13h2.5"/>',
+    health: '<rect x="4" y="4" width="16" height="16" rx="5"/><path d="M12 8.5v7M8.5 12h7"/>',
+    work: '<rect x="3" y="7.5" width="18" height="12" rx="3"/><path d="M9 7.5V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8v1.7M3 12.5h18"/>',
+    jobdocs: '<path d="M7 3h7l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19.5V4.5A1.5 1.5 0 0 1 7.5 3z"/><path d="M14 3v4h4M9.5 12h5M9.5 15.5h5"/>',
+    alerts: '<path d="M12 4l8.5 15a1 1 0 0 1-.9 1.5H4.4a1 1 0 0 1-.9-1.5z"/><path d="M12 10v4.5M12 17.5h.01"/>',
+    leave: '<rect x="6" y="7" width="12" height="13" rx="3"/><path d="M9.5 7V4.5h5V7M10 11v5M14 11v5M9 20v1.5M15 20v1.5"/>'
+  };
+  var FOLD_SCR = { health: 1, safety: 1, jobdocs: 1, alerts: 1, work: 1, leave: 1 };
+  function life() {
+    var main = document.querySelector('main'); if (!main) return;
+    var scr = document.body.dataset.scr;
+    main.querySelectorAll('.tile').forEach(function (a) {
+      var k = (a.getAttribute('href') || '').replace('#/', ''); var ti = a.querySelector('.ti');
+      if (ti && ICON[k] && !ti.dataset.nbI) { ti.dataset.nbI = '1'; ti.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICON[k] + '</svg>'; }
+    });
+    // 체크리스트(첫 90일 등)·도장 진행 막대
+    main.querySelectorAll('.jprogress').forEach(function (pg) {
+      var box = pg.closest('section') || main;
+      var all = box.querySelectorAll('.jcheck, .stamp'); if (!all.length) { box = main; all = main.querySelectorAll('.jcheck'); }
+      var done = Array.prototype.filter.call(all, function (b) { return b.getAttribute('aria-pressed') === 'true'; }).length;
+      var bar = pg.nextElementSibling && pg.nextElementSibling.classList.contains('nb-prog') ? pg.nextElementSibling : null;
+      if (!bar) { bar = mk('div', 'nb-prog'); bar.setAttribute('aria-hidden', 'true'); bar.appendChild(mk('i')); pg.insertAdjacentElement('afterend', bar); }
+      // 화면에 적힌 'N개 중 M개'를 그대로 쓴다(언어마다 순서가 달라 큰 수 = 전체로 본다). 숫자가 없으면 버튼 수로
+      var nums = (pg.textContent.match(/\d+/g) || []).map(Number);
+      var tot = nums.length >= 2 ? Math.max(nums[0], nums[1]) : all.length, dn = nums.length >= 2 ? Math.min(nums[0], nums[1]) : done;
+      bar.firstChild.style.width = (tot ? Math.round(dn / tot * 100) : 0) + '%';
+    });
+    // 글이 긴 생활 화면(C): 첫 카드만 펼치고 나머지는 제목 줄로 접기
+    if (FOLD_SCR[scr]) {
+      var cs = Array.prototype.filter.call(main.querySelectorAll(':scope > section > section.card'), function (c) { return c.querySelector(':scope > h3'); });
+      cs.forEach(function (c, i) {
+        if (i === 0) return;
+        var h = c.querySelector(':scope > h3'); var key = scr + ':' + h.textContent;
+        c.classList.add('dt-fold'); c.classList.toggle('dt-open', !!open[key]);
+        if (!h.dataset.dtF) { h.dataset.dtF = '1'; h.setAttribute('role', 'button'); h.tabIndex = 0;
+          var tg = function () { open[key] = !open[key]; c.classList.toggle('dt-open', open[key]); };
+          h.addEventListener('click', tg); h.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tg(); } }); }
+      });
+    }
+  }
+
+  // ── 도장 여정: 3칸씩 지그재그(뱀 모양) 순서 + 이어지는 길(SVG) + 도착 표시 ──
+  var GOAL = { ko: ['도착까지 {r}개', '완주! 한국 생활 12개 도장 모두'], en: ['{r} to go', 'All 12 stamps!'], zh: ['还差 {r} 个', '12 个印章全部集齐！'], vi: ['Còn {r} con dấu', 'Đủ cả 12 con dấu!'] };
+  function journey() {
+    var box = document.querySelector('main .stamps'); if (!box) return;
+    var items = Array.prototype.filter.call(box.querySelectorAll('.stamp'), function (b) { return !b.classList.contains('nb-hide'); }); var C = 3;
+    items.forEach(function (b, i) { var r = Math.floor(i / C), c = i % C; b.style.order = r % 2 ? (r * C + (C - 1 - c)) : i; });
+    var svg = box.querySelector('.nb-path');
+    if (!svg) { svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('class', 'nb-path'); svg.setAttribute('aria-hidden', 'true'); box.insertBefore(svg, box.firstChild); }
+    var br = box.getBoundingClientRect(); if (!br.width) return;
+    var pts = items.map(function (b) { var q = b.getBoundingClientRect(); return { x: q.left - br.left + q.width / 2, y: q.top - br.top + q.height / 2, w: q.width, on: b.getAttribute('aria-pressed') === 'true' }; });
+    var html = '';
+    for (var k = 0; k + 1 < pts.length; k++) {
+      var a = pts[k], b2 = pts[k + 1], d;
+      if (Math.abs(a.y - b2.y) < 4) d = 'M' + a.x + ' ' + a.y + ' L' + b2.x + ' ' + b2.y;
+      else { var rr = (b2.y - a.y) / 2, right = a.x > br.width / 2; var ox = right ? a.x + a.w * 0.5 : a.x - a.w * 0.5;
+        // 줄 끝에서 카드 밖으로 나가지 않게 작은 반원(가로 반지름 16)으로 돌아 내려간다
+        d = 'M' + a.x + ' ' + a.y + ' L' + ox + ' ' + a.y + ' A16 ' + rr + ' 0 0 ' + (right ? 1 : 0) + ' ' + ox + ' ' + b2.y + ' L' + b2.x + ' ' + b2.y; }
+      html += '<path d="' + d + '"' + (a.on && b2.on ? ' class="on"' : '') + '/>';
+    }
+    if (svg.innerHTML !== html) svg.innerHTML = html;
+    var n = pts.filter(function (p) { return p.on; }).length, left = pts.length - n, l = (typeof state !== 'undefined' && state.lang) || 'en', g = GOAL[l] || GOAL.en;
+    var goal = box.nextElementSibling && box.nextElementSibling.classList.contains('nb-goal') ? box.nextElementSibling : null;
+    var txt = left ? g[0].replace('{r}', left) : g[1];
+    if (!goal) { goal = mk('div', 'nb-goal'); box.insertAdjacentElement('afterend', goal); }
+    var want = '<span class="bear" aria-hidden="true">🐻</span><span>' + txt + '</span><b>' + n + '/' + pts.length + '</b>';
+    if (goal.innerHTML !== want) goal.innerHTML = want;
+  }
+  window.addEventListener('resize', function () { setTimeout(journey, 50); });
+
+  // 11-18: 30일 지난 근거 경고 — 처음엔 ⚠ 상자만, 누르면 문구 펼침(다시 누르면 접힘).
+  // 같은 칸(부모)에 경고가 여러 줄이면: 똑같은 문구는 하나만 남기고, 다른 날짜는 첫 표시를 누를 때 함께 펼친다
+  function warnFold() {
+    var groups = new Map();
+    document.querySelectorAll('main p.warn').forEach(function (w) { var g = groups.get(w.parentElement) || []; g.push(w); groups.set(w.parentElement, g); });
+    groups.forEach(function (list) {
+      var first = list[0], seen = {}, key = 'warn:' + list.map(function (w) { return w.textContent.trim(); }).join('|');
+      list.forEach(function (w, i) {
+        var txt = w.textContent.trim();
+        if (seen[txt]) { w.classList.add('nb-dup'); return; } seen[txt] = 1;
+        if (i > 0) { w.classList.add('nb-more', 'nb-wf', 'open'); w.classList.toggle('show', !!open[key]); }
+      });
+      if (first.dataset.nbW) return; first.dataset.nbW = '1';
+      var label = Object.keys(seen).join(' / ');
+      first.classList.add('nb-wf'); first.classList.toggle('open', !!open[key]);
+      first.setAttribute('role', 'button'); first.tabIndex = 0; first.setAttribute('aria-expanded', String(!!open[key])); first.setAttribute('aria-label', label); first.title = label;
+      var tg = function (e) { e.preventDefault(); e.stopPropagation(); open[key] = !open[key]; first.classList.toggle('open', open[key]); first.setAttribute('aria-expanded', String(open[key]));
+        list.forEach(function (w) { if (w.classList.contains('nb-more')) w.classList.toggle('show', open[key]); }); };
+      first.addEventListener('click', tg); first.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') tg(e); });
+    });
+  }
+
+  // ── 글 줄이기(11-18): 노선도 역 설명·결과 '이유'·비교표 근거를 접는다(내용은 그대로, 누르면 보임) ──
+  var EVL = { ko: '근거', en: 'Source', zh: '依据', vi: 'Nguồn' };
+  function slim() {
+    var main = document.querySelector('main'); if (!main) return;
+    // (11-18 수정) 역 설명은 ⓘ 하나로만 연다 — 역 이름 ▾ 토글은 뺌. ⓘ를 눌러 근거 칸(.info-panel)이 열린 역만 설명까지 펼쳐 보인다
+    main.querySelectorAll('.line .stn').forEach(function (li) {
+      var body = li.querySelector('.stn-body'); if (!body || li.classList.contains('dest')) return;
+      var det = Array.prototype.some.call(body.children, function (c) { return !c.classList.contains('stn-head') && !c.classList.contains('wbox'); });
+      li.classList.toggle('nb-hasdet', det); li.classList.toggle('nb-open', !!body.querySelector('.info-panel'));
+    });
+    main.querySelectorAll('p.why').forEach(function (w) {
+      if (w.dataset.nbS || !w.querySelector('strong')) return; w.dataset.nbS = '1'; w.classList.add('nb-why');
+      var key = 'why:' + w.textContent; if (open[key]) w.classList.add('open');
+      w.setAttribute('role', 'button'); w.tabIndex = 0; w.setAttribute('aria-expanded', String(!!open[key]));
+      var tg = function (e) { e.preventDefault(); open[key] = !open[key]; w.classList.toggle('open', open[key]); w.setAttribute('aria-expanded', String(open[key])); };
+      w.addEventListener('click', tg); w.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') tg(e); });
+    });
+    var l = (typeof state !== 'undefined' && state.lang) || 'en', none = (typeof t === 'function') ? '' : '';
+    main.querySelectorAll('.cell-line.small').forEach(function (c) {
+      if (c.dataset.nbS) return; c.dataset.nbS = '1';
+      var cell = c.parentElement, badge = cell.querySelector('.badges');
+      // 근거가 없다는 줄(배지와 같은 말)은 아예 숨김
+      if (badge && badge.textContent.trim() === c.textContent.trim()) { c.classList.add('nb-evh'); return; }
+      c.classList.add('nb-evh');
+      var key = 'ev:' + c.textContent; if (open[key]) cell.classList.add('nb-ev-open');
+      var b = mk('button', 'nb-evbtn', EVL[l] || EVL.en); b.type = 'button'; b.setAttribute('aria-expanded', String(!!open[key]));
+      b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); open[key] = !open[key]; cell.classList.toggle('nb-ev-open', open[key]); b.setAttribute('aria-expanded', String(open[key])); });
+      c.insertAdjacentElement('beforebegin', b);
+    });
+  }
+
+  // ── 비교표 판정(11-18): 칸의 상태(bg-…)로 '돼요/안 돼요/몰라요'를 크게 ──
+  var VERD = {
+    ok: { ko: '✓ 돼요', en: '✓ Works', zh: '✓ 可以', vi: '✓ Được' },
+    stu: { ko: '✓ 된대요', en: '✓ Students say yes', zh: '✓ 学生说可以', vi: '✓ SV nói được' },
+    guide: { ko: '안내상 돼요', en: 'Should work', zh: '按指南可以', vi: 'Theo hướng dẫn: được' },
+    unk: { ko: '? 아직 몰라요', en: '? Unknown yet', zh: '? 尚不清楚', vi: '? Chưa rõ' },
+    no: { ko: '✕ 안 돼요', en: '✕ Does not work', zh: '✕ 不行', vi: '✕ Không được' }
+  };
+  function vOf(st) { return /^(tested|verified)$/.test(st) ? 'ok' : st === 'reported' ? 'stu' : /^(guide|public)$/.test(st) ? 'guide' : st === 'blocked' ? 'no' : 'unk'; }
+  function verdict() {
+    var main = document.querySelector('main'); if (!main) return; var l = (typeof state !== 'undefined' && state.lang) || 'en';
+    main.querySelectorAll('[class*="bg-"]').forEach(function (cell) {
+      var m = /\bbg-(\w+)/.exec(cell.className), b = cell.querySelector(':scope > .badges'); if (!m || !b || cell.querySelector(':scope > .nb-verdict')) return;
+      var v = vOf(m[1]); var d = mk('div', 'nb-verdict v-' + v, (VERD[v][l] || VERD[v].en)); cell.insertBefore(d, b);
+    });
+    main.querySelectorAll('.legend .badge').forEach(function (bd) {
+      if (bd.querySelector('.nb-lv')) return; var m = /\bst-(\w+)/.exec(bd.className); if (!m) return;
+      var v = vOf(m[1]); var s = mk('span', 'nb-lv', (VERD[v][l] || VERD[v].en) + ' ·'); bd.insertBefore(s, bd.firstChild);
+    });
+  }
+
+  // 11-18 사용자: 복원 안내('이 기기에 저장된 …')가 화면 위에 붙은 머리줄 안에 있어 내려도 계속 남음
+  // → 머리줄 밖(본문 맨 위)으로 옮겨, 처음엔 그 자리에 있고 스크롤하면 위로 사라지게. 기계번역 안내(중·베)도 같이
+  function flashOut() {
+    var top = document.getElementById('top'), main = document.querySelector('main'); if (!top || !main) return;
+    var found = top.querySelectorAll('.flash, .mt-note'); if (!found.length) return;
+    main.querySelectorAll(':scope > .nb-flash-moved').forEach(function (o) { o.remove(); }); // 머리줄이 다시 그려지면 예전 사본은 지우고 새것만
+    found.forEach(function (p) {
+      var w = p.closest('.wrap') || p; w.classList.add('nb-flash-moved');
+      var old = main.querySelector(':scope > .nb-flash-moved'); main.insertBefore(w, old ? old.nextSibling : main.firstChild);
+    });
+  }
+
+  // ── 내 도장(11-18): 직접 추가·이름/그림 바꾸기·삭제, 기본 도장 숨기기/되돌리기. 이 기기(localStorage)에만, 보내지 않음 ──
+  var SKEY = 'nubi:custom-stamps:v1', sMem = null, sEdit = false, sForm = null; // sForm: null | {id?:string}
+  var SL = {
+    add: { ko: '+ 내 도장 추가', en: '+ Add my own', zh: '+ 添加我的印章', vi: '+ Thêm dấu của tôi' },
+    edit: { ko: '편집', en: 'Edit', zh: '编辑', vi: 'Sửa' }, done: { ko: '완료', en: 'Done', zh: '完成', vi: 'Xong' },
+    restore: { ko: '숨긴 도장 {n}개 되돌리기', en: 'Show {n} hidden', zh: '恢复 {n} 个隐藏的印章', vi: 'Hiện lại {n} dấu đã ẩn' },
+    newQ: { ko: '어떤 걸 해 보고 싶어요?', en: 'What do you want to try?', zh: '你想尝试什么？', vi: 'Bạn muốn thử điều gì?' },
+    editQ: { ko: '내 도장 고치기', en: 'Edit my stamp', zh: '修改我的印章', vi: 'Sửa dấu của tôi' },
+    ph: { ko: '예: 한강에서 자전거 타기', en: 'e.g., Ride a bike by the Han River', zh: '例如：在汉江边骑自行车', vi: 'VD: Đạp xe ven sông Hàn' },
+    save: { ko: '저장', en: 'Save', zh: '保存', vi: 'Lưu' }, cancel: { ko: '취소', en: 'Cancel', zh: '取消', vi: 'Hủy' }, del: { ko: '삭제', en: 'Delete', zh: '删除', vi: 'Xóa' },
+    hint: { ko: '이름·연락처·계좌번호는 쓰지 마세요. 이 기기에만 저장돼요.', en: 'Do not write names, phone or account numbers. Saved on this device only.', zh: '请勿填写姓名、电话或账号。只保存在这台设备上。', vi: 'Đừng ghi tên, số điện thoại hay số tài khoản. Chỉ lưu trên máy này.' },
+    note: { ko: '편집 중: 기본 도장은 ✕를 눌러 숨기고, 내 도장은 ✎를 눌러 고쳐요. 내 도장은 이 기기에만 저장돼요.', en: 'Editing: tap a stamp with ✕ to hide it, ✎ to edit yours. Your stamps stay on this device only.', zh: '编辑中：点带 ✕ 的印章可隐藏，点 ✎ 修改你的印章。你的印章只保存在这台设备上。', vi: 'Đang sửa: chạm dấu có ✕ để ẩn, ✎ để sửa dấu của bạn. Dấu của bạn chỉ lưu trên máy này.' }
+  };
+  var EMS = ['⭐', '🎯', '📚', '🏃', '🎨', '✈️', '🍰', '🎵', '🚲', '📸'];
+  function sl(k) { var l = (typeof state !== 'undefined' && state.lang) || 'en'; return SL[k][l] || SL[k].en; }
+  function sLoad() { if (typeof state !== 'undefined' && state.remember === false) return sMem ? JSON.parse(JSON.stringify(sMem)) : { items: [], hidden: [] }; try { var o = JSON.parse(localStorage.getItem(SKEY) || '{}'); return { items: Array.isArray(o.items) ? o.items : [], hidden: Array.isArray(o.hidden) ? o.hidden : [] }; } catch (e) { return { items: [], hidden: [] }; } }
+  function sSave(o) { if (typeof state !== 'undefined' && state.remember === false) { sMem = o; try { localStorage.removeItem(SKEY); } catch (e) {} return; } try { localStorage.setItem(SKEY, JSON.stringify(o)); } catch (e) {} }
+  function sToday() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function sRedraw() { var b = document.querySelector('main .stamps'); if (b) b.dataset.nbSig = ''; custStamps(); journey(); life(); }
+  function custStamps() {
+    var box = document.querySelector('main .stamps'); if (!box) return;
+    var o = sLoad(), l = (typeof state !== 'undefined' && state.lang) || 'en';
+    var sig = JSON.stringify(o) + '|' + sEdit + '|' + JSON.stringify(sForm) + '|' + l;
+    var ok = box.dataset.nbSig === sig && box.querySelectorAll('.nb-cst').length === o.items.length && box.parentElement.querySelector('.nb-stools');
+    if (!ok) {
+      box.dataset.nbSig = sig;
+      box.querySelectorAll('.nb-cst').forEach(function (x) { x.remove(); });
+      box.querySelectorAll('.stamp:not(.nb-cst)').forEach(function (b) { var id = (b.dataset.fid || '').replace('st-', ''); b.classList.toggle('nb-hide', o.hidden.indexOf(id) >= 0); });
+      o.items.forEach(function (it) {
+        var b = mk('button', 'stamp nb-cst'); b.type = 'button'; b.setAttribute('aria-pressed', String(!!it.date)); b.dataset.cid = it.id;
+        var ic = mk('span', 'ico', it.ico || '⭐'); ic.setAttribute('aria-hidden', 'true'); b.appendChild(ic); b.appendChild(mk('span', 'nm', it.name));
+        if (it.date) b.appendChild(mk('span', 'dt', it.date.slice(5).replace('-', '/')));
+        b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation();
+          if (sEdit) { sForm = { id: it.id }; sRedraw(); return; }
+          var o2 = sLoad(); o2.items.forEach(function (x) { if (x.id === it.id) x.date = x.date ? '' : sToday(); }); sSave(o2); sRedraw(); });
+        box.appendChild(b);
+      });
+      box.classList.toggle('nb-editing', sEdit);
+      if (!box.dataset.nbCap) { box.dataset.nbCap = '1';
+        box.addEventListener('click', function (e) { if (!sEdit) return; var b = e.target.closest('.stamp'); if (!b || b.classList.contains('nb-cst')) return;
+          e.preventDefault(); e.stopPropagation(); var id = (b.dataset.fid || '').replace('st-', ''); var o3 = sLoad(); if (id && o3.hidden.indexOf(id) < 0) o3.hidden.push(id); sSave(o3); sRedraw(); }, true); }
+      // 도구 줄 + 입력 상자 (도착 알약 아래)
+      var host = box.parentElement; host.querySelectorAll('.nb-stools, .nb-sform, .nb-snote').forEach(function (x) { x.remove(); });
+      var anchor = box.nextElementSibling && box.nextElementSibling.classList.contains('nb-goal') ? box.nextElementSibling : box;
+      var tools = mk('div', 'nb-stools');
+      var bAdd = mk('button', 'main', sl('add')); bAdd.type = 'button'; bAdd.addEventListener('click', function () { sForm = {}; sEdit = false; sRedraw(); setTimeout(function () { var i = document.querySelector('.nb-sform input'); if (i) i.focus(); }, 50); });
+      var bEd = mk('button', '', sEdit ? sl('done') : sl('edit')); bEd.type = 'button'; bEd.setAttribute('aria-pressed', String(sEdit)); bEd.addEventListener('click', function () { sEdit = !sEdit; sForm = null; sRedraw(); });
+      tools.appendChild(bAdd); tools.appendChild(bEd);
+      if (o.hidden.length) { var bR = mk('button', '', sl('restore').replace('{n}', o.hidden.length)); bR.type = 'button'; bR.addEventListener('click', function () { var o4 = sLoad(); o4.hidden = []; sSave(o4); sRedraw(); }); tools.appendChild(bR); }
+      anchor.insertAdjacentElement('afterend', tools);
+      var after = tools;
+      if (sEdit) { var nt = mk('p', 'nb-snote', sl('note')); after.insertAdjacentElement('afterend', nt); after = nt; }
+      if (sForm) {
+        var cur = sForm.id ? o.items.filter(function (x) { return x.id === sForm.id; })[0] : null, pick = cur ? cur.ico : EMS[0];
+        var f = mk('div', 'nb-sform'); f.setAttribute('role', 'group'); f.appendChild(mk('p', null, cur ? sl('editQ') : sl('newQ')));
+        var ems = mk('div', 'ems'); EMS.forEach(function (em) { var eb = mk('button', null, em); eb.type = 'button'; eb.setAttribute('aria-pressed', String(em === pick)); eb.addEventListener('click', function () { pick = em; ems.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.textContent === em)); }); }); ems.appendChild(eb); });
+        f.appendChild(ems);
+        var inp = mk('input'); inp.type = 'text'; inp.maxLength = 24; inp.placeholder = sl('ph'); inp.value = cur ? cur.name : ''; inp.setAttribute('aria-label', sl('newQ')); f.appendChild(inp); var hn = mk('p', 'nb-shint', sl('hint')); f.appendChild(hn);
+        var row = mk('div', 'row');
+        var sv = mk('button', 'main', sl('save')); sv.type = 'button';
+        var save = function () { var name = inp.value.trim(); if (!name) { inp.focus(); return; } var o5 = sLoad();
+          if (cur) o5.items.forEach(function (x) { if (x.id === cur.id) { x.name = name; x.ico = pick; } });
+          else o5.items.push({ id: 'c' + Date.now().toString(36), name: name, ico: pick, date: '' });
+          sSave(o5); sForm = null; sRedraw(); };
+        sv.addEventListener('click', save); inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); save(); } });
+        var cc = mk('button', null, sl('cancel')); cc.type = 'button'; cc.addEventListener('click', function () { sForm = null; sRedraw(); });
+        row.appendChild(sv); row.appendChild(cc);
+        if (cur) { var dl = mk('button', 'del', sl('del')); dl.type = 'button'; dl.addEventListener('click', function () { var o6 = sLoad(); o6.items = o6.items.filter(function (x) { return x.id !== cur.id; }); sSave(o6); sForm = null; sRedraw(); }); row.appendChild(dl); }
+        f.appendChild(row); after.insertAdjacentElement('afterend', f);
+      }
+    }
+    // START는 보이는 첫 도장에, 'N개 중 n개'는 보이는 것만 다시 셈
+    var vis = Array.prototype.filter.call(box.querySelectorAll('.stamp'), function (b) { return !b.classList.contains('nb-hide'); });
+    vis.forEach(function (b, i) { b.classList.toggle('nb-first', i === 0); });
+    var n = vis.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; }).length;
+    var pg = box.parentElement.querySelector('.jprogress');
+    if (pg && typeof t === 'function') { var tx = t('stampCount', { n: String(n), N: String(vis.length) }); if (pg.textContent !== tx) pg.textContent = tx; }
+  }
+  var busy = false;
+  new MutationObserver(function () { if (busy) return; busy = true; setTimeout(function () { flashOut(); fix(); wfold(); nb(); custStamps(); life(); journey(); warnFold(); slim(); verdict(); busy = false; }, 0); })
+    .observe(document.body, { childList: true, subtree: true });
+  document.addEventListener('DOMContentLoaded', fix); window.addEventListener('hashchange', function () { setTimeout(function () { flashOut(); fix(); wfold(); nb(); custStamps(); life(); journey();  warnFold(); slim(); verdict(); }, 0); });
+  setTimeout(function () { flashOut(); fix(); wfold(); nb(); custStamps(); life(); journey();  warnFold(); slim(); verdict(); }, 0);
+})();
+</script>
+<!-- 디자인 이식(11-18) 끝 -->
 </body>
 </html>
