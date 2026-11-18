@@ -212,6 +212,8 @@ details.og{margin:2px 0 4px;font-size:13px;color:var(--sub)}details.og summary{c
 .bg-assumed{background:var(--st-assumed-bg)!important}
 .bg-public{background:var(--st-public-bg)!important}
 .bg-reported{background:var(--st-reported-bg)!important}
+.bg-mixed{background:#FFF4E0!important}
+.st-mixed{background:#FFF4E0;color:#8A4B00}
 .bg-pending{background:var(--st-pending-bg)!important}
 .bg-blocked{background:var(--st-blocked-bg)!important}
 .cell-line{margin:2px 0;color:var(--text);line-height:1.4}
@@ -1259,6 +1261,9 @@ td .cell-line.small.nb-evh,.cmp-cell .cell-line.small.nb-evh,.cell-line.small.nb
 .nb-verdict.v-guide{background:#fff;color:#1F4E9C;border:1.5px solid #1F4E9C}
 .nb-verdict.v-unk{background:#fff;color:#5C6370;border:1.5px dashed #9AA1AC}
 .nb-verdict.v-no{background:#FDE8E8;color:#B42318;border:1.5px solid #B42318}
+.nb-verdict.v-mix{background:#FFF4E0;color:#8A4B00;border:1px solid #D9822B}
+.legend .badge.st-mixed{background:#FFF4E0!important}.legend .badge.st-mixed::before{background:#D9822B}
+[class*="bg-"] .badges .badge.st-mixed::before{background:#D9822B}
 [class*="bg-"]>.badges .badge{font-size:11.5px!important;padding:2px 8px!important;opacity:.85}
 .legend .nb-lv{font-weight:900;margin-right:2px}
 
@@ -1459,7 +1464,7 @@ const TEXT = {
     bypassCell: 'Blocked → {x} · Demo assumption', bypassCellV: 'Blocked → {x} · Team checked',
     need_sms: 'Needs SMS number', need_contact: 'Needs contact number', need_payMethod: 'Needs foreign card or mobile pay',
     need_foreignCard: 'Needs foreign card', need_nonVMJ: 'VISA·MASTER·JCB only',
-    r_sms: 'an overseas number that can receive SMS', r_contact: 'a contact number for the order',
+    r_sms: 'a number that can receive SMS', r_contact: 'a contact number for the order',
     r_payMethod: 'a foreign card or Alipay / WeChat Pay / Apple Pay', r_foreignCard: 'a foreign card',
     r_foreignCardVMJ: 'a foreign card (VISA·MASTER·JCB)', r_sameName: 'the same name as your Coupang account',
     r_nonVMJ: 'cards other than VISA·MASTER·JCB (e.g., UnionPay)',
@@ -1618,7 +1623,7 @@ const TEXT = {
     c_platform: '플랫폼', c_goal: '목적', c_arc: 'ARC', c_foreignCard: '해외 카드', c_cardBrand: '카드 브랜드',
     c_wallets: '간편결제', c_payMethod: '해외 카드·간편결제', c_sms: 'SMS 번호', c_contact: '연락 번호',
     v_unknown: '모름', v_yes: '있음', v_no: '없음', v_unsure: '잘 모름',
-    arc_none: 'ARC 없음(대기 중)', arc_have: 'ARC 있음',
+    arc_none: 'ARC 없음', arc_have: 'ARC 있음',
     p_coupang: '쿠팡', p_naver: '네이버', p_baemin: '배민',
     g_online_goods: '온라인 쇼핑', g_food_delivery: '음식 배달', g_reservation: '예약',
     b_visa: 'VISA', b_master: 'MASTER', b_jcb: 'JCB', b_unionpay: 'UnionPay',
@@ -1682,7 +1687,7 @@ const TEXT = {
     modeBadgeDemo: '데이터: 데모', modeBadgeVerified: '데이터: 검증만',
     asOf: '기준일 {date} (팀의 가장 최근 확인·캡처일)',
     orderNote: '정렬: 플랫폼 이름 가나다순입니다. 제휴 여부는 순서를 바꾸지 않습니다.',
-    colRoute: '플랫폼 · 목적', colSms: '휴대폰/SMS 인증', colSignup: '회원가입', colPay: '결제', colYou: '내 조건(For you)',
+    colRoute: '플랫폼 · 목적', colSms: '휴대폰/SMS 인증', colSignup: '회원가입', colPay: '결제', colYou: '내 조건 기준',
     tableCaption: '플랫폼별 결제 단계 현황',
     noStep: '—', noStepSr: '이 플랫폼에는 없는 단계',
     tellUsLink: '내 상황을 알려 주면 확인해요',
@@ -1696,7 +1701,7 @@ const TEXT = {
     bypassCell: '막힘 → {x} · 시연 가정', bypassCellV: '막힘 → {x} · 팀 확인',
     need_sms: 'SMS 받을 번호 필요', need_contact: '연락 번호 필요', need_payMethod: '해외 카드·간편결제 필요',
     need_foreignCard: '해외 카드 필요', need_nonVMJ: 'VISA·MASTER·JCB만 가능',
-    r_sms: 'SMS 수신 가능한 해외 번호', r_contact: '주문 연락 번호',
+    r_sms: 'SMS 받을 수 있는 번호', r_contact: '주문 연락 번호',
     r_payMethod: '해외 카드 또는 알리페이·위챗페이·애플페이', r_foreignCard: '해외 카드',
     r_foreignCardVMJ: '해외 카드 VISA·MASTER·JCB', r_sameName: '쿠팡 회원정보와 같은 본인 명의',
     r_nonVMJ: 'UnionPay 등 VISA·MASTER·JCB 외 브랜드',
@@ -2667,7 +2672,7 @@ TEXT.zh = {
   requires: '需要：{x}', notFor: '不适用：{x}', missingFor: '你缺少：{x}', destTitle: '付款', destReach: '按步骤可以走到付款', destNo: '这些条件下无法到达',
   altH: '同一目的的其他方式', switchRoute: '换成这条路线', askRerouting: '正在重新规划……这是同一目的的另一种方式。', rerouteNone: '这个目的暂时没有其他路线',
   blockedLine: '在这里停止——我们尝试时这一步被拦截了。', skippedV: '同一目的的另一种方式：{x} ↓', nvTag: '尚未验证',
-  r_sms: '能接收短信的境外号码', r_foreignCard: '境外信用卡', r_contact: '订单联系号码', r_payMethod: '境外卡或支付宝 / 微信支付 / Apple Pay',
+  r_sms: '能接收短信的号码', r_foreignCard: '境外信用卡', r_contact: '订单联系号码', r_payMethod: '境外卡或支付宝 / 微信支付 / Apple Pay',
   prepH: '开始之前', prepNote: '确认你有什么。不全部勾选也可以开始。', prep_sms: '能接收短信的号码', prep_foreignCardVMJName: '境外卡：VISA、MASTER 或 JCB，本人名下', prep_passport: '护照', prep_contact: '订单联系号码',
   itemH: '找你要买的东西', itemLabel: '你要买什么？（可选）', itemPlaceholder: '例如：laptop、노트북，或粘贴商品链接', itemSearch: '在{p}搜索“{q}”', openHome: '打开{p}',
   itemNoTrack: '会打开平台网站，搜索词会发送给该平台。', blockedTip: '如果看到 “Access Denied” 或 “접속 제한”，请对该网站关闭 VPN 或 iCloud 专用代理，或打开{p} App 粘贴搜索词。',
@@ -2751,7 +2756,7 @@ TEXT.vi = {
   requires: 'Cần: {x}', notFor: 'Không dùng cho: {x}', missingFor: 'Bạn còn thiếu: {x}', destTitle: 'Thanh toán', destReach: 'Làm theo các bước sẽ đến bước thanh toán', destNo: 'Không đến được với điều kiện này',
   altH: 'Cách khác cho cùng mục đích', switchRoute: 'Chuyển sang lộ trình này', askRerouting: 'Đang tìm đường khác… Đây là một cách khác cho cùng mục đích.', rerouteNone: 'Chưa có lộ trình khác cho mục đích này',
   blockedLine: 'Dừng ở đây — bước này bị chặn khi chúng tôi thử.', skippedV: 'Cùng mục đích, cách khác: {x} ↓', nvTag: 'Chưa kiểm chứng',
-  r_sms: 'số nước ngoài nhận được SMS', r_foreignCard: 'thẻ nước ngoài', r_contact: 'số liên lạc khi đặt hàng', r_payMethod: 'thẻ nước ngoài hoặc Alipay / WeChat Pay / Apple Pay',
+  r_sms: 'số nhận được SMS', r_foreignCard: 'thẻ nước ngoài', r_contact: 'số liên lạc khi đặt hàng', r_payMethod: 'thẻ nước ngoài hoặc Alipay / WeChat Pay / Apple Pay',
   prepH: 'Trước khi bắt đầu', prepNote: 'Kiểm tra những gì bạn có. Không cần đánh dấu hết vẫn bắt đầu được.', prep_sms: 'Số nhận được SMS', prep_foreignCardVMJName: 'Thẻ nước ngoài: VISA, MASTER hoặc JCB, đứng tên bạn', prep_passport: 'Hộ chiếu', prep_contact: 'Số liên lạc khi đặt hàng',
   itemH: 'Tìm món đồ', itemLabel: 'Bạn định mua gì? (không bắt buộc)', itemPlaceholder: 'VD: laptop, 노트북, hoặc dán liên kết sản phẩm', itemSearch: 'Tìm "{q}" trên {p}', openHome: 'Mở {p}',
   itemNoTrack: 'Mở trang của nền tảng. Từ khóa tìm kiếm sẽ được gửi tới nền tảng đó.', blockedTip: 'Nếu thấy "Access Denied" hoặc "접속 제한", hãy tắt VPN hoặc iCloud Private Relay cho trang này, hoặc mở ứng dụng {p} và dán từ khóa.',
@@ -3227,7 +3232,16 @@ function buildLive(guidance) {
     s.evidence = s.evidence.concat([t13('The code did not arrive, even after resending with the country code selected (cause unknown)', '국가 번호를 고르고 다시 보내도 인증번호가 안 옴(원인 모름)', B('the same overseas number as 2026-10-07', '2026-10-07과 같은 해외 번호'))]);
     s.note = B('The code arrived on 2026-10-07, but not on 2026-11-13 with the same number (cause unknown). If it does not arrive, check the country code, resend once, then try another route.',
       '2026-10-07에는 인증번호가 왔지만 2026-11-13 같은 번호로는 오지 않았습니다(원인 모름). 안 오면 국가 번호를 확인하고 한 번만 다시 보낸 뒤 다른 경로를 보세요.');
+    // 11-18 앱 점검(오유미) 반영: 됐던 날과 안 된 날이 둘 다 있으므로 '됐어요'로 단정하지 않는다. 경로는 멈추지 않음(상태는 tested 유지, 표시만 '됐다 안 됐다')
+    s.mixed = { ok: '2026-10-07', no: T13 };
   });
+  // 쿠팡 결제: 학생 1명이 앱에서 결제 완료를 알려 옴(11-12, 팀 없이 혼자) → '학생들이 됐대요'. 팀이 확인한 결제는 여전히 없음
+  c7.status = 'reported';
+  c7.evidence = c7.evidence.concat([ev({ kind: 'interview', sourceLabel: B('Beta tester report in the app (team not present)', '베타 테스터가 앱에서 알려 준 결과(팀 동석 없음)'), capturedAt: '2026-11-12',
+    observedScope: B('Payment completed (one person)', '결제 완료(1명)') })]);
+  c7.info = { kind: 'student', source: 'beta1112', text: B('One beta tester reported completing payment in the app (2026-11-12). Not checked by the team.', '베타 테스터 1명이 결제를 마쳤다고 앱에서 알려 줬어요(2026-11-12). 팀이 직접 보지는 않았어요.') };
+  c7.note = B('One beta tester reported a completed payment (2026-11-12, team not present); no team-witnessed payment yet. In the 2026-11-13 test, product pages were blocked ("access denied") in a web browser but opened in the Coupang app.',
+    '베타 테스터 1명이 결제 완료를 알려 왔어요(2026-11-12, 팀 동석 없음). 팀이 직접 본 결제는 아직 없습니다. 2026-11-13 테스트에서 웹 브라우저로는 상품 페이지가 "사용권한이 없습니다"로 막히고, 쿠팡 앱에서는 열렸습니다.');
   return d;
 }
 
@@ -3256,6 +3270,7 @@ const CONFIG = (() => {
       teamSms: { label: 'Nubi team test (one overseas number)', url: null, checked: '2026-10-07' },
       teamBaemin: { label: 'Nubi team attempt', url: null, checked: '2026-10-02' },
       test1113: { label: 'Nubi beta test — a tester did it while a team member watched', url: null, checked: '2026-11-13' },
+      beta1112: { label: 'Nubi beta — a tester reported it in the app (team not present)', url: null, checked: '2026-11-12' },
       interview5: { label: 'Student interview (#5)', url: null, checked: '2026-10' },
       baeminCeo: { label: 'Baemin CEO site — official (guest order, foreign cards)', url: 'https://ceo.baemin.com/knowhow/12885', published: '2024-07', checked: '2026-10-18' }
     },
@@ -3270,6 +3285,7 @@ const CONFIG = (() => {
     datasets: { live: deepFreeze(buildLive(guidance)) },
     // 최근 확인 기록(비교표에 표시): 팀이 실제로 확인한 것만. 새로 확인하면 맨 위에 추가한다
     checkLog: [
+      { date: '2026-11-13', text: B('Beta test with a team member present: Baemin guest order paid, Coupang sign-up done (16-country list checked), Naver SMS code did not arrive', '베타 테스트(팀원 동석): 배민 비회원 결제 완료 · 쿠팡 가입 완료(16개 나라 목록 확인) · 네이버 SMS 인증번호 안 옴') },
       { date: '2026-10-16', text: B('Captured the Coupang Help Center foreign-card guide', '쿠팡 고객센터 해외카드 안내 캡처') },
       { date: '2026-10-07', text: B('Tested SMS verification on Coupang and Naver with one overseas number', '쿠팡·네이버 SMS 인증을 해외 번호 1건으로 시험') },
       { date: '2026-10-02', text: B('Tried Baemin sign-up — blocked without a Korean phone', '배민 회원가입 시도 — 한국 휴대폰 없이 막힘') }
@@ -3642,6 +3658,8 @@ function restoreSaved(saved) {
     target = '#/steps';
   }
   addFlash('restored');
+  // 11-18 앱 점검: 주소에 독립 화면(#/survey·#/ai-check·#/info·생활 탭 등)이 있으면 그 화면을 그대로 연다 — 기록은 되살리되 화면은 덮지 않음
+  if (location.hash && !['#/start', '#/talk', '#/result', '#/steps', '#/compare', '#/arc'].includes(location.hash)) return;
   history.replaceState(null, '', target);
 }
 // 개선 기록: 옵트인일 때만, 숫자만 올린다(문장·개인 ID 없음, 전송 없음)
@@ -3958,7 +3976,7 @@ function render() {
 function resetApp() {
   // 지운 뒤 다시 쓰지 않게 막고(해시 변경 → render → writeStore 방지), 해시 없이 새로 연다 → 시작 화면
   if (typeof state === 'object' && state) state.holdWrites = true;
-  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); } catch (e) { /* 저장소가 막혀도 새로고침은 한다 */ }
+  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); } catch (e) { /* 저장소가 막혀도 새로고침은 한다 */ }
   location.replace(location.pathname + location.search);
 }
 function showLoadFail(err) {
@@ -3990,11 +4008,15 @@ function renderChrome() {
 }
 
 function badge(text, cls) { return el('span', { class: 'badge ' + cls }, text); }
+// 됐다 안 됐다(11-18): 같은 조건에서 된 날·안 된 날이 둘 다 있는 단계
+const MIXED_T = { ko: '{ok} 됨 · {no} 안 됨(누비 시험)', en: 'Worked {ok} · failed {no} (Nubi tests)', zh: '{ok} 可以 · {no} 不行（Nubi 测试）', vi: '{ok} được · {no} không (Nubi thử)' };
+const mixedText = s => (MIXED_T[state.lang] || MIXED_T.en).replace('{ok}', s.mixed.ok.slice(5).replace('-', '/')).replace('{no}', s.mixed.no.slice(5).replace('-', '/'));
 function statusText(s) {
+  if (s.mixed) return mixedText(s);
   // 막힘이 팀 직접 확인이면 그 사실도 함께: "Blocked · Team checked"
   return t('st_' + s.status) + (s.status === 'blocked' && s.evidence.some(e => e.kind === 'team_test') ? ' · ' + t('st_verified') : '');
 }
-const statusBadge = s => badge(statusText(s), 'st-' + s.status);
+const statusBadge = s => badge(statusText(s), 'st-' + (s.mixed ? 'mixed' : s.status));
 const reqLabel = k => t('r_' + k);
 
 /* 근거 한 줄: 누가·무엇으로·언제 */
@@ -4023,7 +4045,10 @@ function evShort(e, st) {
 function staleDate(s, e) {
   if (s.status === 'assumed' || e.kind === 'assumption') return null;
   const d = basisDate(e);
-  return d && daysSince(d) > 30 ? d : null;
+  if (!d || daysSince(d) <= 30) return null;
+  // 11-18 앱 점검: 같은 단계를 최근(30일 안)에 다시 확인했으면 옛 근거 날짜로 경고하지 않는다
+  if ((s.evidence || []).some(x => x !== e && x.kind !== 'assumption' && basisDate(x) && daysSince(basisDate(x)) <= 30)) return null;
+  return d;
 }
 function evidenceLines(s) {
   const out = [];
@@ -4520,7 +4545,7 @@ function arcCard() {
     !state.remember ? el('p', { class: 'small' }, t('arcNoRemember')) : null);
 }
 // 문의 폼 링크: 구글 폼 주소만 받고, 자리표시에 화면·언어·버전만 넣는다
-const APP_VERSION = '2026-11-05';
+const APP_VERSION = '2026-11-18';
 function feedbackHref(scr) {
   const u = safeUrl(CONFIG.feedbackUrl || ''); if (!u) return null;
   const host = new URL(u).hostname; if (!/^(docs\.google\.com|forms\.gle)$/i.test(host)) return null;
@@ -5593,7 +5618,7 @@ function cellContent(route, col, res) {
   ss.forEach(s => s.evidence.forEach(e => { const d = staleDate(s, e); if (d) kids.push(el('p', { class: 'warn' }, '⚠ ' + t('warnShort', { date: d }))); }));
   if (res && res.stop && res.stop.reason === 'unmet' && ss.includes(res.stop.stage))
     kids.push(el('p', { class: 'missing' }, res.stop.missing.map(k => t('need_' + k)).join(' · ')));
-  return { cls: 'bg-' + weakest.status, kids };
+  return { cls: 'bg-' + (weakest.mixed ? 'mixed' : weakest.status), kids };
 }
 function forYouContent(res, isBest) {
   if (!res) return [el('a', { href: '#/start' }, t('tellUsLink'))];
@@ -5716,7 +5741,7 @@ function personalCard(conds) {
       ? el('ol', {}, lists.A.map(r => el('li', {}, routeTitle(r.route) + ' — ' + (ko ? r.picked + '명 선택' : r.picked + ' picked'))))
       : el('p', { class: 'small' }, ko ? '아직 모인 선택 기록이 없어요. 아래 표의 기본 순서를 보세요.' : 'No choices collected yet. Use the default order in the table below.');
   } else if (lists.fallback) {
-    body = el('p', { class: 'small' }, ko ? '나와 같은 조건(' + groupLabel(g) + ')에서 시작한 사람이 ' + PERSONAL.minStart + '명보다 적어서, 기본 안내(아래 표의 For you 순서)를 보여 드려요.'
+    body = el('p', { class: 'small' }, ko ? '나와 같은 조건(' + groupLabel(g) + ')에서 시작한 사람이 ' + PERSONAL.minStart + '명보다 적어서, 기본 안내(아래 표의 \'내 조건 기준\' 순서)를 보여 드려요.'
       : 'Fewer than ' + PERSONAL.minStart + ' people with your conditions (' + groupLabel(g) + ') have started, so we show the default guide (For you order below).');
   } else {
     body = [el('ol', {}, lists.B.map(r => el('li', {}, routeTitle(r.route) + ' — ' + (ko ? r.started + '명 중 ' + r.done + '명 완료 (' + pct(r.rate) + ')' : r.done + ' of ' + r.started + ' finished (' + pct(r.rate) + ')')))),
@@ -5855,7 +5880,8 @@ function viewCompare() {
     }), el('dt', {}, t('colYou')), el('dd', {}, forYouContent(res, r.id === bestId))))));
   const legend = el('div', { class: 'legend' }, el('span', { class: 'small' }, t('legend')),
     // 범례는 현재 데이터에 실제로 있는 상태만 — Verified only 화면에 'Demo assumption' 배지가 보이지 않게
-    CONFIG.statusOrder.filter(st => dataset().routes.some(r => r.stages.some(s => s.status === st))).map(s => badge(t('st_' + s), 'st-' + s)));
+    CONFIG.statusOrder.filter(st => dataset().routes.some(r => r.stages.some(s => s.status === st))).map(s => badge(t('st_' + s), 'st-' + s)),
+    dataset().routes.some(r => r.stages.some(s => s.mixed)) ? badge({ ko: '날마다 결과가 달랐어요', en: 'results differed by day', zh: '不同日期结果不同', vi: 'kết quả khác nhau theo ngày' }[state.lang] || 'results differed by day', 'st-mixed') : null);
   return el('section', {},
     el('h2', {}, t('s5Title')),
     arcNote(),
@@ -6962,7 +6988,7 @@ window.__payPathReady = true;
   // ── 레퍼런스 반영(11-17 12:20): 누비 캐릭터·말풍선·상태색·큰 숫자·도장·한 단어 색 ──
   var NB = {
     start: { ko: 'ARC 없어도 길이 있어요!', en: 'No ARC yet? There is still a way!', zh: '没有 ARC 也有路！', vi: 'Chưa có ARC vẫn có đường!' },
-    resA: { ko: '이 길이면 결제까지 가요!', en: 'This route gets you to payment!', zh: '这条路可以走到付款！', vi: 'Lộ trình này đi được tới thanh toán!' },
+    resA: { ko: '결제까지 가는 길이에요', en: 'Your route to payment', zh: '这是通往付款的路线', vi: 'Lộ trình đến thanh toán' },
     resD: { ko: '옆길 하나만 들르면 돼요!', en: 'Just one detour on the way!', zh: '只要绕一小段路！', vi: 'Chỉ cần đi vòng một đoạn!' },
     resB: { ko: '중간까지는 안내할 수 있어요', en: 'I can guide you part of the way', zh: '可以带你走一段', vi: 'Mình dẫn bạn được một đoạn' },
     resC: { ko: '지금 조건으론 막혀요. 조건을 바꿔 볼까요?', en: 'Blocked with these conditions. Try changing them?', zh: '按现在的条件走不通，换个条件试试？', vi: 'Với điều kiện này thì bị chặn. Thử đổi điều kiện nhé?' },
@@ -7174,11 +7200,12 @@ window.__payPathReady = true;
     stu: { ko: '✓ 학생들이 됐대요', en: '✓ Students say it worked', zh: '✓ 学生说可以', vi: '✓ SV nói được' },
     guide: { ko: '안내상 돼요', en: 'Should work', zh: '按指南可以', vi: 'Theo hướng dẫn: được' },
     unk: { ko: '? 아직 몰라요', en: '? Unknown yet', zh: '? 尚不清楚', vi: '? Chưa rõ' },
+    mix: { ko: '△ 됐다 안 됐다 해요', en: '△ Mixed results', zh: '△ 时行时不行', vi: '△ Lúc được lúc không' },
     no: { ko: '✕ 해 봤더니 막혔어요', en: '✕ Blocked in our test', zh: '✕ 我们试过，不行', vi: '✕ Đã thử: bị chặn' },
     note: { ko: '판정은 누비·학생이 해 본 결과예요. 카드·번호에 따라 다를 수 있어요.', en: 'Results are from tests by Nubi and students. Your card or number may give a different result.', zh: '结果来自 Nubi 和学生的测试。你的卡或号码可能结果不同。', vi: 'Kết quả từ thử nghiệm của Nubi và sinh viên. Thẻ hoặc số của bạn có thể cho kết quả khác.' },
     warn: { ko: '⚠ = 확인한 지 30일 넘음(누르면 날짜)', en: '⚠ = checked over 30 days ago (tap for date)', zh: '⚠ = 确认已超过 30 天（点击看日期）', vi: '⚠ = đã kiểm tra hơn 30 ngày (chạm để xem ngày)' }
   };
-  function vOf(st) { return /^(tested|verified)$/.test(st) ? 'ok' : st === 'reported' ? 'stu' : /^(guide|public)$/.test(st) ? 'guide' : st === 'blocked' ? 'no' : 'unk'; }
+  function vOf(st) { return st === 'mixed' ? 'mix' : /^(tested|verified)$/.test(st) ? 'ok' : st === 'reported' ? 'stu' : /^(guide|public)$/.test(st) ? 'guide' : st === 'blocked' ? 'no' : 'unk'; }
   function verdict() {
     var main = document.querySelector('main'); if (!main) return; var l = (typeof state !== 'undefined' && state.lang) || 'en';
     main.querySelectorAll('[class*="bg-"]').forEach(function (cell) {
