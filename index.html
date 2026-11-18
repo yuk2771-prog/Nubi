@@ -1316,6 +1316,10 @@ main>.nb-flash-moved .flash,main>.nb-flash-moved .mt-note{margin:12px 0 4px!impo
 .legend .nb-lwarn{display:inline-flex;align-items:center;padding:3px 10px;border-radius:4px;border-left:4px solid var(--warn,#F08C00);background:var(--warn-bg,#FFF3E0);color:var(--warn-text,#7A4600);font-size:12.5px;font-weight:700}
 .nb-lnote{margin:-4px 0 12px!important;font-size:12.5px;color:var(--sub)}
 
+/* 11-18 23:20 사용자: 접힌 카드의 검정 원 안 '+'가 가운데가 아님(글꼴 기준선 탓) → 글자 대신 그린 +/− 그림을 원 정가운데에 */
+.dt-fold>h3::after{content:""!important;flex:none;background:#111 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M7 1.5v11M1.5 7h11' stroke='%23C8F04B' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center/13px 13px no-repeat!important}
+.dt-fold.dt-open>h3::after{content:""!important;background:#111 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M1.5 7h11' stroke='%23C8F04B' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center/13px 13px no-repeat!important}
+
 
 .nb-sform .nb-shint{margin:-4px 0 10px;font-size:12.5px;font-weight:400;color:var(--sub)}
 
@@ -3976,7 +3980,7 @@ function render() {
 function resetApp() {
   // 지운 뒤 다시 쓰지 않게 막고(해시 변경 → render → writeStore 방지), 해시 없이 새로 연다 → 시작 화면
   if (typeof state === 'object' && state) state.holdWrites = true;
-  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); } catch (e) { /* 저장소가 막혀도 새로고침은 한다 */ }
+  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); } catch (e) { /* 저장소가 막혀도 새로고침은 한다 */ }
   location.replace(location.pathname + location.search);
 }
 function showLoadFail(err) {
