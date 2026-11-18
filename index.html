@@ -3958,7 +3958,7 @@ function render() {
 function resetApp() {
   // 지운 뒤 다시 쓰지 않게 막고(해시 변경 → render → writeStore 방지), 해시 없이 새로 연다 → 시작 화면
   if (typeof state === 'object' && state) state.holdWrites = true;
-  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); } catch (e) { /* 저장소가 막혀도 새로고침은 한다 */ }
+  try { localStorage.removeItem(CONFIG.storageKey); localStorage.removeItem(OLD_KEY); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); localStorage.removeItem('nubi:custom-stamps:v1'); } catch (e) { /* 저장소가 막혀도 새로고침은 한다 */ }
   location.replace(location.pathname + location.search);
 }
 function showLoadFail(err) {
@@ -7217,7 +7217,8 @@ window.__payPathReady = true;
     newQ: { ko: '어떤 걸 해 보고 싶어요?', en: 'What do you want to try?', zh: '你想尝试什么？', vi: 'Bạn muốn thử điều gì?' },
     editQ: { ko: '내 도장 고치기', en: 'Edit my stamp', zh: '修改我的印章', vi: 'Sửa dấu của tôi' },
     ph: { ko: '예: 한강에서 자전거 타기', en: 'e.g., Ride a bike by the Han River', zh: '例如：在汉江边骑自行车', vi: 'VD: Đạp xe ven sông Hàn' },
-    save: { ko: '저장', en: 'Save', zh: '保存', vi: 'Lưu' }, cancel: { ko: '취소', en: 'Cancel', zh: '取消', vi: 'Hủy' }, del: { ko: '삭제', en: 'Delete', zh: '删除', vi: 'Xóa' },
+    save: { ko: '저장', en: 'Save', zh: '保存', vi: 'Lưu' }, dateQ: { ko: '언제 처음 해 봤어요?', en: 'When did you first do it?', zh: '你第一次是什么时候？', vi: 'Bạn làm lần đầu khi nào?' },
+    stampIt: { ko: '이 날짜로 찍기', en: 'Stamp this date', zh: '按这个日期盖章', vi: 'Đóng dấu ngày này' }, unstamp: { ko: '도장 지우기', en: 'Remove stamp', zh: '取消印章', vi: 'Bỏ dấu' }, cancel: { ko: '취소', en: 'Cancel', zh: '取消', vi: 'Hủy' }, del: { ko: '삭제', en: 'Delete', zh: '删除', vi: 'Xóa' },
     hint: { ko: '이름·연락처·계좌번호는 쓰지 마세요. 이 기기에만 저장돼요.', en: 'Do not write names, phone or account numbers. Saved on this device only.', zh: '请勿填写姓名、电话或账号。只保存在这台设备上。', vi: 'Đừng ghi tên, số điện thoại hay số tài khoản. Chỉ lưu trên máy này.' },
     note: { ko: '편집 중: 기본 도장은 ✕를 눌러 숨기고, 내 도장은 ✎를 눌러 고쳐요. 내 도장은 이 기기에만 저장돼요.', en: 'Editing: tap a stamp with ✕ to hide it, ✎ to edit yours. Your stamps stay on this device only.', zh: '编辑中：点带 ✕ 的印章可隐藏，点 ✎ 修改你的印章。你的印章只保存在这台设备上。', vi: 'Đang sửa: chạm dấu có ✕ để ẩn, ✎ để sửa dấu của bạn. Dấu của bạn chỉ lưu trên máy này.' }
   };
@@ -7242,7 +7243,7 @@ window.__payPathReady = true;
         if (it.date) b.appendChild(mk('span', 'dt', it.date.slice(5).replace('-', '/')));
         b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation();
           if (sEdit) { sForm = { id: it.id }; sRedraw(); return; }
-          var o2 = sLoad(); o2.items.forEach(function (x) { if (x.id === it.id) x.date = x.date ? '' : sToday(); }); sSave(o2); sRedraw(); });
+          sForm = { id: it.id, mode: 'date' }; sRedraw(); setTimeout(function () { var d = document.querySelector('.nb-sform input[type=date]'); if (d) d.focus(); }, 50); });
         box.appendChild(b);
       });
       box.classList.toggle('nb-editing', sEdit);
@@ -7260,7 +7261,20 @@ window.__payPathReady = true;
       anchor.insertAdjacentElement('afterend', tools);
       var after = tools;
       if (sEdit) { var nt = mk('p', 'nb-snote', sl('note')); after.insertAdjacentElement('afterend', nt); after = nt; }
-      if (sForm) {
+      if (sForm && sForm.mode === 'date') {
+        var dc = o.items.filter(function (x) { return x.id === sForm.id; })[0];
+        if (dc) {
+          var df = mk('div', 'nb-sform'); df.setAttribute('role', 'group'); df.appendChild(mk('p', null, (dc.ico || '') + ' ' + dc.name + ' — ' + sl('dateQ')));
+          var di = mk('input'); di.type = 'date'; di.max = sToday(); di.value = dc.date || sToday(); di.setAttribute('aria-label', sl('dateQ')); df.appendChild(di);
+          var dr = mk('div', 'row');
+          var ds = mk('button', 'main', sl('stampIt')); ds.type = 'button';
+          ds.addEventListener('click', function () { var v = /^\d{4}-\d{2}-\d{2}$/.test(di.value) && di.value <= sToday() ? di.value : sToday(); var o7 = sLoad(); o7.items.forEach(function (x) { if (x.id === dc.id) x.date = v; }); sSave(o7); sForm = null; sRedraw(); });
+          dr.appendChild(ds);
+          if (dc.date) { var du = mk('button', 'del', sl('unstamp')); du.type = 'button'; du.addEventListener('click', function () { var o8 = sLoad(); o8.items.forEach(function (x) { if (x.id === dc.id) x.date = ''; }); sSave(o8); sForm = null; sRedraw(); }); dr.appendChild(du); }
+          var dx = mk('button', null, sl('cancel')); dx.type = 'button'; dx.addEventListener('click', function () { sForm = null; sRedraw(); }); dr.appendChild(dx);
+          df.appendChild(dr); after.insertAdjacentElement('afterend', df);
+        }
+      } else if (sForm) {
         var cur = sForm.id ? o.items.filter(function (x) { return x.id === sForm.id; })[0] : null, pick = cur ? cur.ico : EMS[0];
         var f = mk('div', 'nb-sform'); f.setAttribute('role', 'group'); f.appendChild(mk('p', null, cur ? sl('editQ') : sl('newQ')));
         var ems = mk('div', 'ems'); EMS.forEach(function (em) { var eb = mk('button', null, em); eb.type = 'button'; eb.setAttribute('aria-pressed', String(em === pick)); eb.addEventListener('click', function () { pick = em; ems.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.textContent === em)); }); }); ems.appendChild(eb); });
